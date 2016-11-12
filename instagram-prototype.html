@@ -40,9 +40,9 @@
         
         <script lang="javascript">
             $("document").ready(function(){
-                var authToken = location.href.split("X").pop();
-                if (authToken){
-                    alert("authenticated: " + authToken);
+                if (location.href.indexOf("#") > 0){
+                    var authToken = location.href.split("#");
+                    console.log("authenticated: " + authToken.pop());
                 }
             });
         </script>
