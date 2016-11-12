@@ -11,12 +11,12 @@ and firebase
 
 
 our sandbox instagram users:
-* ontopofspaghetti - added
-* quinoadreams - added
-* picklesandlace - added
-* garlicbodybutter - added
-* cauliflower_king - added
-* tofugees - added
+* ontopofspaghetti - added, content added
+* quinoadreams - added, content added
+* picklesandlace - added, content added
+* cauliflower_king - added - LA content added
+* garlicbodybutter - added - san francisco content added
+* tofugees - added - sf - san francisco content added
 * leatherandkale
 * iheart2nom
 * peebeenjayjay
