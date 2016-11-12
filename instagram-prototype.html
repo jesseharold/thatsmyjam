@@ -73,11 +73,7 @@
                     //url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token + "&callback=?",
                     url: endpoint + "access_token=" + token,
                     method: 'GET',
-                    dataType: "jsonp",
-                    success: function(data) {
-                        console.log(data);
-                    }
-                /*
+                    dataType: "jsonp"
                 })
                 .done(function(response) {
                     console.log("done!");
@@ -91,7 +87,6 @@
                     }
                 }).fail(function(err){
                     console.error("Failed: " + err);
-                */
                 });
             }
 
