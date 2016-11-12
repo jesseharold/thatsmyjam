@@ -44,7 +44,7 @@
         <script lang="javascript">
             $("document").ready(function(){
                 //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
-                var endpoint = "https://api.instagram.com/v1/media/search?lat=48.858844&lng=2.294351";  
+                var endpoint = "https://api.instagram.com/v1/media/search?";  
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -52,24 +52,22 @@
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
                         $("#login").hide();
-                        getImages(authToken[1]);
+                        var geoLocation = getLocation().split(",");
+                        getImages(authToken[1], geoLocation[0], geoLocation[1]);
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
                 }
 
-                getLocation()
             function getLocation(){
                 $.get("https://ipinfo.io", function(response) {
-                    console.log("IP: " + response.ip);
-                    console.log("City: " + response.city + ", " + response.region);
-                    console.log("loc: " + response.loc);
+                    return(response.loc);
                 }, "jsonp");
             }
-            function getImages(token){
+            function getImages(token, latitude, longitude){
                 //get images
                 $.ajax({
-                    url: endpoint + "?access_token=" + token + "&callback=?",
+                    url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token + "&callback=?",
                     method: 'GET'
                 })
                 .done(function(response) {
