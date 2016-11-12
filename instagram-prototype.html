@@ -52,8 +52,8 @@
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
                         $("#login").hide();
-                        var geoLocation = getLocation().split(",");
-                        getImages(authToken[1], geoLocation[0], geoLocation[1]);
+                        var geoLocation = getLocation();
+                        getImages(authToken[1], geoLocation[0].trim(), geoLocation[1].trim());
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
@@ -61,7 +61,8 @@
 
             function getLocation(){
                 $.get("https://ipinfo.io", function(response) {
-                    return(response.loc);
+                    var location = response.loc;
+                    return location.split(",");
                 }, "jsonp");
             }
             function getImages(token, latitude, longitude){
