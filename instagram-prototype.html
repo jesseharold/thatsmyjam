@@ -44,7 +44,7 @@
         <script lang="javascript">
             $("document").ready(function(){
                 //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
-                var endpoint = "https://api.instagram.com/v1/media/search?";  
+                var endpoint = "https://api.instagram.com/v1/media/search?client_id=7c89da9d27cd49f9a18e2d6155032011&";  
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -62,8 +62,7 @@
                 $.get("https://ipinfo.io", function(response) {
                     var location = response.loc;
                     var geoLocation = location.split(",");
-                    console.log(geoLocation);
-                    getImages(authToken[1], geoLocation[0].trim(), geoLocation[1].trim());
+                    getImages(authToken[1], geoLocation[0], geoLocation[1]);
                 }, "jsonp");
             }
             function getImages(token, latitude, longitude){
