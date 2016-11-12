@@ -34,7 +34,7 @@
             
             <div class="panel-body">
                 <div id="login">
-                    <a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review/instagram-prototype.html&response_type=token" target="_blank">Click here to log in with instagram</a>
+                    <a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review/instagram-prototype.html&response_type=token">Click here to log in with instagram</a>
                 </div>
                 <div id="response">
                 </div>
@@ -49,7 +49,7 @@
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
-                    var authTokenString = location.href.split("#");
+                    var authTokenString = location.href.split("#").pop();
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
                         myToken = authToken[1];
