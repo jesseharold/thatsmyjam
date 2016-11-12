@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>#seefood instagram prototype</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <style>
+        #title, #main{      
+                margin: auto;
+                margin-bottom: 10px;
+            }
+
+        .container .panel-heading, .jumbotron, .btn-primary{
+            background-color: navy;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron" id="title">
+            <h1>see-food-friends</h1>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Instragram Prototype</h3>
+            </div>
+            
+            <div class="panel-body">
+                <div id="login">
+                    <a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review/instagram-prototype.html&response_type=token">Click here to log in with instagram</a>
+                </div>
+                <div id="response">
+                </div>
+            </div>
+        </div>
+        
+        <script lang="javascript">
+            $("document").ready(function(){
+                //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?";
+                //var endpoint = "https://api.instagram.com/v1/users/self/media/recent?";
+                var endpoint = "https://api.instagram.com/v1/media/search?";  
+
+                //check for auth token and store
+                if (location.href.indexOf("#") > 0){
+                    var authTokenString = location.href.split("#").pop();
+                    var authToken = authTokenString.split("=");
+                    if (authToken[0] === "access_token"){
+                        $("#login").hide();
+                        getLocation();
+                    } else {
+                        $("#response").text("User did not give the app permission");
+                    }
+                }
+
+            function getLocation(){
+                $.get("https://ipinfo.io", function(response) {
+                    var location = response.loc;
+                    var geoLocation = location.split(",");
+                    getImages(authToken[1], geoLocation[0], geoLocation[1]);
+                }, "jsonp");
+            }
+            function getImages(token, latitude, longitude){
+
+                //get images
+                $.ajax({
+                    url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token,
+                    //url: endpoint + "access_token=" + token,
+                    method: 'GET',
+                    dataType: "jsonp"
+                })
+                .done(function(response) {
+                    console.log(response.data);
+                    if(response.meta.code === 200){
+                        // create current round of images
+                        for (var i = 0; i < response.data.length; i++) {  
+                            if (response.data[i].type === "image"){
+                                var thumbnail = $("<img>");
+                                thumbnail
+                                    .attr("src", response.data[i].images.thumbnail.url)
+                                    .addClass("thumbnail");
+                                $("#response").append(thumbnail);
+                            }
+                        }
+                    } else {
+                        console.error("meta error: "+response.meta.code);
+                    }
+                }).fail(function(err){
+                    console.error("Failed: " + err);
+                });
+            }
+
+            });
+        </script>
+</body>
+</html>
