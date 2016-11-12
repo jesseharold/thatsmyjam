@@ -43,7 +43,7 @@
         
         <script lang="javascript">
             $("document").ready(function(){
-                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=";
+                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
 
 
                 //check for auth token and store
@@ -61,10 +61,11 @@
             function getImages(token){
                 //get images
                 $.ajax({
-                    url: endpoint+token,
+                    url: endpoint + "?access_token=" + token,
                     method: 'GET'
                 })
                 .done(function(response) {
+                    console.log("done!");
                     if(response.meta.code === 200){
                         // create current round of images
                         for (var i = 0; i < response.data.length; i++) {
@@ -72,10 +73,10 @@
                             $("#response").append(response.data[i]);
                         }
                     } else {
-                        console.error("error: "+response.meta.code);
+                        console.error("meta error: "+response.meta.code);
                     }
                 }).fail(function(err){
-                    console.error(err);
+                    console.error("Failed: " + err);
                 });
             }
 
