@@ -43,8 +43,8 @@
         
         <script lang="javascript">
             $("document").ready(function(){
-                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
-
+                //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
+                var endpoint = "https://api.instagram.com/v1/media/search?lat=48.858844&lng=2.294351";  
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -58,6 +58,13 @@
                     }
                 }
 
+
+            function getLocation(){
+                $.get("http://ipinfo.io", function(response) {
+                    console.log("IP: " + response.ip);
+                    console.log("City: " + response.city + ", " + response.region);
+                }, "jsonp");
+            }
             function getImages(token){
                 //get images
                 $.ajax({
