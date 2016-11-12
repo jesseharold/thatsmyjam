@@ -60,9 +60,10 @@
 
                 getLocation()
             function getLocation(){
-                $.get("http://ipinfo.io", function(response) {
+                $.get("https://ipinfo.io", function(response) {
                     console.log("IP: " + response.ip);
                     console.log("City: " + response.city + ", " + response.region);
+                    console.log("loc: " + response.loc);
                 }, "jsonp");
             }
             function getImages(token){
