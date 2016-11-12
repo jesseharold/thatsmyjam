@@ -25,13 +25,18 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Privacy Policy</h3>
+                <h3 class="panel-title">Instragram Prototype</h3>
             </div>
             
             <div class="panel-body">
-                see-food-friends uses instagram users' photos only with their permission, as indicated by either logging in and authorizing or by using the #seefoodfriends hashtag. Instagram users photos will never be sold, monetized, or shared in any way other than the stated usage of the app - displaying the images on a map visible to the users' friends.
-                <br><br>
-                For any questions, contact jesseharold@gmail.com.
+                
+<a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=REDIRECT-URI&response_type=token" target="_blank">Click here to authenticate with instagram</a>
+<br><br>
+At this point, we present the user with a login screen and then a confirmation screen where they grant your app’s access to their Instagram data. Note that unlike the explicit flow the response type here is “token”.
+<br><br>
+Once the user has authenticated and then authorized your application, Instagram redirects them to your redirect_uri with the access_token in the url fragment. It will look like this:
+<br><br>
+http://your-redirect-uri#access_token=ACCESS-TOKEN
             </div>
         </div>
         
