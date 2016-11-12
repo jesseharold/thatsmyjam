@@ -44,8 +44,8 @@
         <script lang="javascript">
             $("document").ready(function(){
                 //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?";
-                //var endpoint = "https://api.instagram.com/v1/users/self/media/recent?";
-                var endpoint = "https://api.instagram.com/v1/media/search?";  
+                var endpoint = "https://api.instagram.com/v1/users/self/media/recent?";
+                //var endpoint = "https://api.instagram.com/v1/media/search?";  
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -70,8 +70,8 @@
 
                 //get images
                 $.ajax({
-                    url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token,
-                    //url: endpoint + "access_token=" + token,
+                    //url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token,
+                    url: endpoint + "access_token=" + token,
                     method: 'GET',
                     dataType: "jsonp"
                 })

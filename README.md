@@ -1,4 +1,4 @@
-# project-1 Friends Restaurant Reviews
+# project-1 That's My Jam
 Group Project
 
 An app that lets a user see their friends' instagram food photos on a map of their location
@@ -8,3 +8,4 @@ Users can also add their own instragram food photos, so their friends can see ho
 
 using google map API
 and instragram API
+and firebase
