@@ -53,7 +53,8 @@
                     if (authToken[0] === "access_token"){
                         $("#login").hide();
                         var geoLocation = getLocation();
-                        getImages(authToken[1], geoLocation[0].trim(), geoLocation[1].trim());
+                        console.log(geoLocation);
+                        //getImages(authToken[1], geoLocation[0].trim(), geoLocation[1].trim());
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
