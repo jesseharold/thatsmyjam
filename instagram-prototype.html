@@ -81,7 +81,13 @@
                     if(response.meta.code === 200){
                         // create current round of images
                         for (var i = 0; i < response.data.length; i++) {  
-                            $("#response").append(response.data[i]);
+                            if (response.data[i].type === "image"){
+                                var thumbnail = $("<img>");
+                                thumbnail
+                                    .attr("src", response.data[i].images.thumbnail.url)
+                                    .addClass("thumbnail");
+                                $("#response").append(thumbnail);
+                            }
                         }
                     } else {
                         console.error("meta error: "+response.meta.code);
