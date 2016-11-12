@@ -43,8 +43,7 @@
         
         <script lang="javascript">
             $("document").ready(function(){
-                var myToken = "";
-                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?access_token="+myToken;
+                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=";
 
 
                 //check for auth token and store
@@ -52,32 +51,33 @@
                     var authTokenString = location.href.split("#").pop();
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
-                        myToken = authToken[1];
                         $("#login").hide();
+                        getImages(authToken[1]);
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
                 }
 
-            //get images
-            $.ajax({
-                url: endpoint,
-                method: 'GET'
-            })
-            .done(function(response) {
-                if(response.meta.code === 200){
-                    // create current round of images
-                    for (var i = 0; i < response.data.length; i++) {
-                        //var thisImage = giphyApp.createSingleImage(response.data[i]);    
-                        $("#response").append(response.data[i]);
+            function getImages(token){
+                //get images
+                $.ajax({
+                    url: endpoint+token,
+                    method: 'GET'
+                })
+                .done(function(response) {
+                    if(response.meta.code === 200){
+                        // create current round of images
+                        for (var i = 0; i < response.data.length; i++) {
+                            //var thisImage = giphyApp.createSingleImage(response.data[i]);    
+                            $("#response").append(response.data[i]);
+                        }
+                    } else {
+                        console.error("error: "+response.meta.code);
                     }
-                } else {
-                    console.error("error: "+response.meta.code);
-                }
-            }).fail(function(err){
-                console.error(err);
-            });
-
+                }).fail(function(err){
+                    console.error(err);
+                });
+            }
 
             });
         </script>
