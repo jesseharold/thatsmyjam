@@ -43,9 +43,9 @@
         
         <script lang="javascript">
             $("document").ready(function(){
-                //var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent";
-                //var endpoint = "https://api.instagram.com/v1/media/search?client_id=7c89da9d27cd49f9a18e2d6155032011&";  
-                var endpoint =  "https://api.instagram.com/v1/users/self/?"
+                var endpoint = "https://api.instagram.com/v1/tags/nofilter/media/recent?";
+                //var endpoint = "https://api.instagram.com/v1/media/search?";  
+                //var endpoint =  "https://api.instagram.com/v1/users/self/?"
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -70,13 +70,13 @@
 
                 //get images
                 $.ajax({
-                    //url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token + "&callback=?",
+                    //url: endpoint + "lat=" + latitude + "&lng=" + longitude + "?access_token=" + token,
                     url: endpoint + "access_token=" + token,
                     method: 'GET',
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    console.log("done!");
+                    //console.log("done!");
                     if(response.meta.code === 200){
                         // create current round of images
                         for (var i = 0; i < response.data.length; i++) {  
