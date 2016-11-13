@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>That's My Jam</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_purple-blue.min.css" />
+        <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+        <link rel="stylesheet" href="assets/css/style.css">
+        <style>
+            .demo-list-control {
+            width: 300px;
+            }
+
+            .demo-list-radio {
+            display: inline;
+            }
+
+            .mdl-layout__drawer-right {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            width: 300px;
+            height: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+            box-sizing: border-box;
+            border-right: 1px solid #e0e0e0;
+            background: #fafafa;
+            -webkit-transform: translateX(310px);
+            -ms-transform: translateX(310px);
+            transform: translateX(310px);
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            will-change: transform;
+            -webkit-transition-duration: .2s;
+            transition-duration: .2s;
+            -webkit-transition-timing-function: cubic-bezier(.4,0,.2,1);
+            transition-timing-function: cubic-bezier(.4,0,.2,1);
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+            color: #424242;
+            overflow: visible;
+            overflow-y: auto;
+            z-index: 5;
+        }
+
+        .active {
+            -webkit-transform: translateX(0);
+            -ms-transform: translateX(0);
+            transform: translateX(0);  
+        }
+
+        .mdl-layout__obfuscator-right {
+            background-color: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 4;
+            visibility: hidden;
+            -webkit-transition-property: background-color;
+            transition-property: background-color;
+            -webkit-transition-duration: .2s;
+            transition-duration: .2s;
+            -webkit-transition-timing-function: cubic-bezier(.4,0,.2,1);
+            transition-timing-function: cubic-bezier(.4,0,.2,1);
+        }
+
+        .mdl-layout__drawer-right.active~.mdl-layout__obfuscator-right {
+            background-color: rgba(0,0,0,.5);
+            visibility: visible;
+        }
+
+        .mdl-layout__drawer-right>.mdl-layout-title {
+            line-height: 56px;
+            padding-left: 16px;
+        }
+
+       
+        </style>
+    </head>
+    <body>
+
+        <!--Fixed header-->
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title">That's My Jam</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="">Link</a>
+                    </nav>
+                    
+                    <div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>
+                    
+                </div>
+            </header>
+            
+            <!--HAmburger Menu -->
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">That's My Jam</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="">Friend</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Contact</a>
+                    <a class="mdl-navigation__link" href="">About Us</a>
+                </nav>
+            </div>
+            
+            <div class="mdl-layout__drawer-right">
+                <span class="mdl-layout-title">Friend's List</span>
+                <ul class="demo-list-control mdl-list">
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                        <i class="material-icons  mdl-list__item-avatar">person</i>
+                        Bill
+                        </span>
+                        <span class="mdl-list__item-secondary-action">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-1">
+                            <input type="checkbox" id="list-checkbox-1" class="mdl-checkbox__input" checked />
+                        </label>
+                        </span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                        <i class="material-icons  mdl-list__item-avatar">person</i>
+                        Harold
+                        </span>
+                        <span class="mdl-list__item-secondary-action">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-2">
+                            <input type="checkbox" id="list-checkbox-2" class="mdl-checkbox__input" checked />
+                        </label>
+                        </span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                        <i class="material-icons  mdl-list__item-avatar">person</i>
+                        Eric
+                        </span>
+                        <span class="mdl-list__item-secondary-action">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-3">
+                            <input type="checkbox" id="list-checkbox-3" class="mdl-checkbox__input" />
+                        </label>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        
+            <main class="mdl-layout__content">
+                 <div class="page-content">
+
+                    <h1 class="subtitle">We Create <span>DESIGNS</span> <br/> And People Just <br/>.......... <br/> <span>LAUGH</span> </h1>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
+                        <i class="material-icons">add</i> 
+                    </button>
+                    <span class="mdl-tooltip mdl-tooltip--right" data-mdl-for="addrestaurant">
+                        Add Restaurant
+                    </span>
+
+    
+
+                </div>
+                
+            </main>
+
+             <div class="mdl-layout__obfuscator-right">
+            </div>
+
+        </div>
+        
+
+        <!--Group icon-->
+        <!--<i class="material-icons">group</i> -->
+        <!--OR
+        People outline icon-->
+        <!--<i class="material-icons">people_outline</i> -->
+
+        
+
+
+        <script  src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+        <script src="assets/javascript/app.js"></script>
+        <script>
+            $('#notif').click(function(){
+                if($('.mdl-layout__drawer-right').hasClass('active')){       
+                    $('.mdl-layout__drawer-right').removeClass('active'); 
+                }
+                else{
+                    $('.mdl-layout__drawer-right').addClass('active'); 
+                }
+                });
+
+                $('.mdl-layout__obfuscator-right').click(function(){
+                if($('.mdl-layout__drawer-right').hasClass('active')){       
+                    $('.mdl-layout__drawer-right').removeClass('active'); 
+                }
+                else{
+                    $('.mdl-layout__drawer-right').addClass('active'); 
+                }
+                });
+        </script>
+    </body>
+</html>
