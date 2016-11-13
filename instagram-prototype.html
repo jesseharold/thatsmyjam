@@ -81,11 +81,29 @@
                         // create current round of images
                         for (var i = 0; i < response.data.length; i++) {  
                             if (response.data[i].type === "image"){
-                                var thumbnail = $("<img>");
-                                thumbnail
-                                    .attr("src", response.data[i].images.thumbnail.url)
-                                    .addClass("thumbnail");
-                                $("#response").append(thumbnail);
+                                //look for the thatsmyjam hashtag
+                                if (hasHashTag(response.data[i].tags)){
+                                    var thumbnail = $("<img>");
+                                    thumbnail
+                                        .attr("src", response.data[i].images.thumbnail.url)
+                                        .addClass("thumbnail");
+                                    $("#response").append(thumbnail);
+                                    // get location information
+                                    if(hasHashTag(response.data[i].location){
+                                        if(response.data[i].location.name){
+                                            $("#response").append("<div class='restaurant-name'>" + "restaurant name: " + response.data[i].location.name);
+                                        }
+                                        if(response.data[i].location.latitude){
+                                            $("#response").append("<div class='restaurant-coords'>" + "latitude: " + response.data[i].location.latitude);
+                                        }
+                                        if(response.data[i].location.longitude){
+                                            $("#response").append("<div class='restaurant-coords'>" + "longitude: " + response.data[i].location.longitude);
+                                        }
+                                    }
+                                }
+                                else {
+                                    console.log(response.data[i].images.thumbnail.url + "doesn't have the hashtag, sorry");
+                                }
                             }
                         }
                     } else {
@@ -94,7 +112,19 @@
                 }).fail(function(err){
                     console.error("Failed: " + err);
                 });
-            }
+            }//function getImages
+
+            function hasHashTag(imageTags){
+                var foundHashTag = false;
+                    //loop through all hashtags
+                    for (var j = 0; j < imageTags.length; j++){
+                        if(imageTags[j].toLowerCase() === "thatsmyjam"){
+                            foundHashTag = true;
+                        }
+                    }
+                } 
+                return foundHashTag;
+            }//function hasHashTag
 
             });
         </script>
