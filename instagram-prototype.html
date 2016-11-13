@@ -89,7 +89,7 @@
                                         .addClass("thumbnail");
                                     $("#response").append(thumbnail);
                                     // get location information
-                                    if(hasHashTag(response.data[i].location){
+                                    if(response.data[i].location){
                                         if(response.data[i].location.name){
                                             $("#response").append("<div class='restaurant-name'>" + "restaurant name: " + response.data[i].location.name);
                                         }
