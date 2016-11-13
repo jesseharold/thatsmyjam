@@ -116,13 +116,12 @@
 
             function hasHashTag(imageTags){
                 var foundHashTag = false;
-                    //loop through all hashtags
-                    for (var j = 0; j < imageTags.length; j++){
-                        if(imageTags[j].toLowerCase() === "thatsmyjam"){
-                            foundHashTag = true;
-                        }
+                //loop through all hashtags on this image
+                for (var j = 0; j < imageTags.length; j++){
+                    if(imageTags[j].toLowerCase() === "thatsmyjam"){
+                        foundHashTag = true;
                     }
-                } 
+                }
                 return foundHashTag;
             }//function hasHashTag
 
