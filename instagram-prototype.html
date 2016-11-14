@@ -85,6 +85,7 @@ user logs in w instagram
                 
                 var database = firebase.database();
                 var endpoint = "https://api.instagram.com/v1/";
+                var token; //auth token required by instragram API
                 var igQueryOwnPhotos = "users/self/media/recent?";
                 var igQueryTag = "tags/thatsmyjam/media/recent?";
                 var igQuerySearch = "media/search?";
@@ -96,9 +97,10 @@ user logs in w instagram
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
                         $("#login").hide();
-                        getOwnUserInfo(authToken[1]);
+                        token = authToken[1];
+                        getOwnUserInfo();
                         getLocation();
-                        getOwnImages(authToken[1]);
+                        getOwnImages();
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
@@ -111,7 +113,7 @@ user logs in w instagram
                 }, "jsonp");
             }
             
-            function getOwnUserInfo(token){
+            function getOwnUserInfo(){
                 $.ajax({
                     url: endpoint + "users/self/?" + "access_token=" + token,
                     method: 'GET',
@@ -129,17 +131,18 @@ user logs in w instagram
                     username: dataFromIg.username,
                     profilePicture: dataFromIg.profile_picture
                 };
-                console.log(user);
                 // check to see if user exists with this id
                 database.ref("users").child(dataFromIg.id).once('value', function(snapshot) {
                     if (snapshot.val() === null){
+                        console.log("adding new");
                         database.ref("users").push(user);
                     } else {
+                        console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
                     }
                 });
                 // for all: update friends list
-                //getOwnFriends(userID);
+                getOwnFriends(userID);
             }
             function getOwnFriends(userID){
                  $.ajax({
@@ -155,10 +158,10 @@ user logs in w instagram
             function updateFriendList(dataFromIg){
                 console.log(dataFromIg);
             }
-            function getFriendsImages(token, latitude, longitude){
+            function getFriendsImages(latitude, longitude){
             }
 
-            function getOwnImages(token){
+            function getOwnImages(){
                 //get images
                 $.ajax({
                     url: endpoint + igQueryOwnPhotos + "access_token=" + token,
