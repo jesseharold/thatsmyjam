@@ -148,10 +148,10 @@ function hasHashTag(imageTags){
 }//function hasHashTag
 
 function createNewReview(imageData){
-    console.log(imageData);
     var thisImage = {
+        id: imageData.id,
         thumbnail: imageData.images.thumbnail.url,
-        image: imageData.images.xxx.url,
+        image: imageData.images.standard_resolution.url,
         review: imageData.caption
     };
     if(imageData.location){
@@ -167,6 +167,7 @@ function createNewReview(imageData){
     } else {
         //promptForLocation(imageData);
     }
+    console.log(thisImage);
     //check if this image is already in the DB as a review
     //then either update or append
 }//function createNewReview
