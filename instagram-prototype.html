@@ -68,10 +68,28 @@ user logs in w instagram
 */
 
 
+
+            <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+            <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDiSNDLvK_AyIdGq7V-AvLjtdWTSNWvl98",
+                authDomain: "thatsmyjam-harold.firebaseapp.com",
+                databaseURL: "https://thatsmyjam-harold.firebaseio.com",
+                storageBucket: "thatsmyjam-harold.appspot.com",
+                messagingSenderId: "682404928881"
+            };
+            firebase.initializeApp(config);
+            </script>
+
             $("document").ready(function(){
-                //var endpoint = "https://api.instagram.com/v1/tags/thatsmyjam/media/recent?";
-                var endpoint = "https://api.instagram.com/v1/users/self/media/recent?";
-                //var endpoint = "https://api.instagram.com/v1/media/search?";  
+                
+                var database = firebase.database();
+                var endpoint = "https://api.instagram.com/v1/";
+                var igQueryOwnPhotos = "users/self/media/recent?";
+                var igQueryTag = "tags/thatsmyjam/media/recent?";
+                var igQuerySearch = "media/search?";
+                var geoLocation;
 
                 //check for auth token and store
                 if (location.href.indexOf("#") > 0){
@@ -79,7 +97,9 @@ user logs in w instagram
                     var authToken = authTokenString.split("=");
                     if (authToken[0] === "access_token"){
                         $("#login").hide();
+                        getOwnUserInfo(authToken[1]);
                         getLocation();
+                        getOwnImages(authToken[1]);
                     } else {
                         $("#response").text("User did not give the app permission");
                     }
@@ -88,18 +108,31 @@ user logs in w instagram
             function getLocation(){
                 $.get("https://ipinfo.io", function(response) {
                     var location = response.loc;
-                    var geoLocation = location.split(",");
-                    getOwnImages(authToken[1]);
+                    geoLocation = location.split(",");
                 }, "jsonp");
             }
             
+            function getOwnUserInfo(token){
+                $.ajax({
+                    url: endpoint + "users/self/?" + "access_token=" + token,
+                    method: 'GET',
+                    dataType: "jsonp"
+                })
+                .done(function(response) {
+                    console.log(response);
+                    // if this user ID exists in the DB
+                    // update friends list
+                    // else create new user w name, handle, friends list
+                });
+            }
+
             function getFriendsImages(token, latitude, longitude){
             }
 
             function getOwnImages(token){
                 //get images
                 $.ajax({
-                    url: endpoint + "access_token=" + token,
+                    url: endpoint + igQueryOwnPhotos + "access_token=" + token,
                     method: 'GET',
                     dataType: "jsonp"
                 })
