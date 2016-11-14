@@ -34,14 +34,14 @@
             
             <div class="panel-body">
                 <div id="login">
-                    <a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review/instagram-prototype.html&response_type=token">Click here to log in with instagram</a>
+                    <a href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review/instagram-prototype.html&response_type=token&scope=follower_list+public_content">Click here to log in with instagram</a>
                 </div>
                 <div id="response">
                 </div>
             </div>
         </div>
         
-        <script lang="javascript">
+<!--
 /*
 program flow:
 
@@ -66,104 +66,21 @@ user logs in w instagram
             when adding a new review, is it possible to use the instagram api to add a new photo???
         have app ready to change the location of the map
 */
+-->
 
 
-            $("document").ready(function(){
-                //var endpoint = "https://api.instagram.com/v1/tags/thatsmyjam/media/recent?";
-                var endpoint = "https://api.instagram.com/v1/users/self/media/recent?";
-                //var endpoint = "https://api.instagram.com/v1/media/search?";  
-
-                //check for auth token and store
-                if (location.href.indexOf("#") > 0){
-                    var authTokenString = location.href.split("#").pop();
-                    var authToken = authTokenString.split("=");
-                    if (authToken[0] === "access_token"){
-                        $("#login").hide();
-                        getLocation();
-                    } else {
-                        $("#response").text("User did not give the app permission");
-                    }
-                }
-
-            function getLocation(){
-                $.get("https://ipinfo.io", function(response) {
-                    var location = response.loc;
-                    var geoLocation = location.split(",");
-                    getOwnImages(authToken[1]);
-                }, "jsonp");
-            }
-            
-            function getFriendsImages(token, latitude, longitude){
-            }
-
-            function getOwnImages(token){
-                //get images
-                $.ajax({
-                    url: endpoint + "access_token=" + token,
-                    method: 'GET',
-                    dataType: "jsonp"
-                })
-                .done(function(response) {
-                    console.log(response.data);
-                    if(response.meta.code === 200){
-                        for (var i = 0; i < response.data.length; i++) {  
-                            if (response.data[i].type === "image"){
-                                //look for the thatsmyjam hashtag
-                                if (hasHashTag(response.data[i].tags)){
-                                    // create current round of images
-                                    createNewReview(response.data[i]);
-                                }
-                            }
-                        }
-                    } else {
-                        console.error("meta error: "+response.meta.code);
-                    }
-                }).fail(function(err){
-                    console.error("Failed: " + err);
-                });
-            }//function getOwnImages
-
-            function hasHashTag(imageTags){
-                var foundHashTag = false;
-                //loop through all hashtags on this image
-                for (var j = 0; j < imageTags.length; j++){
-                    if(imageTags[j].toLowerCase() === "thatsmyjam"){
-                        foundHashTag = true;
-                    }
-                }
-                return foundHashTag;
-            }//function hasHashTag
-
-            function createNewReview(imageData){
-                var thumbnail = $("<img>");
-                thumbnail
-                    .attr("src", imageData.images.thumbnail.url)
-                    .addClass("thumbnail");
-                $("#response").append(thumbnail);
-                // get location information
-                if(imageData.location){
-                    if(imageData.location.name){
-                        $("#response").append("<div class='restaurant-name'>" + "restaurant name: " + imageData.location.name);
-                    }
-                    if(imageData.location.latitude){
-                        $("#response").append("<div class='restaurant-coords'>" + "latitude: " + imageData.location.latitude);
-                    }
-                    if(imageData.location.longitude){
-                        $("#response").append("<div class='restaurant-coords'>" + "longitude: " + imageData.location.longitude);
-                    }
-                } else {
-                    //promptForLocation(imageData);
-                }
-
-            }//function createNewReview
-
-            function promptForLocation(imageData){
-                // this is in the icebox, but it would be nice to add down the road.
-                // probably should pass in a way to ref. this review in the database
-                // once that exists
-            }
-
-            });//document ready
+            <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+            <script lang="javascript">
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDiSNDLvK_AyIdGq7V-AvLjtdWTSNWvl98",
+                authDomain: "thatsmyjam-harold.firebaseapp.com",
+                databaseURL: "https://thatsmyjam-harold.firebaseio.com",
+                storageBucket: "thatsmyjam-harold.appspot.com",
+                messagingSenderId: "682404928881"
+            };
+            firebase.initializeApp(config);
         </script>
+        <script src="assets/javascript/instagram.js"
 </body>
 </html>
