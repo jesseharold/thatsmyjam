@@ -153,7 +153,7 @@ user logs in w instagram
             }
             function updateFriendList(userID){
                  $.ajax({
-                    url: endpoint + "/users/self/follows?" + "access_token=" + token,
+                    url: endpoint + "users/self/follows?" + "access_token=" + token,
                     method: 'GET',
                     dataType: "jsonp"
                 })
