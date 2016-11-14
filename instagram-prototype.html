@@ -132,17 +132,21 @@ user logs in w instagram
                     profilePicture: dataFromIg.profile_picture
                 };
                 // check to see if user exists with this id
+                var userExists = false;
                 database.ref("users").once('value', function(snapshot) {
-                    console.log(snapshot.val());
-                    /*
-                    if (snapshot.hasChild(dataFromIg.id)){
+                    var users = snapshot.val();
+                    for (user in users){
+                        if (user.id && user.id == dataFromIg.id){
+                            userExists = true;
+                        }
+                    }
+                    if (userExists){
                         console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
                     } else {
                         console.log("adding new");
                         database.ref("users").push(user);
                     }
-                    */
                 });
                 // for all: update friends list
                 //getOwnFriends(dataFromIg.id);
