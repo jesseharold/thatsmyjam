@@ -169,11 +169,11 @@ function createNewReview(imageData){
     }
     console.log(thisImage);
     //check if this image is already in the DB as a review
-    //then either update or append
+    //then either update or append to reviews in DB
 }//function createNewReview
 
 function displayReview(){
- /*
+ /* NO LONGER USED
     var thumbnail = $("<img>");
     thumbnail
         .attr("src", imageData.images.thumbnail.url)
