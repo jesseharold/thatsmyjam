@@ -131,7 +131,7 @@ user logs in w instagram
                     username: dataFromIg.username,
                     profilePicture: dataFromIg.profile_picture
                 };
-                database.ref("users").once('value', function(snapshot) 
+                database.ref("users").once('value', function(snapshot) {
                 // check to see if user exists with this id
                 var userExists = false;
                     snapshot.forEach(function(childSnapshot) {
