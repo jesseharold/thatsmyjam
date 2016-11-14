@@ -160,6 +160,9 @@ user logs in w instagram
                 .done(function(response) {
                     console.log("got friends list: " + response);
                     //database.ref("users").child(userID).child("friends").set(response);
+                })
+                .fail(function(error){
+                    console.error(error);
                 });
             }
             function getFriendsImages(latitude, longitude){
