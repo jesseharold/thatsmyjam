@@ -104,6 +104,12 @@ user logs in w instagram
                     }
                 }
 
+            function getAllUsers(){
+                database.ref("users").once("value")
+                .then(function(usersSnapshot) {
+                    return(usersSnapshot.val());
+                });
+            }
 
             function getLocation(){
                 $.get("https://ipinfo.io", function(response) {
@@ -124,7 +130,7 @@ user logs in w instagram
                 });
             }
             function updateUser(dataFromIg){
-                console.log("updateUser: "+dataFromIg);
+                //console.log(dataFromIg);
                 // if no user exists with this id
                 // add a new user with this ID, name, handle, friends list
                 var user = {
@@ -133,6 +139,9 @@ user logs in w instagram
                     username: dataFromIg.username,
                     profilePicture: dataFromIg.profile_picture
                 };
+                database.ref("users").push(user);
+                var users = getAllUsers();
+                console.log(users);
                 // else check to see if name, username, profile_picture changed
 
                 // for all: update friends list: getOwnFriends(token, userID)
