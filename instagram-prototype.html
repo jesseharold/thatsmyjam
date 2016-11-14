@@ -137,9 +137,9 @@ user logs in w instagram
                     //var users = snapshot.val();
 
                     snapshot.forEach(function(childSnapshot) {
-                        var key = childSnapshot.key;
-                        var childData = childSnapshot.val();
-                        console.log(key + ": " + childData);
+                        //var key = childSnapshot.key;
+                        var childData = childSnapshot.child(id);
+                        console.log(childData);
                     });
 
 /*
