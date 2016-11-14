@@ -133,6 +133,7 @@ user logs in w instagram
                 };
                 // check to see if user exists with this id
                 database.ref("users").child(dataFromIg.id).once('value', function(snapshot) {
+                    console.log(snapshot.val());
                     if (snapshot.val() === null){
                         console.log("adding new");
                         database.ref("users").push(user);
@@ -142,7 +143,7 @@ user logs in w instagram
                     }
                 });
                 // for all: update friends list
-                getOwnFriends(userID);
+                getOwnFriends(dataFromIg.id);
             }
             function getOwnFriends(userID){
                  $.ajax({
@@ -151,12 +152,12 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    //console.log(response);
+                    console.log("got friends list: " + response);
                     updateFriendList(response.data, userID);
                 });
             }
-            function updateFriendList(dataFromIg){
-                console.log(dataFromIg);
+            function updateFriendList(dataFromIg, userID){
+                //console.log(dataFromIg);
             }
             function getFriendsImages(latitude, longitude){
             }
