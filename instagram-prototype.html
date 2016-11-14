@@ -120,10 +120,10 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    checkForUser(response.data);
+                    updateUser(response.data);
                 });
             }
-            function checkForUser(dataFromIg){
+            function updateUser(dataFromIg){
                 //console.log(dataFromIg);
                 var user = {
                     name: dataFromIg.full_name,
@@ -131,34 +131,27 @@ user logs in w instagram
                     username: dataFromIg.username,
                     profilePicture: dataFromIg.profile_picture
                 };
+                database.ref("users").once('value', function(snapshot) 
                 // check to see if user exists with this id
                 var userExists = false;
-                database.ref("users").once('value', function(snapshot) {
-                    //var users = snapshot.val();
-
                     snapshot.forEach(function(childSnapshot) {
-                        //var key = childSnapshot.key;
                         if (childSnapshot.hasChild("id")){
                             var childData = childSnapshot.child("id").val();
-                            console.log(childData);
                             if (childData == dataFromIg.id){
                                 userExists = true;
                             }
                         }
                     });
-
                     if (userExists){
-                        console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
                     } else {
-                        console.log("adding new");
                         database.ref("users").push(user);
                     }
                 });
                 // for all: update friends list
-                //getOwnFriends(dataFromIg.id);
+                updateFriendList(dataFromIg.id);
             }
-            function getOwnFriends(userID){
+            function updateFriendList(userID){
                  $.ajax({
                     url: endpoint + "/users/self/follows?" + "access_token=" + token,
                     method: 'GET',
@@ -166,11 +159,8 @@ user logs in w instagram
                 })
                 .done(function(response) {
                     console.log("got friends list: " + response);
-                    updateFriendList(response.data, userID);
+                    //database.ref("users").child(userID).child("friends").set(response);
                 });
-            }
-            function updateFriendList(dataFromIg, userID){
-                //console.log(dataFromIg);
             }
             function getFriendsImages(latitude, longitude){
             }
