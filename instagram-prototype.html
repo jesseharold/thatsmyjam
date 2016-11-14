@@ -138,8 +138,10 @@ user logs in w instagram
 
                     snapshot.forEach(function(childSnapshot) {
                         //var key = childSnapshot.key;
-                        var childData = childSnapshot.child(id);
-                        console.log(childData);
+                        if (childSnapshot.child(id).exists()){
+                            var childData = childSnapshot.child(id);
+                            console.log(childData);
+                        }
                     });
 
 /*
