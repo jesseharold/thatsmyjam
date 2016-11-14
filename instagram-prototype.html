@@ -161,8 +161,12 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    console.log(response);
-                    //database.ref("users").child(userID).child("friends").set(response);
+                    //console.log(response);
+                    var myFriends = [];
+                    for (var i = 0; i < response.data.length; i++){
+                        myFriends.push(response.data[i].id);
+                    }
+                    database.ref("users").child(userID).child("friends").set(myFriends);
                 })
                 .fail(function(error){
                     console.error(error);
