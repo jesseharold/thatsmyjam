@@ -1,0 +1,17 @@
+#map {
+    height: 500px;
+    overflow: auto;
+}
+.review-wrapper{
+    margin: 5px 0px 5px 0px;	
+    border-top: 1px dashed grey;
+    padding: 5px 0px 5px 0px		
+}
+.review-author {
+    font-weight: bold;
+}
+.review-image {
+    width: 98px;
+    height: 98px;
+    margin: 2px;
+}

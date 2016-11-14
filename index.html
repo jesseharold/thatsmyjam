@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_purple-blue.min.css" />
         <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
         <link rel="stylesheet" href="assets/css/style.css">
+        <!-- map stylsheet -->
+        <link rel="stylesheet" href="assets/css/map.css"> 
         
     </head>
     <body>
@@ -82,17 +84,14 @@
         
             <main class="mdl-layout__content">
                  <div class="page-content">
-
-                    <h1 class="subtitle">We Create <span>DESIGNS</span> <br/> And People Just <br/>.......... <br/> <span>LAUGH</span> </h1>
+                    <div id="map"></div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
                         <i class="material-icons">add</i> 
                     </button>
                     <span class="mdl-tooltip mdl-tooltip--right" data-mdl-for="addrestaurant">
                         Add Restaurant
                     </span>
-
     
-
                 </div>
                 
             </main>
@@ -102,13 +101,17 @@
 
         </div>
         
-
-        
-
-
+        <!-- jquery link -->
         <script  src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+        <!-- main front-end script -->
         <script src="assets/javascript/app.js"></script>
+        <!-- firebase scripts -->
+        <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+        <script src="assets/javascript/firebase.js"></script>
+        <!-- google maps scripts-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbclTHvLjlpEPMK_xC5wHJdyvozSb_Cz0&callback=initMap"
+        async defer></script>
+        <script src="assets/javascript/map.js"></script>
         
     </body>
 </html>
