@@ -124,7 +124,7 @@ user logs in w instagram
                 });
             }
             function updateUser(dataFromIg){
-                console.log(dataFromIg);
+                console.log("updateUser: "+dataFromIg);
                 // if no user exists with this id
                 // add a new user with this ID, name, handle, friends list
                 var user = {
@@ -144,7 +144,7 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    console.log(response);
+                    //console.log(response);
                     updateFriendList(response.data, userID);
                 });
             }
@@ -162,7 +162,7 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     if(response.meta.code === 200){
                         for (var i = 0; i < response.data.length; i++) {  
                             if (response.data[i].type === "image"){
