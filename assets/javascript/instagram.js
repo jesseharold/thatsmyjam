@@ -98,7 +98,7 @@ function getFriendsImages(myFriends){
         dataType: "jsonp"
     })
     .done(function(response) {
-        console.log("getFriendsImages: " + response);
+        console.log(response.data);
     })
     .fail(function(error){
         console.error(error);
