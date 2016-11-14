@@ -121,6 +121,9 @@ user logs in w instagram
                 })
                 .done(function(response) {
                     updateUser(response.data);
+                })
+                .fail(function(error){
+                    console.error(error);
                 });
             }
             function updateUser(dataFromIg){
@@ -158,7 +161,7 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    console.log("got friends list: " + response);
+                    console.log(response);
                     //database.ref("users").child(userID).child("friends").set(response);
                 })
                 .fail(function(error){
