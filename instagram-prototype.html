@@ -139,19 +139,14 @@ user logs in w instagram
                     snapshot.forEach(function(childSnapshot) {
                         //var key = childSnapshot.key;
                         if (childSnapshot.hasChild("id")){
-                            var childData = childSnapshot.child("id");
+                            var childData = childSnapshot.child("id").val();
                             console.log(childData);
+                            if (childData == dataFromIg.id){
+                                userExists = true;
+                            }
                         }
                     });
 
-/*
-
-
-                    for (user in users){
-                        if (user.id && user.id == dataFromIg.id){
-                            userExists = true;
-                        }
-                    }
                     if (userExists){
                         console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
@@ -159,7 +154,6 @@ user logs in w instagram
                         console.log("adding new");
                         database.ref("users").push(user);
                     }
-    */
                 });
                 // for all: update friends list
                 //getOwnFriends(dataFromIg.id);
