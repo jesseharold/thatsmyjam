@@ -98,7 +98,7 @@ function getFriendsImages(myFriends){
         dataType: "jsonp"
     })
     .done(function(response) {
-        console.log(response.data);
+        processImages(response);
     })
     .fail(function(error){
         console.error(error);
@@ -113,23 +113,28 @@ function getOwnImages(){
     })
     .done(function(response) {
         //console.log(response.data);
-        if(response.meta.code === 200){
-            for (var i = 0; i < response.data.length; i++) {  
-                if (response.data[i].type === "image"){
-                    //look for the thatsmyjam hashtag
-                    if (hasHashTag(response.data[i].tags)){
-                        // create current round of images
-                        createNewReview(response.data[i]);
-                    }
-                }
-            }
-        } else {
-            console.error("meta error: "+response.meta.code);
-        }
+        processImages(response);
     }).fail(function(err){
         console.error("Failed: " + err);
     });
 }//function getOwnImages
+
+function processImages(dataFromIg){
+    if(dataFromIg.meta.code === 200){
+        for (var i = 0; i < dataFromIg.data.length; i++) {  
+            if (dataFromIg.data[i].type === "image"){
+                //look for the thatsmyjam hashtag
+                if (hasHashTag(dataFromIg.data[i].tags)){
+                    // create current round of images
+                    createNewReview(dataFromIg.data[i]);
+                }
+            }
+        }
+    } else {
+        console.error("meta error: " + dataFromIg.meta.code);
+    }
+
+}// function processImages
 
 function hasHashTag(imageTags){
     var foundHashTag = false;
@@ -143,26 +148,38 @@ function hasHashTag(imageTags){
 }//function hasHashTag
 
 function createNewReview(imageData){
+    console.log(imageData);
+    var thisImage = {
+        thumbnail: imageData.images.thumbnail.url,
+        image: imageData.images.xxx.url,
+        review: imageData.caption
+    };
+    if(imageData.location){
+        if(imageData.location.name){
+            thisImage.restaurant_name = imageData.location.name;
+        }
+        if(imageData.location.latitude){
+            thisImage.lat = imageData.location.latitude;
+        }
+        if(imageData.location.longitude){
+            thisImage.lng = imageData.location.longitude;
+        }
+    } else {
+        //promptForLocation(imageData);
+    }
+    //check if this image is already in the DB as a review
+    //then either update or append
+}//function createNewReview
+
+function displayReview(){
+ /*
     var thumbnail = $("<img>");
     thumbnail
         .attr("src", imageData.images.thumbnail.url)
         .addClass("thumbnail");
     $("#response").append(thumbnail);
-    // get location information
-    if(imageData.location){
-        if(imageData.location.name){
-            $("#response").append("<div class='restaurant-name'>" + "restaurant name: " + imageData.location.name);
-        }
-        if(imageData.location.latitude){
-            $("#response").append("<div class='restaurant-coords'>" + "latitude: " + imageData.location.latitude);
-        }
-        if(imageData.location.longitude){
-            $("#response").append("<div class='restaurant-coords'>" + "longitude: " + imageData.location.longitude);
-        }
-    } else {
-        //promptForLocation(imageData);
-    }
-}//function createNewReview
+*/
+}//function displayReview
 
 function promptForLocation(imageData){
     // this is in the icebox, but it would be nice to add down the road.
