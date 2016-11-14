@@ -104,13 +104,6 @@ user logs in w instagram
                     }
                 }
 
-            function getAllUsers(){
-                database.ref("users").once("value")
-                .then(function(usersSnapshot) {
-                    return(usersSnapshot.val());
-                });
-            }
-
             function getLocation(){
                 $.get("https://ipinfo.io", function(response) {
                     var location = response.loc;
@@ -125,28 +118,30 @@ user logs in w instagram
                     dataType: "jsonp"
                 })
                 .done(function(response) {
-                    //console.log(response);
-                    updateUser(response.data);
+                    checkForUser(response.data);
                 });
             }
-            function updateUser(dataFromIg){
+            function checkForUser(dataFromIg){
                 //console.log(dataFromIg);
-                // if no user exists with this id
-                // add a new user with this ID, name, handle, friends list
                 var user = {
                     name: dataFromIg.full_name,
                     id: dataFromIg.id,
                     username: dataFromIg.username,
                     profilePicture: dataFromIg.profile_picture
                 };
-                database.ref("users").push(user);
-                var users = getAllUsers();
-                console.log(users);
-                // else check to see if name, username, profile_picture changed
-
-                // for all: update friends list: getOwnFriends(token, userID)
+                console.log(user);
+                // check to see if user exists with this id
+                database.ref("users").child(dataFromIg.id).once('value', function(snapshot) {
+                    if (snapshot.val() === null){
+                        database.ref("users").push(user);
+                    } else {
+                        database.ref("users").child(dataFromIg.id).update(user);
+                    }
+                });
+                // for all: update friends list
+                //getOwnFriends(userID);
             }
-            function getOwnFriends(token, userID){
+            function getOwnFriends(userID){
                  $.ajax({
                     url: endpoint + "/users/self/follows?" + "access_token=" + token,
                     method: 'GET',
