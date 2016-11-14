@@ -132,14 +132,14 @@ user logs in w instagram
                     profilePicture: dataFromIg.profile_picture
                 };
                 // check to see if user exists with this id
-                database.ref("users").child(dataFromIg.id).once('value', function(snapshot) {
+                database.ref("users").once('value', function(snapshot) {
                     console.log(snapshot.val());
-                    if (snapshot.val() === null){
-                        console.log("adding new");
-                        database.ref("users").push(user);
-                    } else {
+                    if (snapshot.hasChild(dataFromIg.id)){
                         console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
+                    } else {
+                        console.log("adding new");
+                        database.ref("users").push(user);
                     }
                 });
                 // for all: update friends list
