@@ -134,6 +134,7 @@ user logs in w instagram
                 // check to see if user exists with this id
                 database.ref("users").once('value', function(snapshot) {
                     console.log(snapshot.val());
+                    /*
                     if (snapshot.hasChild(dataFromIg.id)){
                         console.log("updating existing");
                         database.ref("users").child(dataFromIg.id).update(user);
@@ -141,9 +142,10 @@ user logs in w instagram
                         console.log("adding new");
                         database.ref("users").push(user);
                     }
+                    */
                 });
                 // for all: update friends list
-                getOwnFriends(dataFromIg.id);
+                //getOwnFriends(dataFromIg.id);
             }
             function getOwnFriends(userID){
                  $.ajax({
