@@ -68,12 +68,13 @@ function updateUser(dataFromIg){
 function doesUserExist(id){
     var userExists = false;
     database.ref("users").once('value', function(snapshot) {
-        console.log(snapshot.val());
-        if (snapshot.hasChild(id)){
+        var snapObject = snapshot.val();
+        if (snapObject[id]){
             userExists = true;
+            return userExists;
         }
-        return userExists;
     });
+    return userExists;
 }//function doesUserExist
 
 function doesImageExist(id){
