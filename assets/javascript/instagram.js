@@ -58,7 +58,7 @@ function updateUser(dataFromIg){
             console.log("updating existing user "+dataFromIg.id);
             database.ref("users/"+dataFromIg.id).update(user);
         } else {
-            //console.log("creating new user "+dataFromIg.id);
+            console.log("creating new user "+dataFromIg.id);
             database.ref("users/"+dataFromIg.id).set(user);
         }
     });
