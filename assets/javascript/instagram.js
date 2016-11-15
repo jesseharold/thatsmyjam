@@ -52,6 +52,7 @@ function updateUser(dataFromIg){
     };
     
     // check to see if user already exists with this id
+    console.log(doesUserExist(dataFromIg.id));
     if (doesUserExist(dataFromIg.id)){
         database.ref("users").child(dataFromIg.id).update(user);
     } else {
@@ -118,7 +119,8 @@ function updateFriendList(userID){
         dataType: "jsonp"
     })
     .done(function(response) {
-        //console.log(response);
+        console.log("updateFriendList:");
+        console.log(response);
         var myFriends = [];
         var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
@@ -218,7 +220,7 @@ function createNewReview(imageData){
             //promptForLocation(imageData);
         }
         //promptForReview();
-        console.log(thisImage);
+        //console.log(thisImage);
         // if location exists
         // add this image to that restaurant_name
         // else
