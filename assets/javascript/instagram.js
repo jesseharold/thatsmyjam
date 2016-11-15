@@ -68,14 +68,9 @@ function updateUser(dataFromIg){
 function doesUserExist(id){
     var userExists = false;
     database.ref("users").once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-                if (childSnapshot.hasChild("id")){
-                    var childData = childSnapshot.child("id").val();
-                    if (childData == id){
-                        userExists = true;
-                    }
-                }
-        });
+        if (snapshot.hasChild(id)){
+            userExists = true;
+        }
         return userExists;
     });
 }//function doesUserExist
