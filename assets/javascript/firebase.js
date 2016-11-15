@@ -11,8 +11,8 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-//--- the below code is commented out currently, but it can be used to reset the test data in firebase
-//create a test database of restraurants
+// --- the below code is commented out currently, but it can be used to reset the test data in firebase
+// create a test database of restraurants
 // var restaurantDatabase = [
 //     {
 //         name: "Bill's House", 
