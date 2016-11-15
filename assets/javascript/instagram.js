@@ -211,14 +211,14 @@ function createNewReview(imageData){
                 thisRestaurant.lng = imageData.location.longitude;
             }
         } else {
-            //promptForLocation(imageData);
+//          promptForLocation(imageData);
         }
         thisRestaurant.reviews = thisImage;
-        //promptForReview();
+//      promptForReview();
 
-        // if location exists
-        // push this image to that restaurant_name's reviews object
-        // else
+// if location exists
+// push this image to that restaurant_name's reviews object
+// else
         // add new restaurant, and add this image
         database.ref("restaurants").push(thisRestaurant);
 //    }//initial if
@@ -235,9 +235,13 @@ function displayReview(){
 }//function displayReview
 
 function promptForLocation(imageData){
-    // this is in the icebox, but it would be nice to add down the road.
-    // probably should pass in a way to ref. this review in the database
-    // once that exists
+// this is in the icebox, but it would be nice to add down the road.
+// probably should pass in a way to ref. this review in the database
+// once that exists
+}
+
+function promptForReview(imageData){
+// add/edit text and thumbs up/down to review
 }
 
 });//document ready
