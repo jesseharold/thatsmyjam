@@ -54,7 +54,7 @@ function updateUser(dataFromIg){
     // check to see if user already exists with this id
     database.ref("users").once('value', function(snapshot) {
         var snapObject = snapshot.val();
-        if (snapObject[dataFromIg.id]){
+        if (snapObject && snapObject[dataFromIg.id]){
             console.log("updating existing user "+dataFromIg.id);
             database.ref("users/"+dataFromIg.id).update(user);
         } else {
@@ -112,12 +112,12 @@ function updateFriendList(userID){
         var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
             myFriends.push(response.data[i].id);
-            if (doesUserExist(response.data[i].id)){
-                myTMJFriends.push(response.data[i].id);
-            }
+//            if (doesUserExist(response.data[i].id)){
+//                myTMJFriends.push(response.data[i].id);
+//            }
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
-        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+//        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
         getFriendsImages(myTMJFriends);
     })
     .fail(function(error){
