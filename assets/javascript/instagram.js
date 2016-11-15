@@ -55,10 +55,10 @@ function updateUser(dataFromIg){
     //console.log(doesUserExist(dataFromIg.id));
     if (doesUserExist(dataFromIg.id)){
         console.log("updating existing user "+dataFromIg.id);
-        database.ref("users").child(dataFromIg.id).update(user);
+        database.ref("users/"+dataFromIg.id).update(user);
     } else {
         console.log("creating new user "+dataFromIg.id);
-        database.ref("users").push(user);
+        database.ref("users"+dataFromIg.id).set(user);
     }
 
     // for all: update friends list
