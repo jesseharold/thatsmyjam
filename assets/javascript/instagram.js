@@ -212,12 +212,11 @@ function createNewReview(imageData){
         } else {
             //promptForLocation(imageData);
         }
-        thisRestaurant.reviews = [];
-        thisRestaurant.reviews.push(thisImage);
+        thisRestaurant.reviews = thisImage;
         //promptForReview();
-        //console.log(thisImage);
+
         // if location exists
-        // add this image to that restaurant_name
+        // push this image to that restaurant_name's reviews object
         // else
         // add new restaurant, and add this image
         database.ref("restaurants").push(thisRestaurant);
