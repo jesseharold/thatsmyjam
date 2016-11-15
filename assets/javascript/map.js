@@ -46,6 +46,12 @@ function initMap() {
         center: mapCenter
     });
     console.log("map created")
+
+    //code for geocoder
+    var geocoder = new google.maps.Geocoder();
+    document.getElementById('submit').addEventListener('click', function() {
+        geocodeAddress(geocoder, map);
+    });
 };
 
 //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
@@ -80,6 +86,19 @@ database.ref("/restaurantData").on("child_added", function(childSnap){
         })(marker));
         //testing console log
         console.log("marker created");
-    }
+    };
         
 });
+
+
+//geocorder for relocating map
+function geocodeAddress(geocoder, resultsMap) {
+    var address = document.getElementById('address').value;
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+        resultsMap.setCenter(results[0].geometry.location);
+        } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+    }
