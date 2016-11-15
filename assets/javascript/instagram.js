@@ -196,7 +196,8 @@ function createNewReview(imageData){
             id: imageData.id,
             thumbnail: imageData.images.thumbnail.url,
             image: imageData.images.standard_resolution.url,
-            review: imageData.caption
+            text: imageData.caption.text,
+            author: imageData.from.id
         };
         var thisRestaurant = {};
         if(imageData.location){
