@@ -111,12 +111,13 @@ function updateFriendList(userID){
         var myFriends = [];
         var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
-            myFriends.push(response.data[i].id);
+            var thisFriend = response.data[i].id;
+            myFriends.push(thisFriend);
             // check to see if this friend is in our users DB
             database.ref("users").once('value', function(snapshot) {
                 var snapObject = snapshot.val();
-                if (snapObject && snapObject[response.data[i].id]){
-                    myTMJFriends.push(response.data[i].id);
+                if (snapObject && snapObject[thisFriend]){
+                    myTMJFriends.push(thisFriend);
                 } 
             });
         }
