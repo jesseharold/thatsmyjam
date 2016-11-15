@@ -50,26 +50,66 @@ function updateUser(dataFromIg){
         username: dataFromIg.username,
         profilePicture: dataFromIg.profile_picture
     };
-    database.ref("users").once('value', function(snapshot) {
-    // check to see if user exists with this id
-    var userExists = false;
-        snapshot.forEach(function(childSnapshot) {
-            if (childSnapshot.hasChild("id")){
-                var childData = childSnapshot.child("id").val();
-                if (childData == dataFromIg.id){
-                    userExists = true;
-                }
-            }
-        });
-        if (userExists){
-            database.ref("users").child(dataFromIg.id).update(user);
-        } else {
-            database.ref("users").push(user);
-        }
-    });
+    
+    // check to see if user already exists with this id
+    if (doesUserExist(dataFromIg.id)){
+        database.ref("users").child(dataFromIg.id).update(user);
+    } else {
+        database.ref("users").push(user);
+    }
+
     // for all: update friends list
     updateFriendList(dataFromIg.id);
 }//function updateUser
+
+function doesUserExist(id){
+    var userExists = false;
+    database.ref("users").once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+                if (childSnapshot.hasChild("id")){
+                    var childData = childSnapshot.child("id").val();
+                    if (childData == id){
+                        userExists = true;
+                    }
+                }
+        });
+        return userExists;
+    });
+}//function doesUserExist
+
+function doesImageExist(id){
+    var imageExists = false;
+    database.ref("restaurants").once('value', function(snapshot) {
+        snapshot.forEach(function(restaurantSnapshot) {
+                if (restaurantSnapshot.hasChild("reviews")){
+                    var reviews = restaurantSnapshot.child("reviews").val();
+                    for (var i = 0; i < reviews.length; i++){
+                        if(reviews.imageId == id){
+                            imageExists = true;
+                        }
+                    }
+                }
+        });
+        return imageExists;
+    });
+}//function doesImageExist
+
+function doesRestaurantExist(id){
+    var imageExists = false;
+    database.ref("restaurants").once('value', function(snapshot) {
+        snapshot.forEach(function(restaurantSnapshot) {
+                if (restaurantSnapshot.hasChild("reviews")){
+                    var reviews = restaurantSnapshot.child("reviews").val();
+                    for (var i = 0; i < reviews.length; i++){
+                        if(reviews.imageId == id){
+                            imageExists = true;
+                        }
+                    }
+                }
+        });
+        return imageExists;
+    });
+}//function doesImageExist
 
 function updateFriendList(userID){
     $.ajax({
@@ -80,11 +120,16 @@ function updateFriendList(userID){
     .done(function(response) {
         //console.log(response);
         var myFriends = [];
+        var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
             myFriends.push(response.data[i].id);
+            if (doesUserExist(response.data[i].id)){
+                myTMJFriends.push(response.data[i].id);
+            }
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
-        getFriendsImages(myFriends);
+        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        getFriendsImages(myTMJFriends);
     })
     .fail(function(error){
         console.error(error);
@@ -148,28 +193,37 @@ function hasHashTag(imageTags){
 }//function hasHashTag
 
 function createNewReview(imageData){
-    var thisImage = {
-        id: imageData.id,
-        thumbnail: imageData.images.thumbnail.url,
-        image: imageData.images.standard_resolution.url,
-        review: imageData.caption
-    };
-    if(imageData.location){
-        if(imageData.location.name){
-            thisImage.restaurant_name = imageData.location.name;
+    // check if this image is already in the DB as a review
+    // if it is, do nothing, which will allow our reviews to
+    // have custom text, and not get overwritten
+    // if it doesn't exist, add it
+    if(!doesImageExist(imageData.id)){
+        var thisImage = {
+            id: imageData.id,
+            thumbnail: imageData.images.thumbnail.url,
+            image: imageData.images.standard_resolution.url,
+            review: imageData.caption
+        };
+        if(imageData.location){
+            if(imageData.location.name){
+                thisImage.restaurant_name = imageData.location.name;
+            }
+            if(imageData.location.latitude){
+                thisImage.lat = imageData.location.latitude;
+            }
+            if(imageData.location.longitude){
+                thisImage.lng = imageData.location.longitude;
+            }
+        } else {
+            //promptForLocation(imageData);
         }
-        if(imageData.location.latitude){
-            thisImage.lat = imageData.location.latitude;
-        }
-        if(imageData.location.longitude){
-            thisImage.lng = imageData.location.longitude;
-        }
-    } else {
-        //promptForLocation(imageData);
-    }
-    console.log(thisImage);
-    //check if this image is already in the DB as a review
-    //then either update or append to reviews in DB
+        //promptForReview();
+        console.log(thisImage);
+        // if location exists
+        // add this image to that restaurant_name
+        // else
+        // add new restaurant, and add this image
+    }//initial if
 }//function createNewReview
 
 function displayReview(){
