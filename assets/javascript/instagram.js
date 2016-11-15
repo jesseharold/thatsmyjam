@@ -55,10 +55,10 @@ function updateUser(dataFromIg){
     database.ref("users").once('value', function(snapshot) {
         var snapObject = snapshot.val();
         if (snapObject && snapObject[dataFromIg.id]){
-            console.log("updating existing user "+dataFromIg.id);
+            //console.log("updating existing user "+dataFromIg.id);
             database.ref("users/"+dataFromIg.id).update(user);
         } else {
-            console.log("creating new user "+dataFromIg.id);
+            //console.log("creating new user "+dataFromIg.id);
             database.ref("users/"+dataFromIg.id).set(user);
         }
     });
@@ -191,33 +191,37 @@ function createNewReview(imageData){
     // if it is, do nothing, which will allow our reviews to
     // have custom text, and not get overwritten
     // if it doesn't exist, add it
-    if(!doesImageExist(imageData.id)){
+//    if(!doesImageExist(imageData.id)){
         var thisImage = {
             id: imageData.id,
             thumbnail: imageData.images.thumbnail.url,
             image: imageData.images.standard_resolution.url,
             review: imageData.caption
         };
+        var thisRestaurant = {};
         if(imageData.location){
             if(imageData.location.name){
-                thisImage.restaurant_name = imageData.location.name;
+                thisRestaurant.name = imageData.location.name;
             }
             if(imageData.location.latitude){
-                thisImage.lat = imageData.location.latitude;
+                thisRestaurant.lat = imageData.location.latitude;
             }
             if(imageData.location.longitude){
-                thisImage.lng = imageData.location.longitude;
+                thisRestaurant.lng = imageData.location.longitude;
             }
         } else {
             //promptForLocation(imageData);
         }
+        thisRestaurant.reviews = [];
+        thisRestaurant.reviews.push(thisImage);
         //promptForReview();
         //console.log(thisImage);
         // if location exists
         // add this image to that restaurant_name
         // else
         // add new restaurant, and add this image
-    }//initial if
+        database.ref("restaurants").push(thisRestaurant);
+//    }//initial if
 }//function createNewReview
 
 function displayReview(){
