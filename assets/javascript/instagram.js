@@ -52,29 +52,20 @@ function updateUser(dataFromIg){
     };
     
     // check to see if user already exists with this id
-    console.log(doesUserExist(dataFromIg.id));
-    if (doesUserExist(dataFromIg.id)){
-        //console.log("updating existing user "+dataFromIg.id);
-        database.ref("users/"+dataFromIg.id).update(user);
-    } else {
-        //console.log("creating new user "+dataFromIg.id);
-        database.ref("users/"+dataFromIg.id).set(user);
-    }
+    database.ref("users").once('value', function(snapshot) {
+        var snapObject = snapshot.val();
+        if (snapObject[dataFromIg.id]){
+            console.log("updating existing user "+dataFromIg.id);
+            database.ref("users/"+dataFromIg.id).update(user);
+        } else {
+            //console.log("creating new user "+dataFromIg.id);
+            database.ref("users/"+dataFromIg.id).set(user);
+        }
+    });
 
     // for all: update friends list
     updateFriendList(dataFromIg.id);
 }//function updateUser
-
-function doesUserExist(id){
-    var userExists = false;
-    database.ref("users").once('value', function(snapshot) {
-        var snapObject = snapshot.val();
-        if (snapObject[id]){
-            userExists = true;
-        }
-        return userExists;
-    });
-}//function doesUserExist
 
 function doesImageExist(id){
     var imageExists = false;
