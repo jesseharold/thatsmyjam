@@ -112,12 +112,16 @@ function updateFriendList(userID){
         var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
             myFriends.push(response.data[i].id);
-//            if (doesUserExist(response.data[i].id)){
-//                myTMJFriends.push(response.data[i].id);
-//            }
+            // check to see if this friend is in our users DB
+            database.ref("users").once('value', function(snapshot) {
+                var snapObject = snapshot.val();
+                if (snapObject && snapObject[response.data[i].id]){
+                    myTMJFriends.push(response.data[i].id);
+                } 
+            });
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
-//        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
         getFriendsImages(myTMJFriends);
     })
     .fail(function(error){
