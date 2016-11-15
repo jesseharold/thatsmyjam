@@ -52,10 +52,12 @@ function updateUser(dataFromIg){
     };
     
     // check to see if user already exists with this id
-    console.log(doesUserExist(dataFromIg.id));
+    //console.log(doesUserExist(dataFromIg.id));
     if (doesUserExist(dataFromIg.id)){
+        console.log("updating existing user "+dataFromIg.id);
         database.ref("users").child(dataFromIg.id).update(user);
     } else {
+        console.log("creating new user "+dataFromIg.id);
         database.ref("users").push(user);
     }
 
@@ -119,8 +121,8 @@ function updateFriendList(userID){
         dataType: "jsonp"
     })
     .done(function(response) {
-        console.log("updateFriendList:");
-        console.log(response);
+        //console.log("updateFriendList:");
+        //console.log(response);
         var myFriends = [];
         var myTMJFriends = [];
         for (var i = 0; i < response.data.length; i++){
@@ -129,6 +131,7 @@ function updateFriendList(userID){
                 myTMJFriends.push(response.data[i].id);
             }
         }
+        console.log("all friends: " + myFriends.length + ", tmj friends: " + myTMJFriends.length);
         database.ref("users").child(userID).child("friends").set(myFriends);
         database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
         getFriendsImages(myTMJFriends);
