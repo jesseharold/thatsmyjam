@@ -71,10 +71,9 @@ function doesUserExist(id){
         var snapObject = snapshot.val();
         if (snapObject[id]){
             userExists = true;
-            return userExists;
         }
+        return userExists;
     });
-    return userExists;
 }//function doesUserExist
 
 function doesImageExist(id){
