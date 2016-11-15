@@ -68,6 +68,7 @@ function updateUser(dataFromIg){
 function doesUserExist(id){
     var userExists = false;
     database.ref("users").once('value', function(snapshot) {
+        console.log(snapshot.val());
         if (snapshot.hasChild(id)){
             userExists = true;
         }
