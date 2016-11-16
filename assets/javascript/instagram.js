@@ -118,6 +118,7 @@ function updateFriendList(userID){
                 var snapObject = snapshot.val();
                 console.log(snapObject);
                 console.log(thisFriend);
+                console.log(snapObject[thisFriend]);
                 if (snapObject && snapObject[thisFriend]){
                     myTMJFriends.push(thisFriend);
                 } 
