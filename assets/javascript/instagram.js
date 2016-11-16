@@ -116,6 +116,8 @@ function updateFriendList(userID){
             // check to see if this friend is in our users DB
             database.ref("users").once('value', function(snapshot) {
                 var snapObject = snapshot.val();
+                console.log(snapObject);
+                console.log(thisFriend);
                 if (snapObject && snapObject[thisFriend]){
                     myTMJFriends.push(thisFriend);
                 } 

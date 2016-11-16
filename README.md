@@ -10,9 +10,9 @@ and instragram API
 and firebase
 
 
-program flow:
+## program flow:
 
-## user logs in w instagram
+### user logs in w instagram:
 * look up their IG username in our DB of users, add if new
 * retrieve their friends list from IG
 * add / update in our DB on their user object
@@ -26,7 +26,7 @@ program flow:
 * prompt them to add text reviews to the photos
 * if any tagged photos are missing location information, prompt them to add it, possibly from google places data
 
-## all users
+### all users:
 * have map ready to filter displayed reviews by author
 * have map ready to add a new review from the map button
 * when adding a new review, is it possible to use the instagram api to add a new photo???
