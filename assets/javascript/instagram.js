@@ -208,7 +208,7 @@ function createNewReview(imageData){
             }
 
         });
-    }
+    });
     // if review doesn't already exist, add it
 //    if(!doesImageExist(imageData.id)){
         var thisImage = {
