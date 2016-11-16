@@ -81,5 +81,12 @@
     padding-left: 16px;
 }
 
-       
-    
+#notif{
+    margin-left:20px;
+}
+
+#addrestaurant{
+    position: absolute;
+    right:5%;
+    bottom:35%;
+}     
