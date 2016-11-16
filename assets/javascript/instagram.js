@@ -233,7 +233,7 @@ function doAddReview(imageData){
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
         snapshot.forEach(function(childSnapshot) {
-            console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+            //console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
             if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
                 restaurantExists = true;
                 console.log("restaurant match: " + childSnapshot.key);
@@ -242,10 +242,13 @@ function doAddReview(imageData){
         });
         // if review doesn't already exist, add it
         if(restaurantExists){
+            console.log("restaurant already exists, don't add: " + imageData.location.name);
             // restaurant already exists
             // push this image to that restaurant_name's reviews array
         } else {
             // add new restaurant, and add this image
+            
+            console.log("add new restaurant: " + imageData.location.name);
             var thisRestaurant = {};
             if(imageData.location){
                 if(imageData.location.name){
