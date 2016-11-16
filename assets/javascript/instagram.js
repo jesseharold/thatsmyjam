@@ -219,7 +219,8 @@ function createNewReview(imageData){
             console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
 //          promptForLocation(imageData);
         }
-        thisRestaurant.reviews = thisImage;
+        thisRestaurant.reviews = [];
+        thisRestaurant.push(thisImage);
 
 // if location exists
 // push this image to that restaurant_name's reviews object
