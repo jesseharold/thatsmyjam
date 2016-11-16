@@ -233,7 +233,7 @@ function doAddReview(imageData){
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
         snapshot.forEach(function(childSnapshot) {
-            console.log(imageData.location.name);
+            console.log(imageData.location.name "==?" childSnapshot.child("name").val());
             console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
             console.log(imageData.location.latitude + ", " + imageData.location.longitude);
             if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
