@@ -129,10 +129,10 @@ function filterFriends(userID){
         var allFriends = snapshot.child(userID).child("friends").val();
         console.log("allFriends: "+ allFriends);
         //var snapObject = snapshot.val();
+        var myTMJFriends = [];
+        // database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        // getFriendsImages(myTMJFriends);
     });
-
-    database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-        getFriendsImages(myTMJFriends);
 }
 
 function getFriendsImages(myFriends){
