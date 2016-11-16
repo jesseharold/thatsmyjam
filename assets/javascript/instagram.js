@@ -233,11 +233,14 @@ function doAddReview(imageData){
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
         snapshot.forEach(function(childSnapshot) {
-            //console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+            console.log(imageData.location.name);
+            console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+            console.log(imageData.location.latitude + ", " + imageData.location.longitude);
             if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                console.log("equal");
                 restaurantExists = true;
-                console.log("restaurant match: " + childSnapshot.key);
-                
+            } else {
+                console.log("not equal");
             }
         });
         // if review doesn't already exist, add it
