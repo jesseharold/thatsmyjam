@@ -201,16 +201,21 @@ function createNewReview(imageData){
     // if it is, do nothing, which will allow our reviews to
     // have custom text, and not get overwritten
     database.ref("restaurants").once('value', function(snapshot) {
+        var reviewExists = false;
         snapshot.forEach(function(childSnapshot) {
             if(childSnapshot.hasChild("reviews")){
                 var reviewsArray = childSnapshot.child("reviews").val();
                 console.log(reviewsArray);
                 for (var i = 0; i < reviewsArray.length; i++){
-                    console.log(reviewsArray[i].review_id + " == " + imageData.id + "??");
+                    if(reviewsArray[i].review_id  ==  imageData.id){
+                        reviewExists = true;
+                        console.log("found it!");
+                    }
                 }
             }
 
         });
+        console.log(reviewExists);
     });
     // if review doesn't already exist, add it
 //    if(!doesImageExist(imageData.id)){
