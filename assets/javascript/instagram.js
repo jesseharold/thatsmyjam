@@ -113,26 +113,27 @@ function updateFriendList(userID){
         for (var i = 0; i < response.data.length; i++){
             var thisFriend = response.data[i].id;
             myFriends.push(thisFriend);
-            // check to see if this friend is in our users DB
-            database.ref("users").once('value', function(snapshot) {
-                var snapObject = snapshot.val();
-                for (var existingUser in snapObject){
-                    console.log(existingUser + " == " + thisFriend + "?");
-                    if(existingUser == thisFriend){
-                        console.log("true");
-                        myTMJFriends.push(thisFriend);
-                    }
-                }
-            });
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
-        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-        getFriendsImages(myTMJFriends);
+        filterFriends(userID);
     })
     .fail(function(error){
         console.error(error);
     });
 }//function updateFriendList
+
+function filterFriends(userID){
+    // check user's friends list against user DB
+    // create a second friends list of only other TMJ users
+    database.ref("users").once('value', function(snapshot) {
+        var allFriends = snapshot.child(userID).child("friends").val();
+        console.log("allFriends: "+ allFriends);
+        //var snapObject = snapshot.val();
+    });
+
+    database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        getFriendsImages(myTMJFriends);
+}
 
 function getFriendsImages(myFriends){
      $.ajax({
