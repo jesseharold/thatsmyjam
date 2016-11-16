@@ -18,145 +18,229 @@ if (location.href.indexOf("#") > 0){
         getOwnUserInfo();
         getLocation();
         getOwnImages();
-    } else {
-        $("#response").text("User did not give the app permission");
     }
 }
 
 function getLocation(){
-$.get("https://ipinfo.io", function(response) {
-    var location = response.loc;
-    geoLocation = location.split(",");
-}, "jsonp");
-}
+    $.get("https://ipinfo.io", function(response) {
+        var location = response.loc;
+        geoLocation = location.split(",");
+    }, "jsonp");
+}//function getLocation
 
 function getOwnUserInfo(){
-$.ajax({
-    url: endpoint + "users/self/?" + "access_token=" + token,
-    method: 'GET',
-    dataType: "jsonp"
-})
-.done(function(response) {
-    updateUser(response.data);
-})
-.fail(function(error){
-    console.error(error);
-});
-}
+    $.ajax({
+        url: endpoint + "users/self/?" + "access_token=" + token,
+        method: 'GET',
+        dataType: "jsonp"
+    })
+    .done(function(response) {
+        updateUser(response.data);
+    })
+    .fail(function(error){
+        console.error(error);
+    });
+}//function getOwnUserInfo(){
+
 function updateUser(dataFromIg){
-//console.log(dataFromIg);
-var user = {
-    name: dataFromIg.full_name,
-    id: dataFromIg.id,
-    username: dataFromIg.username,
-    profilePicture: dataFromIg.profile_picture
-};
-database.ref("users").once('value', function(snapshot) {
-// check to see if user exists with this id
-var userExists = false;
-    snapshot.forEach(function(childSnapshot) {
-        if (childSnapshot.hasChild("id")){
-            var childData = childSnapshot.child("id").val();
-            if (childData == dataFromIg.id){
-                userExists = true;
-            }
+    //console.log(dataFromIg);
+    var user = {
+        name: dataFromIg.full_name,
+        id: dataFromIg.id,
+        username: dataFromIg.username,
+        profilePicture: dataFromIg.profile_picture
+    };
+    
+    // check to see if user already exists with this id
+    database.ref("users").once('value', function(snapshot) {
+        var snapObject = snapshot.val();
+        if (snapObject && snapObject[dataFromIg.id]){
+            //console.log("updating existing user "+dataFromIg.id);
+            database.ref("users/"+dataFromIg.id).update(user);
+        } else {
+            //console.log("creating new user "+dataFromIg.id);
+            database.ref("users/"+dataFromIg.id).set(user);
         }
     });
-    if (userExists){
-        database.ref("users").child(dataFromIg.id).update(user);
-    } else {
-        database.ref("users").push(user);
-    }
-});
-// for all: update friends list
-updateFriendList(dataFromIg.id);
-}
+
+    // for all: update friends list
+    updateFriendList(dataFromIg.id);
+}//function updateUser
+
+function doesImageExist(id){
+    var imageExists = false;
+    database.ref("restaurants").once('value', function(snapshot) {
+        snapshot.forEach(function(restaurantSnapshot) {
+                if (restaurantSnapshot.hasChild("reviews")){
+                    var reviews = restaurantSnapshot.child("reviews").val();
+                    for (var i = 0; i < reviews.length; i++){
+                        if(reviews.imageId == id){
+                            imageExists = true;
+                        }
+                    }
+                }
+        });
+        return imageExists;
+    });
+}//function doesImageExist
+
+function doesRestaurantExist(id){
+    var imageExists = false;
+    database.ref("restaurants").once('value', function(snapshot) {
+        snapshot.forEach(function(restaurantSnapshot) {
+                if (restaurantSnapshot.hasChild("reviews")){
+                    var reviews = restaurantSnapshot.child("reviews").val();
+                    for (var i = 0; i < reviews.length; i++){
+                        if(reviews.imageId == id){
+                            imageExists = true;
+                        }
+                    }
+                }
+        });
+        return imageExists;
+    });
+}//function doesImageExist
+
 function updateFriendList(userID){
     $.ajax({
-    url: endpoint + "users/self/follows?" + "scope=follower_list&" + "access_token=" + token,
-    method: 'GET',
-    dataType: "jsonp"
-})
-.done(function(response) {
-    //console.log(response);
-    var myFriends = [];
-    for (var i = 0; i < response.data.length; i++){
-        myFriends.push(response.data[i].id);
-    }
-    database.ref("users").child(userID).child("friends").set(myFriends);
-})
-.fail(function(error){
-    console.error(error);
-});
-}
-function getFriendsImages(latitude, longitude){
+        url: endpoint + "users/self/follows?" + "scope=follower_list&" + "access_token=" + token,
+        method: 'GET',
+        dataType: "jsonp"
+    })
+    .done(function(response) {
+        var myFriends = [];
+        var myTMJFriends = [];
+        for (var i = 0; i < response.data.length; i++){
+            var thisFriend = response.data[i].id;
+            myFriends.push(thisFriend);
+            // check to see if this friend is in our users DB
+            database.ref("users").once('value', function(snapshot) {
+                var snapObject = snapshot.val();
+                if (snapObject && snapObject[thisFriend]){
+                    myTMJFriends.push(thisFriend);
+                } 
+            });
+        }
+        database.ref("users").child(userID).child("friends").set(myFriends);
+        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        getFriendsImages(myTMJFriends);
+    })
+    .fail(function(error){
+        console.error(error);
+    });
+}//function updateFriendList
+
+function getFriendsImages(myFriends){
+     $.ajax({
+        url: endpoint + igQueryTag + "scope=public_content&" + "access_token=" + token,
+        method: 'GET',
+        dataType: "jsonp"
+    })
+    .done(function(response) {
+        processImages(response);
+    })
+    .fail(function(error){
+        console.error(error);
+    });
 }
 
 function getOwnImages(){
-//get images
-$.ajax({
-    url: endpoint + igQueryOwnPhotos + "access_token=" + token,
-    method: 'GET',
-    dataType: "jsonp"
-})
-.done(function(response) {
-    //console.log(response.data);
-    if(response.meta.code === 200){
-        for (var i = 0; i < response.data.length; i++) {  
-            if (response.data[i].type === "image"){
+    $.ajax({
+        url: endpoint + igQueryOwnPhotos + "access_token=" + token,
+        method: 'GET',
+        dataType: "jsonp"
+    })
+    .done(function(response) {
+        //console.log(response.data);
+        processImages(response);
+        promptForReviews();
+    }).fail(function(err){
+        console.error("Failed: " + err);
+    });
+}//function getOwnImages
+
+function processImages(dataFromIg){
+    if(dataFromIg.meta.code === 200){
+        for (var i = 0; i < dataFromIg.data.length; i++) {  
+            if (dataFromIg.data[i].type === "image"){
                 //look for the thatsmyjam hashtag
-                if (hasHashTag(response.data[i].tags)){
+                if (hasHashTag(dataFromIg.data[i].tags)){
                     // create current round of images
-                    createNewReview(response.data[i]);
+                    createNewReview(dataFromIg.data[i]);
                 }
             }
         }
     } else {
-        console.error("meta error: "+response.meta.code);
+        console.error("meta error: " + dataFromIg.meta.code);
     }
-}).fail(function(err){
-    console.error("Failed: " + err);
-});
-}//function getOwnImages
+
+}// function processImages
 
 function hasHashTag(imageTags){
-var foundHashTag = false;
-//loop through all hashtags on this image
-for (var j = 0; j < imageTags.length; j++){
-    if(imageTags[j].toLowerCase() === "thatsmyjam"){
-        foundHashTag = true;
+    var foundHashTag = false;
+    //loop through all hashtags on this image
+    for (var j = 0; j < imageTags.length; j++){
+        if(imageTags[j].toLowerCase() === "thatsmyjam"){
+            foundHashTag = true;
+        }
     }
-}
-return foundHashTag;
+    return foundHashTag;
 }//function hasHashTag
 
 function createNewReview(imageData){
-var thumbnail = $("<img>");
-thumbnail
-    .attr("src", imageData.images.thumbnail.url)
-    .addClass("thumbnail");
-$("#response").append(thumbnail);
-// get location information
-if(imageData.location){
-    if(imageData.location.name){
-        $("#response").append("<div class='restaurant-name'>" + "restaurant name: " + imageData.location.name);
-    }
-    if(imageData.location.latitude){
-        $("#response").append("<div class='restaurant-coords'>" + "latitude: " + imageData.location.latitude);
-    }
-    if(imageData.location.longitude){
-        $("#response").append("<div class='restaurant-coords'>" + "longitude: " + imageData.location.longitude);
-    }
-} else {
-    //promptForLocation(imageData);
-}
+    // check if this image is already in the DB as a review
+    // if it is, do nothing, which will allow our reviews to
+    // have custom text, and not get overwritten
+    // if it doesn't exist, add it
+//    if(!doesImageExist(imageData.id)){
+        var thisImage = {
+            review_id: imageData.id,
+            thumbnail: imageData.images.thumbnail.url,
+            image: imageData.images.standard_resolution.url,
+            text: imageData.caption.text,
+            author: imageData.caption.from.id
+        };
+        var thisRestaurant = {};
+        if(imageData.location){
+            if(imageData.location.name){
+                thisRestaurant.name = imageData.location.name;
+            }
+            if(imageData.location.latitude){
+                thisRestaurant.lat = imageData.location.latitude;
+            }
+            if(imageData.location.longitude){
+                thisRestaurant.lng = imageData.location.longitude;
+            }
+        } else {
+            console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
+//          promptForLocation(imageData);
+        }
+        thisRestaurant.reviews = thisImage;
 
+// if location exists
+// push this image to that restaurant_name's reviews object
+// else
+        // add new restaurant, and add this image
+        database.ref("restaurants").push(thisRestaurant);
+//    }//initial if
 }//function createNewReview
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
 // probably should pass in a way to ref. this review in the database
 // once that exists
+}
+
+function promptForReviews(imageData){
+// cycle through a user's reviews
+// create a local array of images that have no thumbs up/down value
+// in a modal ask the user if they'd like to add them now, say how many
+// if yes, 
+//   - show images one at a time, 
+//   - show buttons of thumbs
+//   - show existing text, allow them to edit it and click submit
+//   - on submit, update database and show next image until done
+//   - say thaks on done
 }
 
 });//document ready
