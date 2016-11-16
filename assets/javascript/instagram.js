@@ -205,27 +205,34 @@ function createNewReview(imageData){
         snapshot.forEach(function(childSnapshot) {
             if(childSnapshot.hasChild("reviews")){
                 var reviewsArray = childSnapshot.child("reviews").val();
-                console.log(reviewsArray);
                 for (var i = 0; i < reviewsArray.length; i++){
                     if(reviewsArray[i].review_id  ==  imageData.id){
                         reviewExists = true;
-                        console.log("found it!");
                     }
                 }
             }
 
         });
-        console.log(reviewExists);
+        // if review doesn't already exist, add it
+        if(!reviewExists){
+            doAddReview(imageData);
+        }// if reviewExists
     });
-    // if review doesn't already exist, add it
-//    if(!doesImageExist(imageData.id)){
-        var thisImage = {
-            review_id: imageData.id,
-            thumbnail: imageData.images.thumbnail.url,
-            image: imageData.images.standard_resolution.url,
-            text: imageData.caption.text,
-            author: imageData.caption.from.id
-        };
+}//function createNewReview
+
+function doAddReview(imageData){
+    var thisImage = {
+        review_id: imageData.id,
+        thumbnail: imageData.images.thumbnail.url,
+        image: imageData.images.standard_resolution.url,
+        text: imageData.caption.text,
+        author: imageData.caption.from.id
+    };
+    if(false){
+        // restaurant already exists
+        // push this image to that restaurant_name's reviews array
+    } else {
+        // add new restaurant, and add this image
         var thisRestaurant = {};
         if(imageData.location){
             if(imageData.location.name){
@@ -244,14 +251,9 @@ function createNewReview(imageData){
         var allReviews = [];
         allReviews.push(thisImage);
         thisRestaurant.reviews = allReviews;
-
-// if location exists
-// push this image to that restaurant_name's reviews object
-// else
-        // add new restaurant, and add this image
         database.ref("restaurants").push(thisRestaurant);
-//    }//initial if
-}//function createNewReview
+    }
+}// function doAddReview
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
