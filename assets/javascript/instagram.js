@@ -127,9 +127,14 @@ function filterFriends(userID){
     // create a second friends list of only other TMJ users
     database.ref("users").once('value', function(snapshot) {
         var allFriends = snapshot.child(userID).child("friends").val();
-        console.log("allFriends: "+ allFriends);
-        //var snapObject = snapshot.val();
         var myTMJFriends = [];
+        for (var i = 0; i < allFriends.length; i++ ){
+            if (snapshot.hasChild(allFriends[i])){
+                myTMJFriends.push(allFriends[i]);
+            }
+        }
+        console.log("myTMJFriends: " + myTMJFriends);
+        //var snapObject = snapshot.val();
         // database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
         // getFriendsImages(myTMJFriends);
     });
