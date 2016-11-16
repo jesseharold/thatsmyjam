@@ -133,10 +133,9 @@ function filterFriends(userID){
                 myTMJFriends.push(allFriends[i]);
             }
         }
-        console.log("myTMJFriends: " + myTMJFriends);
-        //var snapObject = snapshot.val();
-        // database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-        // getFriendsImages(myTMJFriends);
+        //console.log("myTMJFriends: " + myTMJFriends);
+        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        getFriendsImages(myTMJFriends);
     });
 }
 
