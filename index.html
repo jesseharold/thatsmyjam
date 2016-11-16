@@ -23,12 +23,14 @@
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
+                        <a class="mdl-navigation__link"  href="">Sign up</a>
                     </nav>
                     
-                    <div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>
-                    
+                    <!--<div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>-->
+                    <button class="mdl-button mdl-button--icon" id="notif">
+                        <i class="material-icons">people_outline</i>
+                    </button>
                 </div>
             </header>
             
@@ -36,16 +38,16 @@
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">That's My Jam</span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Friend</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Login</a>
+                    <a class="mdl-navigation__link" href="">Sign up</a>
                     <a class="mdl-navigation__link" href="">Contact</a>
                     <a class="mdl-navigation__link" href="">About Us</a>
                 </nav>
             </div>
             
             <div class="mdl-layout__drawer-right">
-                <span class="mdl-layout-title">Friend's List</span>
-                <ul class="demo-list-control mdl-list">
+                <span class="mdl-layout-title" id="addfriend">Friend's List</span>
+                <ul class="demo-list-control mdl-list friendlist">
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content">
                         <i class="material-icons  mdl-list__item-avatar">person</i>
@@ -70,7 +72,18 @@
                     </li>
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content">
-                        <i class="material-icons  mdl-list__item-avatar">person</i>
+                        <img class="mdl-list__item-avatar" src="assets/images/testprofpic.jpg"/>
+                        Eric
+                        </span>
+                        <span class="mdl-list__item-secondary-action">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-3">
+                            <input type="checkbox" id="list-checkbox-3" class="mdl-checkbox__input" />
+                        </label>
+                        </span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                        <img class="mdl-list__item-avatar" src="assets/images/testprofpic.jpg"/>
                         Eric
                         </span>
                         <span class="mdl-list__item-secondary-action">
@@ -88,7 +101,7 @@
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
                         <i class="material-icons">add</i> 
                     </button>
-                    <span class="mdl-tooltip mdl-tooltip--right" data-mdl-for="addrestaurant">
+                    <span class="mdl-tooltip mdl-tooltip--left" data-mdl-for="addrestaurant">
                         Add Restaurant
                     </span>
     
