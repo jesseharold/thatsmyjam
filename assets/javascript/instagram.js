@@ -116,9 +116,13 @@ function updateFriendList(userID){
             // check to see if this friend is in our users DB
             database.ref("users").once('value', function(snapshot) {
                 var snapObject = snapshot.val();
-                if (snapObject && snapObject[parseInt(thisFriend)]){
-                    myTMJFriends.push(thisFriend);
-                } 
+                for (var existingUser in snapObject){
+                    console.log(existingUser + " == " + thisFriend + "?");
+                    if(existingUser == thisFriend){
+                        console.log("true");
+                        myTMJFriends.push(thisFriend);
+                    }
+                }
             });
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
