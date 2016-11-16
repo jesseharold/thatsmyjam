@@ -153,6 +153,7 @@ function getOwnImages(){
     .done(function(response) {
         //console.log(response.data);
         processImages(response);
+        promptForReviews();
     }).fail(function(err){
         console.error("Failed: " + err);
     });
@@ -193,7 +194,7 @@ function createNewReview(imageData){
     // if it doesn't exist, add it
 //    if(!doesImageExist(imageData.id)){
         var thisImage = {
-            id: imageData.id,
+            review_id: imageData.id,
             thumbnail: imageData.images.thumbnail.url,
             image: imageData.images.standard_resolution.url,
             text: imageData.caption.text,
@@ -211,10 +212,10 @@ function createNewReview(imageData){
                 thisRestaurant.lng = imageData.location.longitude;
             }
         } else {
+            console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
 //          promptForLocation(imageData);
         }
         thisRestaurant.reviews = thisImage;
-//      promptForReview();
 
 // if location exists
 // push this image to that restaurant_name's reviews object
@@ -224,24 +225,22 @@ function createNewReview(imageData){
 //    }//initial if
 }//function createNewReview
 
-function displayReview(){
- /* NO LONGER USED
-    var thumbnail = $("<img>");
-    thumbnail
-        .attr("src", imageData.images.thumbnail.url)
-        .addClass("thumbnail");
-    $("#response").append(thumbnail);
-*/
-}//function displayReview
-
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
 // probably should pass in a way to ref. this review in the database
 // once that exists
 }
 
-function promptForReview(imageData){
-// add/edit text and thumbs up/down to review
+function promptForReviews(imageData){
+// cycle through a user's reviews
+// create a local array of images that have no thumbs up/down value
+// in a modal ask the user if they'd like to add them now, say how many
+// if yes, 
+//   - show images one at a time, 
+//   - show buttons of thumbs
+//   - show existing text, allow them to edit it and click submit
+//   - on submit, update database and show next image until done
+//   - say thaks on done
 }
 
 });//document ready
