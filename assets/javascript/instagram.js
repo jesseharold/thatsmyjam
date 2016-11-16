@@ -200,7 +200,16 @@ function createNewReview(imageData){
     // check if this image is already in the DB as a review
     // if it is, do nothing, which will allow our reviews to
     // have custom text, and not get overwritten
-    // if it doesn't exist, add it
+    database.ref("restaurants").once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            if(childSnapshot.hasChild("reviews")){
+                var reviewsArray = childSnapshot.child("reviews").val();
+                console.log("checking reviews: " + reviewsArray);
+            }
+
+        });
+    }
+    // if review doesn't already exist, add it
 //    if(!doesImageExist(imageData.id)){
         var thisImage = {
             review_id: imageData.id,
