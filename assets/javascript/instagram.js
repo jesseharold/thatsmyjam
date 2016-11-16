@@ -1,6 +1,6 @@
 $("document").ready(function(){
-                
-var database = firebase.database();
+
+//var database = firebase.database();
 var endpoint = "https://api.instagram.com/v1/";
 var token; //auth token required by instragram API
 var igQueryOwnPhotos = "users/self/media/recent?";
