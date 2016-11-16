@@ -205,8 +205,8 @@ function createNewReview(imageData){
             if(childSnapshot.hasChild("reviews")){
                 var reviewsArray = childSnapshot.child("reviews").val();
                 console.log(reviewsArray);
-                for (var review in reviewsArray){
-                    //console.log(review.review_id + " == " + imageData.id + "??");
+                for (var i = 0; i < reviewsArray.length; i++){
+                    console.log(reviewsArray[i].review_id + " == " + imageData.id + "??");
                 }
             }
 
