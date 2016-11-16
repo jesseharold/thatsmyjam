@@ -216,7 +216,7 @@ function createNewReview(imageData){
         // if review doesn't already exist, add it
         if(!reviewExists){
             doAddReview(imageData);
-        }// if reviewExists
+        }
     });
 }//function createNewReview
 
@@ -228,31 +228,44 @@ function doAddReview(imageData){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
-    if(false){
-        // restaurant already exists
-        // push this image to that restaurant_name's reviews array
-    } else {
-        // add new restaurant, and add this image
-        var thisRestaurant = {};
-        if(imageData.location){
-            if(imageData.location.name){
-                thisRestaurant.name = imageData.location.name;
+
+
+    database.ref("restaurants").once('value', function(snapshot) {
+        var restaurantExists = false;
+        snapshot.forEach(function(childSnapshot) {
+            if(childSnapshot.lat == imageData.location.latitude && childSnapshot.lng == imageData.location.longitude){
+                restaurantExists = true;
+                console.log("restaurant match: " + childSnapshot.key);
+                
             }
-            if(imageData.location.latitude){
-                thisRestaurant.lat = imageData.location.latitude;
-            }
-            if(imageData.location.longitude){
-                thisRestaurant.lng = imageData.location.longitude;
-            }
+        });
+        // if review doesn't already exist, add it
+        if(restaurantExists){
+            // restaurant already exists
+            // push this image to that restaurant_name's reviews array
         } else {
-            console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
+            // add new restaurant, and add this image
+            var thisRestaurant = {};
+            if(imageData.location){
+                if(imageData.location.name){
+                    thisRestaurant.name = imageData.location.name;
+                }
+                if(imageData.location.latitude){
+                    thisRestaurant.lat = imageData.location.latitude;
+                }
+                if(imageData.location.longitude){
+                    thisRestaurant.lng = imageData.location.longitude;
+                }
+            } else {
+                console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
 //          promptForLocation(imageData);
+            }
+            var allReviews = [];
+            allReviews.push(thisImage);
+            thisRestaurant.reviews = allReviews;
+            database.ref("restaurants").push(thisRestaurant);
         }
-        var allReviews = [];
-        allReviews.push(thisImage);
-        thisRestaurant.reviews = allReviews;
-        database.ref("restaurants").push(thisRestaurant);
-    }
+    });
 }// function doAddReview
 
 function promptForLocation(imageData){
