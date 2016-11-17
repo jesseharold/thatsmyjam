@@ -158,12 +158,18 @@ function getOwnImages(){
 function processImages(dataFromIg){
     if(dataFromIg.meta.code === 200){
         var reviewsToAdd = [];
-        for (var i = 0; i < dataFromIg.data.length; i++) {  
-            if (dataFromIg.data[i].type === "image"){
+        for (var i = 0; i < dataFromIg.data.length; i++) { 
+            var thisImageData = dataFromIg.data[i];
+            if (thisImageData.type === "image"){
                 //look for the thatsmyjam hashtag
-                if (hasHashTag(dataFromIg.data[i].tags)){
-                    // create current round of images
-                    checkReviewExists(dataFromIg.data[i]);
+                // don't add if it's already in DB
+                if (hasHashTag(thisImageData.tags) && !checkReviewExists(thisImageData)){
+                    var existingRestaurantKey = checkRestaurantExists(thisImageData);
+                    if(existingRestaurantKey){
+                        addReviewToExistingRestaurant(thisImageData, existingRestaurantKey);
+                    } else {
+                        addReviewAndNewRestaurant(thisImageData);
+                    }
                 }
             }
         }
@@ -184,23 +190,6 @@ function hasHashTag(imageTags){
     return foundHashTag;
 }//function hasHashTag
 
-/*
-
-    database.ref("restaurants").once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-            if(childSnapshot.hasChild("reviews")){
-                var reviewsArray = childSnapshot.child("reviews").val();
-                for (var i = 0; i < reviewsArray.length; i++){
-                    if(reviewsArray[i].review_id  ==  imageData.id){
-                        reviewExists = true;
-                    }
-                }
-            }
-
-        });
-    });
-*/
-
 function checkReviewExists(imageData){
     // check if this image is already in the DB as a review
     // if it is, do nothing, which will allow our reviews to
@@ -211,20 +200,32 @@ function checkReviewExists(imageData){
             for(var i = 0; i < restaurant.reviews.length; i++){
                 if(restaurant.reviews[i].review_id === imageData.id){
                     reviewsExists = true;
-                    //break out of loop
-                    i = restaurant.reviews.length;
+                    return reviewsExists;
                 }
             }
         }
     }
-    // if review doesn't already exist, add it
-    if(!reviewExists){
-        checkRestaurantExists(imageData);
-    }
+    return reviewExists
 }//function checkReviewExists
 
 function checkRestaurantExists(imageData){
-    console.log("checkRestaurantExists: "+imageData);
+    var existingRestaurantKey;
+    if(imageData.location){
+        for(var restaurant in localCopyRestaurants){
+            if(restaurant.lat ==+ imageData.location.latitude 
+            && restaurant.lng === imageData.location.longitude){
+                existingRestaurantKey = restaurant;
+                console.log("duplicate key: "+restaurant);
+                return restaurant;
+            }
+        }
+    } else { // if no location is set for this image
+        promptForLocation(imageData);
+    }
+    return false;
+}// function checkRestaurantExists
+
+function addReviewToExistingRestaurant(imageData, key){
     var thisImage = {
         review_id: imageData.id,
         thumbnail: imageData.images.thumbnail.url,
@@ -232,37 +233,20 @@ function checkRestaurantExists(imageData){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
-    database.ref("restaurants").once('value', function(snapshot) {
-        var restaurantExists = false;
-        var existingRestaurantKey;
-        if(imageData.location){
-            snapshot.forEach(function(childSnapshot) {
-                if(childSnapshot.child("lat").val() == imageData.location.latitude 
-                && childSnapshot.child("lng").val() == imageData.location.longitude){
-                    restaurantExists = true;
-                    existingRestaurantKey = childSnapshot.key;
-                }
-            });
-            // if review doesn't already exist, add it
-            if(restaurantExists){
-                addReviewToExistingRestaurant(thisImage, existingRestaurantKey);
-            } else {
-                addReviewAndNewRestaurant(thisImage, imageData);
-            }
-        } else { // if no location is set for this image
-            promptForLocation(imageData);
-        }
-    });
-}// function checkRestaurantExists
-
-function addReviewToExistingRestaurant(thisImage, key){
     console.log("restaurant already exists, don't add: " + imageData.location.name);
     // restaurant already exists
     // push this image to that restaurant_name's reviews array
     database.ref("restaurants/"+key).push(imageData);
 }//function addReviewToExistingRestaurant
 
-function addReviewAndNewRestaurant(thisImage, imageData){
+function addReviewAndNewRestaurant(imageData){
+    var thisImage = {
+        review_id: imageData.id,
+        thumbnail: imageData.images.thumbnail.url,
+        image: imageData.images.standard_resolution.url,
+        text: imageData.caption.text,
+        author: imageData.caption.from.id
+    };
     // add new restaurant, and add this image
     console.log("add new restaurant: " + imageData.location.name);
     var thisRestaurant = {};
