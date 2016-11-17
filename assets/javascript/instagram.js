@@ -114,17 +114,16 @@ function updateFriendList(userID){
 function filterFriends(userID){
     // check user's friends list against existing users
     // create a second friends list of only other TMJ users
-        var allFriends = localCopyUsers[userID].friends;
-        var myTMJFriends = [];
-        for (var i = 0; i < allFriends.length; i++){
-            if (localCopyUsers[allFriends[i]]){
-                myTMJFriends.push(allFriends[i]);
-            }
+    var allFriends = localCopyUsers[userID].friends;
+    var myTMJFriends = [];
+    for (var i = 0; i < allFriends.length; i++){
+        if (localCopyUsers[allFriends[i]]){
+            myTMJFriends.push(allFriends[i]);
         }
-        //console.log("myTMJFriends: " + myTMJFriends);
-        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-        getFriendsImages(myTMJFriends);
-    });
+    }
+    //console.log("myTMJFriends: " + myTMJFriends);
+    database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+    getFriendsImages(myTMJFriends);
 }//function filterFriends
 
 function getFriendsImages(myFriends){
