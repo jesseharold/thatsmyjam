@@ -82,7 +82,7 @@ function updateUser(dataFromIg){
     };
 
     // check to see if user already exists with this id
-    if (localCopyUsers[dataFromIg.id]){
+    if (localCopyUsers && localCopyUsers[dataFromIg.id]){
         console.log("updating existing user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).update(user);
     } else {
