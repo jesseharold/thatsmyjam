@@ -258,7 +258,8 @@ function checkRestaurantExists(imageData){
         var existingRestaurantKey;
         if(imageData.location){
             snapshot.forEach(function(childSnapshot) {
-                if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                if(childSnapshot.child("lat").val() == imageData.location.latitude 
+                && childSnapshot.child("lng").val() == imageData.location.longitude){
                     restaurantExists = true;
                     existingRestaurantKey = childSnapshot.key;
                 }
@@ -269,7 +270,6 @@ function checkRestaurantExists(imageData){
             } else {
                 addReviewAndNewRestaurant(thisImage, imageData);
             }
-        });
     } else { // if no location is set for this image
         promptForLocation(imageData);
     }
