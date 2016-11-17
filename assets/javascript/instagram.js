@@ -10,6 +10,7 @@ var igQuerySearch = "media/search?";
 var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
+var dataready=0;
 
 //check for auth token and store
 if (location.href.indexOf("#") > 0){
@@ -28,16 +29,23 @@ function initializeApp(){
     database.ref("restaurants").on("value", function(snapshot){
         localCopyRestaurants = snapshot.val();
         console.log(localCopyRestaurants);
+        dataready++;
+        if(dataready === 2){
+            getOwnUserInfo();
+            getOwnImages();
+        }
     });
 
     //listen for changes to DB to keep localCopyUsers updated
     database.ref("users").on("value", function(snapshot){
         localCopyUsers = snapshot.val();
         console.log(localCopyUsers);
+        dataready++;
+        if(dataready === 2){
+            getOwnUserInfo();
+            getOwnImages();
+        }
     });
-
-    getOwnUserInfo();
-    getOwnImages();
     //getLocation();
 }//function initializeApp
 
