@@ -215,8 +215,8 @@ function checkRestaurantExists(imageData){
     if(imageData.location){
         console.log(localCopyRestaurants);
         for(var restaurant in localCopyRestaurants){
-            console.log(restaurant.lat + "===?" + imageData.location.latitude);
-            console.log(restaurant.lng + "===?" + imageData.location.longitude);
+            //console.log(restaurant.lat + "===?" + imageData.location.latitude);
+            //console.log(restaurant.lng + "===?" + imageData.location.longitude);
             if(restaurant.lat === imageData.location.latitude 
             && restaurant.lng === imageData.location.longitude){
                 existingRestaurantKey = restaurant;
