@@ -97,4 +97,3 @@ $(document).on("click",'#addfriend', function(){
 
 
 
-//"users/"+dataFromIg.id

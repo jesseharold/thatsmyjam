@@ -233,25 +233,12 @@ function doAddReview(imageData){
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
         snapshot.forEach(function(childSnapshot) {
-<<<<<<< HEAD
             //console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
             if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
                 restaurantExists = true;
                 console.log("restaurant match: " + childSnapshot.key);
                 
             }
-=======
-            console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
-            console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
-            console.log(imageData.location.latitude + ", " + imageData.location.longitude);
-            if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
-                console.log("equal");
-                restaurantExists = true;
-            } else {
-                console.log("not equal");
-            }
-            console.log("---------------------------");
->>>>>>> 576f4e620f76ef9c2702c9214ba62d5720688f8e
         });
         // if review doesn't already exist, add it
         if(restaurantExists){
