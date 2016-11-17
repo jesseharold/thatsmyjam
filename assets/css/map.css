@@ -17,18 +17,16 @@
 }
 
 /* geocoder styling */
-#change-location-panel {
+#floating-panel {
+position: absolute;
+top: 10px;
+left: 25%;
 z-index: 5;
-margin-left: 30px;
+background-color: #fff;
 padding: 5px;
+border: 1px solid #999;
 text-align: center;
+font-family: 'Roboto','sans-serif';
 line-height: 30px;
 padding-left: 10px;
-}
-#change-location-text{
-display: inline-block;
-line-height: 0;
-}
-#address{
-    margin-left: 5px
 }

@@ -19,16 +19,11 @@
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">That's My Jam</span>
-                    <!-- change location form -->
-                    <div id="change-location-panel" class="">
-                        <p id="change-location-text">Change Location: </p>
-                        <input id="address" type="textbox" value="Los Angeles, California">
-                        <input id="submit" type="button" value="Go">
-                    </div>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link"  href="">Add a Review</a>
                         <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
                         <a class="mdl-navigation__link"  href="">Sign up</a>
                     </nav>
@@ -65,44 +60,17 @@
                         </label>
                         </span>
                     </li>
-                    <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                        <i class="material-icons  mdl-list__item-avatar">person</i>
-                        Harold
-                        </span>
-                        <span class="mdl-list__item-secondary-action">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-2">
-                            <input type="checkbox" id="list-checkbox-2" class="mdl-checkbox__input" checked />
-                        </label>
-                        </span>
-                    </li>
-                    <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                        <img class="mdl-list__item-avatar" src="assets/images/testprofpic.jpg"/>
-                        Eric
-                        </span>
-                        <span class="mdl-list__item-secondary-action">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-3">
-                            <input type="checkbox" id="list-checkbox-3" class="mdl-checkbox__input" />
-                        </label>
-                        </span>
-                    </li>
-                    <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                        <img class="mdl-list__item-avatar" src="assets/images/testprofpic.jpg"/>
-                        Eric
-                        </span>
-                        <span class="mdl-list__item-secondary-action">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-3">
-                            <input type="checkbox" id="list-checkbox-3" class="mdl-checkbox__input" />
-                        </label>
-                        </span>
-                    </li>
+                   
                 </ul>
             </div>
         
             <main class="mdl-layout__content">
                  <div class="page-content">
+                    <!-- city input for centering map -->
+                    <div id="floating-panel">
+                        <input id="address" type="textbox" value="Los Angeles, California">
+                        <input id="submit" type="button" value="Change Location">
+                    </div>
                     <!-- map -->
                     <div id="map"></div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
