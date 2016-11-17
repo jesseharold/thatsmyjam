@@ -14,11 +14,13 @@ var localCopyUsers;
 //listen for changes to DB to keep localCopyRestaurants updated
 database.ref("restaurants").on("value", function(snapshot){
     localCopyRestaurants = snapshot.val();
+    console.log(localCopyRestaurants);
 });
 
 //listen for changes to DB to keep localCopyUsers updated
 database.ref("users").on("value", function(snapshot){
     localCopyUsers = snapshot.val();
+    console.log(localCopyUsers);
 });
 
 //check for auth token and store
