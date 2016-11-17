@@ -32,6 +32,7 @@ if (location.href.indexOf("#") > 0){
         }
         if (cookie.indexOf("authToken=") === 0) {
             token = cookie.substring(10, cookie.length);
+            initializeApp();
         }
     }
 }
