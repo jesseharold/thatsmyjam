@@ -10,6 +10,7 @@ var igQuerySearch = "media/search?";
 var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
+var currentUserId;
 var dataready=0;
 
 //check for auth token and store
@@ -97,7 +98,8 @@ function updateUser(dataFromIg){
     } else {
         database.ref("users/"+dataFromIg.id).set(user);
     }
-    // for all: update friends list
+    // for all: store ID locally and update friends list
+    currentUserId = dataFromIg.id;
     updateFriendList(dataFromIg.id);
 }//function updateUser
 
@@ -158,7 +160,6 @@ function getOwnImages(){
     })
     .done(function(response) {
         processImages(response);
-        promptForReviews();
     }).fail(function(err){
         console.error("Failed: " + err);
     });
@@ -182,6 +183,7 @@ function processImages(dataFromIg){
                 }
             }
         }
+        promptForReviews();
     } else {
         console.error("meta error: " + dataFromIg.meta.code);
     }
@@ -291,16 +293,44 @@ function promptForLocation(imageData){
     console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
 }
 
-function promptForReviews(imageData){
-// cycle through a user's reviews
-// create a local array of images that have no thumbsup/down value
-// in a modal ask the user if they'd like to add them now, say how many
-// if yes, 
-//   - show images one at a time, 
-//   - show buttons of thumbs
-//   - show existing text, allow them to edit it and click submit
-//   - on submit, update database and show next image until done
-//   - say thaks on done
+function promptForReviews(){
+    // find one review authored by current user that doesn't have 
+    // thumbsup/down 
+    var reviewMe = false;
+    var reviewMeRestaurant = false;
+    for (var restaurant in localCopyRestaurants){
+        var reviews = localCopyRestaurants[restaurant].reviews;
+        if(reviews){
+            for(var i = 0; i < reviews.length; i++){
+                if(reviews[i].author === currentUser && !reviews.thumb){
+                    showReviewModal(reviews[i].image, reviews[i].text, reviews[i].review_id, restaurant);
+                    i = reviews.length;
+                }
+            }
+        }
+    }
+}//function promptForReviews
+
+function showReviewModal(img, text, review_id, restaurant_id){
+    var modalBG = $("<div>").addClass("modalBackground");
+    var container = $("<div>").addClass("modalContainer");
+    var image = $("<img>").attr("src", img);
+    var textInput = $("<textarea>").text(text);
+    var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
+    var button = $("<button>").addClass("reviewSubmit").text("Submit");
+    var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
+    modalBG.append(container).after(image).after(textInput).after(thumbs).after(button).after(buttonCancel);
+    $("document").append(modalBG);
+    // in a modal show the user :
+    //   - show images
+    //   - show buttons of thumbs
+    //   - show existing text in an input with submit button
+    //   - show button to cancel adding reviews, store as global var
+    //  add styles and instructions
+    //  add button event listeners:
+    //  on submit, update database and call promptForReviews again
+    //  on cancel, remove modal, store local variable to not prompt
+    //   - say thaks on done
 }
 
 });//document ready
