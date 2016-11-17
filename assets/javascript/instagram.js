@@ -233,6 +233,7 @@ function hasSameLocation(lat1, lng1, lat2, lng2){
 }
 
 function addReviewToExistingRestaurant(imageData, key){
+    // restaurant already exists, only need the review data
     var thisImage = {
         review_id: imageData.id,
         thumbnail: imageData.images.thumbnail.url,
@@ -240,9 +241,8 @@ function addReviewToExistingRestaurant(imageData, key){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
-    // restaurant already exists
     // push this image to that restaurant_name's reviews array
-    database.ref("restaurants/"+key).push(imageData);
+    database.ref("restaurants/" + key + "/reviews").push(thisImage);
 }//function addReviewToExistingRestaurant
 
 function addReviewAndNewRestaurant(imageData){
