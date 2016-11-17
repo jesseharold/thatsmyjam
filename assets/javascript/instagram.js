@@ -18,11 +18,11 @@ if (location.href.indexOf("#") > 0){
     if (authToken[0] === "access_token"){
         $("#login").hide();
         token = authToken[1];
-        initApp();
+        initializeApp();
     }
 }
 
-function initApp(){
+function initializeApp(){
 
     //listen for changes to DB to keep localCopyRestaurants updated
     database.ref("restaurants").on("value", function(snapshot){
@@ -37,11 +37,9 @@ function initApp(){
     });
 
     getOwnUserInfo();
-    //getLocation();
     getOwnImages();
-
-
-}
+    //getLocation();
+}//function initializeApp
 
 function getLocation(){
     $.get("https://ipinfo.io", function(response) {
