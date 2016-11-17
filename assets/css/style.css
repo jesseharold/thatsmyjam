@@ -91,3 +91,7 @@
     bottom:35%;
 }     
 
+#titlelink{
+    text-decoration: none;
+    color:inherit;
+}

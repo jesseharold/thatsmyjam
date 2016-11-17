@@ -1,0 +1,16 @@
+#titlelink{
+    text-decoration: none;
+    color:inherit;
+}
+
+#textboxlength{
+    width:600px;
+}
+
+#restaurantlength{
+    width:600px;
+}
+
+#review {
+    resize:none;
+}

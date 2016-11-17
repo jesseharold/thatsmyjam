@@ -18,79 +18,53 @@ $('#notif').click(function(){
     });
 
 
-
-// function populateFriendsList(snapshot?) {
-
-//     var listTagFriend = $('<li>').addClass("mdl-list__item");
-//     var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
-//     var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").append("src", IGsnapshotSOURCE).html(IGsnapshotUSERNAME);
-//     var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
-//     var inputCheckmark = $('<input>').append("type", checkbox).append("id", list-checkbox-LENGTHNUMBER).addClass("mdl-checkbox__input");
-//     var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").append("for", list-checkbox-LENGTHNUMBER).append(inputCheckmark)
-    
-    
-    
-//     var completedFriend = listTag.append(spanTagFriend + imageTagFriend + spanCheckmark + labelCheckmark);
-// }
-
-// On connection to IG API {
-    
-//     loop through IG friends list (maybe if the user has a TMJ account too??)
-//     for (var i = 0, i < friendlist.length, i++){
-//         $(".friendlist").append(completedFriend);
-//     }
-    
-
-
-// }
+$(document).on("click","#submit-restaurant", function(){
+    window.location = "index.html";
+});
 
 
 
+function populateFriendsList() {
 
-var friendsUsers = {
-    friendNumber: 6,
-    userName: "Dirk",
-    imageURL: "https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/14262873_1829037100651690_6065155530383425536_n.jpg?ig_cache_key=MTM4MjE3Njc2NDkxNDEwODY4NA%3D%3D.2",
+    for (var m = 0; m < myTMJFriends.length; m++){
 
-}
-
-
-
-function populateFriendsList(testObject) {
-
-
-
-    var completedFriend
+    var friendListID = database.ref("users/" + myTMJFriends[m] + "/id").val();
+    var friendListName = database.ref("users/" + myTMJFriends[m] + "/name").val();
+    var friendListProfilePicture = database.ref("users/" + myTMJFriends[m] + "/profilePicture").val();
+    var friendListUsername = database.ref("users/" + myTMJFriends[m] + "/username").val();
 
     var listTagFriend = $('<li>').addClass("mdl-list__item");
 
     var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
     listTagFriend.append(spanTagFriend);
 
-    var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").attr("src", testObject.imageURL)
-    spanTagFriend.append(imageTagFriend).append(testObject.userName);
+    var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").attr("src", friendListProfilePicture)
+    spanTagFriend.append(imageTagFriend).append(friendListName);
 
     var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
     spanTagFriend.after(spanCheckmark);
 
-    var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").attr("for", "list-checkbox-" + testObject.friendNumber);
-    var inputCheckmark = $('<input>').addClass("mdl-checkbox__input").attr("type", "checkbox").attr("id", "list-checkbox-" + testObject.friendNumber).attr("checked", "");
+    var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").attr("for", "list-checkbox-" + myTMJFriends.indexOf([m]));
+    var inputCheckmark = $('<input>').addClass("mdl-checkbox__input").attr("type", "checkbox").attr("id", "list-checkbox-" + myTMJFriends.indexOf([m])).attr("checked", "");
    
     spanCheckmark.append(labelCheckmark);
 
     labelCheckmark.append(inputCheckmark);
     
     
-    completedFriend = listTagFriend;
+    var completedFriend = listTagFriend;
     
     console.log(completedFriend);
     $(".friendlist").append(completedFriend);
+
+    }
    
 }
 
+
 $(document).on("click",'#addfriend', function(){
     
-    populateFriendsList(friendsUsers);
+    populateFriendsList();
     componentHandler.upgradeDom();
 });
 
