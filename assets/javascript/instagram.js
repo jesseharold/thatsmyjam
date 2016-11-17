@@ -200,13 +200,11 @@ function checkReviewExists(imageData){
             for(var i = 0; i < localCopyRestaurants[restaurant].reviews.length; i++){
                 if(localCopyRestaurants[restaurant].reviews[i].review_id === imageData.id){
                     reviewsExists = true;
-                    console.log("found matching review");
                     return reviewsExists;
                 }
             }
         }
     }
-    console.log("didn't find matching review");
     return reviewExists
 }//function checkReviewExists
 
@@ -214,10 +212,12 @@ function checkRestaurantExists(imageData){
     var existingRestaurantKey;
     if(imageData.location){
         for(var restaurant in localCopyRestaurants){
-            if(localCopyRestaurants[restaurant].lat === imageData.location.latitude 
-            && localCopyRestaurants[restaurant].lng === imageData.location.longitude){
-                existingRestaurantKey = restaurant;
+            if(sameLocation(localCopyRestaurants[restaurant].lat,
+            localCopyRestaurants[restaurant].lng,
+            imageData.location.latitude,
+            imageData.location.longitude)){
                 console.log("duplicate entry key: " + restaurant);
+                existingRestaurantKey = restaurant;
                 return restaurant;
             }
         }
@@ -226,6 +226,16 @@ function checkRestaurantExists(imageData){
     }
     return false;
 }// function checkRestaurantExists
+
+function sameLocation(lat1, lng1, lat2, lng2){
+    sameLocation = false;
+    console.log(lat1, lng1, lat2, lng2);
+    var threshold = 0;
+    if (Math.abs(lat1 - lat2) <= threshold && Math.abs(lng1 - lng2) <= threshold){
+        sameLocation = true;
+    }
+    return sameLocation;
+}
 
 function addReviewToExistingRestaurant(imageData, key){
     var thisImage = {
