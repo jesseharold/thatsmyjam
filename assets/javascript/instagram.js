@@ -245,6 +245,78 @@ function addReviewToExistingRestaurant(imageData, key){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
+<<<<<<< HEAD
+    // check to see if restaurant already exists in the DB
+    if(imageData.location){
+        database.ref("restaurants").once('value', function(snapshot) {
+            var restaurantExists = false;
+            snapshot.forEach(function(childSnapshot) {
+                console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
+                console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+                console.log(imageData.location.latitude + ", " + imageData.location.longitude);
+                if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                    console.log("equal");
+                    restaurantExists = true;
+                } else {
+                    console.log("not equal");
+                }
+                console.log("---------------------------");
+            });
+
+<<<<<<< HEAD
+            if(restaurantExists){
+                console.log("restaurant already exists, don't add: " + imageData.location.name);
+                // restaurant already exists
+                // push this image to that restaurant_name's reviews array
+            } else {
+                // add new restaurant, and add this image
+                console.log("add new restaurant: " + imageData.location.name);
+                var thisRestaurant = {};
+=======
+
+    database.ref("restaurants").once('value', function(snapshot) {
+        var restaurantExists = false;
+        snapshot.forEach(function(childSnapshot) {
+            //console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+            if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                restaurantExists = true;
+                console.log("restaurant match: " + childSnapshot.key);
+                
+            }
+        });
+        // if review doesn't already exist, add it
+        if(restaurantExists){
+            console.log("restaurant already exists, don't add: " + imageData.location.name);
+            // restaurant already exists
+            // push this image to that restaurant_name's reviews array
+        } else {
+            // add new restaurant, and add this image
+            
+            console.log("add new restaurant: " + imageData.location.name);
+            var thisRestaurant = {};
+            if(imageData.location){
+>>>>>>> 7fe8cc4cc752b33798dd21800e3c08a1f28e9ce8
+                if(imageData.location.name){
+                    thisRestaurant.name = imageData.location.name;
+                }
+                if(imageData.location.latitude){
+                    thisRestaurant.lat = imageData.location.latitude;
+                }
+                if(imageData.location.longitude){
+                    thisRestaurant.lng = imageData.location.longitude;
+                }
+                
+                var allReviews = [];
+                allReviews.push(thisImage);
+                thisRestaurant.reviews = allReviews;
+                database.ref("restaurants").push(thisRestaurant);
+            }
+        });
+    } else { // this image doesn't have a location set
+        promptForLocation(imageData);
+    }
+}// function doAddReview
+=======
     console.log("restaurant already exists, add review to: " + imageData.location.name);
     // restaurant already exists
     // push this image to that restaurant_name's reviews array
@@ -276,12 +348,17 @@ function addReviewAndNewRestaurant(imageData){
     thisRestaurant.reviews = allReviews;
     database.ref("restaurants").push(thisRestaurant);
 }//function addReviewAndNewRestaurant
+>>>>>>> gh-pages
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
 // probably should pass in a way to ref. this review in the database
 // once that exists
+<<<<<<< HEAD
+    console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location."); 
+=======
     console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
+>>>>>>> gh-pages
 }
 
 function promptForReviews(imageData){
