@@ -129,9 +129,11 @@ function filterFriends(userID){
     // create a second friends list of only other TMJ users
     var allFriends = localCopyUsers[userID].friends;
     var myTMJFriends = [];
-    for (var i = 0; i < allFriends.length; i++){
-        if (localCopyUsers[allFriends[i]]){
-            myTMJFriends.push(allFriends[i]);
+    if(allFriends){
+        for (var i = 0; i < allFriends.length; i++){
+            if (localCopyUsers[allFriends[i]]){
+                myTMJFriends.push(allFriends[i]);
+            }
         }
     }
     database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
