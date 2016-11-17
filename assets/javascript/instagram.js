@@ -138,7 +138,7 @@ function getFriendsImages(myFriends){
     .fail(function(error){
         console.error(error);
     });
-}
+}//function getFriendsImages
 
 function getOwnImages(){
     $.ajax({
@@ -184,12 +184,9 @@ function hasHashTag(imageTags){
     return foundHashTag;
 }//function hasHashTag
 
-function checkReviewExists(imageData){
-    // check if this image is already in the DB as a review
-    // if it is, do nothing, which will allow our reviews to
-    // have custom text, and not get overwritten
+/*
+
     database.ref("restaurants").once('value', function(snapshot) {
-        var reviewExists = false;
         snapshot.forEach(function(childSnapshot) {
             if(childSnapshot.hasChild("reviews")){
                 var reviewsArray = childSnapshot.child("reviews").val();
@@ -201,14 +198,33 @@ function checkReviewExists(imageData){
             }
 
         });
-        // if review doesn't already exist, add it
-        if(!reviewExists){
-            checkRestaurantExists(imageData);
-        }
     });
+*/
+
+function checkReviewExists(imageData){
+    // check if this image is already in the DB as a review
+    // if it is, do nothing, which will allow our reviews to
+    // have custom text, and not get overwritten
+    var reviewExists = false;
+    for (var restaurant in localCopyRestaurants){
+        if(restaurant.reviews){
+            for(var i = 0; i < restaurant.reviews.length; i++){
+                if(restaurant.reviews[i].review_id === imageData.id){
+                    reviewsExists = true;
+                    //break out of loop
+                    i = restaurant.reviews.length;
+                }
+            }
+        }
+    }
+    // if review doesn't already exist, add it
+    if(!reviewExists){
+        checkRestaurantExists(imageData);
+    }
 }//function checkReviewExists
 
 function checkRestaurantExists(imageData){
+    console.log("checkRestaurantExists: "+imageData);
     var thisImage = {
         review_id: imageData.id,
         thumbnail: imageData.images.thumbnail.url,
