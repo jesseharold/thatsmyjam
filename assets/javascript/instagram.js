@@ -113,22 +113,31 @@ function updateFriendList(userID){
         for (var i = 0; i < response.data.length; i++){
             var thisFriend = response.data[i].id;
             myFriends.push(thisFriend);
-            // check to see if this friend is in our users DB
-            database.ref("users").once('value', function(snapshot) {
-                var snapObject = snapshot.val();
-                if (snapObject && snapObject[thisFriend]){
-                    myTMJFriends.push(thisFriend);
-                } 
-            });
         }
         database.ref("users").child(userID).child("friends").set(myFriends);
-        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-        getFriendsImages(myTMJFriends);
+        filterFriends(userID);
     })
     .fail(function(error){
         console.error(error);
     });
 }//function updateFriendList
+
+function filterFriends(userID){
+    // check user's friends list against user DB
+    // create a second friends list of only other TMJ users
+    database.ref("users").once('value', function(snapshot) {
+        var allFriends = snapshot.child(userID).child("friends").val();
+        var myTMJFriends = [];
+        for (var i = 0; i < allFriends.length; i++ ){
+            if (snapshot.hasChild(allFriends[i])){
+                myTMJFriends.push(allFriends[i]);
+            }
+        }
+        //console.log("myTMJFriends: " + myTMJFriends);
+        database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+        getFriendsImages(myTMJFriends);
+    });
+}
 
 function getFriendsImages(myFriends){
      $.ajax({
@@ -191,39 +200,81 @@ function createNewReview(imageData){
     // check if this image is already in the DB as a review
     // if it is, do nothing, which will allow our reviews to
     // have custom text, and not get overwritten
-    // if it doesn't exist, add it
-//    if(!doesImageExist(imageData.id)){
-        var thisImage = {
-            review_id: imageData.id,
-            thumbnail: imageData.images.thumbnail.url,
-            image: imageData.images.standard_resolution.url,
-            text: imageData.caption.text,
-            author: imageData.caption.from.id
-        };
-        var thisRestaurant = {};
-        if(imageData.location){
-            if(imageData.location.name){
-                thisRestaurant.name = imageData.location.name;
+    database.ref("restaurants").once('value', function(snapshot) {
+        var reviewExists = false;
+        snapshot.forEach(function(childSnapshot) {
+            if(childSnapshot.hasChild("reviews")){
+                var reviewsArray = childSnapshot.child("reviews").val();
+                for (var i = 0; i < reviewsArray.length; i++){
+                    if(reviewsArray[i].review_id  ==  imageData.id){
+                        reviewExists = true;
+                    }
+                }
             }
-            if(imageData.location.latitude){
-                thisRestaurant.lat = imageData.location.latitude;
-            }
-            if(imageData.location.longitude){
-                thisRestaurant.lng = imageData.location.longitude;
-            }
-        } else {
-            console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
-//          promptForLocation(imageData);
-        }
-        thisRestaurant.reviews = thisImage;
 
-// if location exists
-// push this image to that restaurant_name's reviews object
-// else
-        // add new restaurant, and add this image
-        database.ref("restaurants").push(thisRestaurant);
-//    }//initial if
+        });
+        // if review doesn't already exist, add it
+        if(!reviewExists){
+            doAddReview(imageData);
+        }
+    });
 }//function createNewReview
+
+function doAddReview(imageData){
+    var thisImage = {
+        review_id: imageData.id,
+        thumbnail: imageData.images.thumbnail.url,
+        image: imageData.images.standard_resolution.url,
+        text: imageData.caption.text,
+        author: imageData.caption.from.id
+    };
+
+
+    database.ref("restaurants").once('value', function(snapshot) {
+        var restaurantExists = false;
+        snapshot.forEach(function(childSnapshot) {
+            console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
+            console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+            console.log(imageData.location.latitude + ", " + imageData.location.longitude);
+            if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                console.log("equal");
+                restaurantExists = true;
+            } else {
+                console.log("not equal");
+            }
+            console.log("---------------------------");
+        });
+        // if review doesn't already exist, add it
+        if(restaurantExists){
+            console.log("restaurant already exists, don't add: " + imageData.location.name);
+            // restaurant already exists
+            // push this image to that restaurant_name's reviews array
+        } else {
+            // add new restaurant, and add this image
+            
+            console.log("add new restaurant: " + imageData.location.name);
+            var thisRestaurant = {};
+            if(imageData.location){
+                if(imageData.location.name){
+                    thisRestaurant.name = imageData.location.name;
+                }
+                if(imageData.location.latitude){
+                    thisRestaurant.lat = imageData.location.latitude;
+                }
+                if(imageData.location.longitude){
+                    thisRestaurant.lng = imageData.location.longitude;
+                }
+            } else {
+                console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
+//          promptForLocation(imageData);
+            }
+            var allReviews = [];
+            allReviews.push(thisImage);
+            thisRestaurant.reviews = allReviews;
+            database.ref("restaurants").push(thisRestaurant);
+        }
+    });
+}// function doAddReview
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
