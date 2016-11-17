@@ -11,18 +11,6 @@ var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
 
-//listen for changes to DB to keep localCopyRestaurants updated
-database.ref("restaurants").on("value", function(snapshot){
-    localCopyRestaurants = snapshot.val();
-    console.log(localCopyRestaurants);
-});
-
-//listen for changes to DB to keep localCopyUsers updated
-database.ref("users").on("value", function(snapshot){
-    localCopyUsers = snapshot.val();
-    console.log(localCopyUsers);
-});
-
 //check for auth token and store
 if (location.href.indexOf("#") > 0){
     var authTokenString = location.href.split("#").pop();
@@ -30,10 +18,29 @@ if (location.href.indexOf("#") > 0){
     if (authToken[0] === "access_token"){
         $("#login").hide();
         token = authToken[1];
-        getOwnUserInfo();
-        getLocation();
-        getOwnImages();
+        initApp();
     }
+}
+
+function initApp(){
+
+    //listen for changes to DB to keep localCopyRestaurants updated
+    database.ref("restaurants").on("value", function(snapshot){
+        localCopyRestaurants = snapshot.val();
+        console.log(localCopyRestaurants);
+    });
+
+    //listen for changes to DB to keep localCopyUsers updated
+    database.ref("users").on("value", function(snapshot){
+        localCopyUsers = snapshot.val();
+        console.log(localCopyUsers);
+    });
+
+    getOwnUserInfo();
+    //getLocation();
+    getOwnImages();
+
+
 }
 
 function getLocation(){
