@@ -250,13 +250,8 @@ function doAddReview(imageData){
             });
             // if review doesn't already exist, add it
             if(restaurantExists){
-                console.log("restaurant already exists, don't add: " + imageData.location.name);
-                // restaurant already exists
-                // push this image to that restaurant_name's reviews array
                 addReviewToExistingRestaurant(imageData, existingRestaurantKey);
             } else {
-                // add new restaurant, and add this image
-                console.log("add new restaurant: " + imageData.location.name);
                 addReviewAndNewRestaurant(imageData);
             }
         });
@@ -266,10 +261,15 @@ function doAddReview(imageData){
 }// function doAddReview
 
 function addReviewToExistingRestaurant(imageData, key){
+    console.log("restaurant already exists, don't add: " + imageData.location.name);
+    // restaurant already exists
+    // push this image to that restaurant_name's reviews array
     database.ref("restaurants/"+key).push(imageData);
 }//function addReviewToExistingRestaurant
 
 function addReviewAndNewRestaurant(imageData){
+    // add new restaurant, and add this image
+    console.log("add new restaurant: " + imageData.location.name);
     var thisRestaurant = {};
     if(imageData.location.name){
         thisRestaurant.name = imageData.location.name;
