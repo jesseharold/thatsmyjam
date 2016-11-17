@@ -31,6 +31,7 @@ function initializeApp(){
         console.log(localCopyRestaurants);
         dataready++;
         if(dataready === 2){
+            //check to see if both sets of data are ready
             getOwnUserInfo();
             getOwnImages();
         }
@@ -42,6 +43,7 @@ function initializeApp(){
         console.log(localCopyUsers);
         dataready++;
         if(dataready === 2){
+            //check to see if both sets of data are ready
             getOwnUserInfo();
             getOwnImages();
         }
@@ -91,40 +93,6 @@ function updateUser(dataFromIg){
     // for all: update friends list
     updateFriendList(dataFromIg.id);
 }//function updateUser
-
-function doesImageExist(id){
-    var imageExists = false;
-    database.ref("restaurants").once('value', function(snapshot) {
-        snapshot.forEach(function(restaurantSnapshot) {
-                if (restaurantSnapshot.hasChild("reviews")){
-                    var reviews = restaurantSnapshot.child("reviews").val();
-                    for (var i = 0; i < reviews.length; i++){
-                        if(reviews.imageId == id){
-                            imageExists = true;
-                        }
-                    }
-                }
-        });
-        return imageExists;
-    });
-}//function doesImageExist
-
-function doesRestaurantExist(id){
-    var imageExists = false;
-    database.ref("restaurants").once('value', function(snapshot) {
-        snapshot.forEach(function(restaurantSnapshot) {
-                if (restaurantSnapshot.hasChild("reviews")){
-                    var reviews = restaurantSnapshot.child("reviews").val();
-                    for (var i = 0; i < reviews.length; i++){
-                        if(reviews.imageId == id){
-                            imageExists = true;
-                        }
-                    }
-                }
-        });
-        return imageExists;
-    });
-}//function doesImageExist
 
 function updateFriendList(userID){
     $.ajax({
@@ -194,7 +162,6 @@ function getOwnImages(){
 }//function getOwnImages
 
 function processImages(dataFromIg){
-    deDuplicateRestaurants();
     if(dataFromIg.meta.code === 200){
         var reviewsToAdd = [];
         for (var i = 0; i < dataFromIg.data.length; i++) {  
@@ -211,10 +178,6 @@ function processImages(dataFromIg){
     }
 
 }// function processImages
-
-function deDuplicateRestaurants(){
-
-}//function deDuplicateRestaurants
 
 function hasHashTag(imageTags){
     var foundHashTag = false;
