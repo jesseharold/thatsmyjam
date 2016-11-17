@@ -165,7 +165,6 @@ function processImages(dataFromIg){
                 // don't add if it's already in DB
                 if (hasHashTag(thisImageData.tags) && !checkReviewExists(thisImageData)){
                     var existingRestaurantKey = checkRestaurantExists(thisImageData);
-                    console.log(existingRestaurantKey);
                     if(existingRestaurantKey){
                         addReviewToExistingRestaurant(thisImageData, existingRestaurantKey);
                     } else {
@@ -201,11 +200,13 @@ function checkReviewExists(imageData){
             for(var i = 0; i < restaurant.reviews.length; i++){
                 if(restaurant.reviews[i].review_id === imageData.id){
                     reviewsExists = true;
+                    console.log("found matching review");
                     return reviewsExists;
                 }
             }
         }
     }
+    console.log("didn't find matching review");
     return reviewExists
 }//function checkReviewExists
 
@@ -213,10 +214,12 @@ function checkRestaurantExists(imageData){
     var existingRestaurantKey;
     if(imageData.location){
         for(var restaurant in localCopyRestaurants){
-            if(restaurant.lat ==+ imageData.location.latitude 
+            console.log(restaurant.lat + "===?" + imageData.location.latitude);
+            console.log(restaurant.lng + "===?" + imageData.location.longitude);
+            if(restaurant.lat === imageData.location.latitude 
             && restaurant.lng === imageData.location.longitude){
                 existingRestaurantKey = restaurant;
-                console.log("duplicate key: "+restaurant);
+                console.log("true! duplicate key: " + restaurant);
                 return restaurant;
             }
         }
