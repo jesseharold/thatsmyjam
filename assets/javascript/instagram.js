@@ -165,6 +165,7 @@ function processImages(dataFromIg){
                 // don't add if it's already in DB
                 if (hasHashTag(thisImageData.tags) && !checkReviewExists(thisImageData)){
                     var existingRestaurantKey = checkRestaurantExists(thisImageData);
+                    console.log(existingRestaurantKey);
                     if(existingRestaurantKey){
                         addReviewToExistingRestaurant(thisImageData, existingRestaurantKey);
                     } else {
@@ -233,7 +234,7 @@ function addReviewToExistingRestaurant(imageData, key){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
-    console.log("restaurant already exists, don't add: " + imageData.location.name);
+    console.log("restaurant already exists, add review to: " + imageData.location.name);
     // restaurant already exists
     // push this image to that restaurant_name's reviews array
     database.ref("restaurants/"+key).push(imageData);
