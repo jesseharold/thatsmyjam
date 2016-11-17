@@ -72,13 +72,11 @@ function updateUser(dataFromIg){
     };
 
     // check to see if user already exists with this id
-    var userExists = false;
-    console.log(localCopyUsers.hasOwnProperty(dataFromIg.id));
-    if (userExists){
-        //console.log("updating existing user "+dataFromIg.id);
+    if (localCopyUsers[dataFromIg.id]){
+        console.log("updating existing user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).update(user);
     } else {
-        //console.log("creating new user "+dataFromIg.id);
+        console.log("creating new user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).set(user);
     }
 
