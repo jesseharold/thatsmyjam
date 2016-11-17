@@ -136,6 +136,8 @@ function filterFriends(userID){
     }
     database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
     getFriendsImages(myTMJFriends);
+    // call function on the user interface to populate visible friends list
+    //displayFriends();
 }//function filterFriends
 
 function getFriendsImages(myFriends){
@@ -302,7 +304,7 @@ function promptForReviews(){
         var reviews = localCopyRestaurants[restaurant].reviews;
         if(reviews){
             for(var i = 0; i < reviews.length; i++){
-                if(reviews[i].author === currentUser && !reviews.thumb){
+                if(reviews[i].author === currentUserId && !reviews.thumb){
                     showReviewModal(reviews[i].image, reviews[i].text, reviews[i].review_id, restaurant);
                     i = reviews.length;
                 }
