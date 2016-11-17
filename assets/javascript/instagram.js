@@ -27,7 +27,7 @@ function initializeApp(){
     //listen for changes to DB to keep localCopyRestaurants updated
     database.ref("restaurants").on("value", function(snapshot){
         localCopyRestaurants = snapshot.val();
-        console.log(localCopyRestaurants);
+        //console.log(localCopyRestaurants);
         dataready++;
         if(dataready === 2){
             //check to see if both sets of data are ready
@@ -38,7 +38,7 @@ function initializeApp(){
     //listen for changes to DB to keep localCopyUsers updated
     database.ref("users").on("value", function(snapshot){
         localCopyUsers = snapshot.val();
-        console.log(localCopyUsers);
+        //console.log(localCopyUsers);
         dataready++;
         if(dataready === 2){
             //check to see if both sets of data are ready
