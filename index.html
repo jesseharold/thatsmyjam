@@ -23,6 +23,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link"  href="">Add a Review</a>
                         <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
                         <a class="mdl-navigation__link"  href="">Sign up</a>
                     </nav>
@@ -65,6 +66,12 @@
         
             <main class="mdl-layout__content">
                  <div class="page-content">
+                    <!-- city input for centering map -->
+                    <div id="floating-panel">
+                        <input id="address" type="textbox" value="Los Angeles, California">
+                        <input id="submit" type="button" value="Change Location">
+                    </div>
+                    <!-- map -->
                     <div id="map"></div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
                         <i class="material-icons">add</i> 
@@ -87,11 +94,10 @@
         <!-- main front-end script -->
         <script src="assets/javascript/app.js"></script>
         <!-- firebase scripts -->
-        <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
         <script src="assets/javascript/firebase.js"></script>
         <!-- google maps scripts-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbclTHvLjlpEPMK_xC5wHJdyvozSb_Cz0&callback=initMap"
-        async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtu_MMhMD6Ss_EH4Ol-gidM9fRcePTO0M&callback=initMap" async defer></script>
         <script src="assets/javascript/map.js"></script>
         
     </body>

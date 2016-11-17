@@ -1,18 +1,18 @@
 //--- the below code blocks initialize the firebase database
 // Initialize Firebase
 var config = {
-apiKey: "AIzaSyAY09wovnCF5WmEEZv0uVR6JUJ_e5FhV14",
-authDomain: "thats-my-jam.firebaseapp.com",
-databaseURL: "https://thats-my-jam.firebaseio.com",
-storageBucket: "thats-my-jam.appspot.com",
-messagingSenderId: "718338845949"
+apiKey: "AIzaSyAkz3870LEAmF2XKge6piue0MstFN8HLOw",
+authDomain: "thats-my-jam-5bd76.firebaseapp.com",
+databaseURL: "https://thats-my-jam-5bd76.firebaseio.com",
+storageBucket: "thats-my-jam-5bd76.appspot.com",
+messagingSenderId: "24683058045"
 };
 firebase.initializeApp(config);
 
 var database = firebase.database();
 
-//--- the below code is commented out currently, but it can be used to reset the test data in firebase
-//create a test database of restraurants
+// --- the below code is commented out currently, but it can be used to reset the test data in firebase
+// create a test database of restraurants
 // var restaurantDatabase = [
 //     {
 //         name: "Bill's House", 
