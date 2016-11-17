@@ -196,9 +196,9 @@ function checkReviewExists(imageData){
     // have custom text, and not get overwritten
     var reviewExists = false;
     for (var restaurant in localCopyRestaurants){
-        if(restaurant.reviews){
-            for(var i = 0; i < restaurant.reviews.length; i++){
-                if(restaurant.reviews[i].review_id === imageData.id){
+        if(localCopyRestaurants[restaurant].reviews){
+            for(var i = 0; i < localCopyRestaurants[restaurant].reviews.length; i++){
+                if(localCopyRestaurants[restaurant].reviews[i].review_id === imageData.id){
                     reviewsExists = true;
                     console.log("found matching review");
                     return reviewsExists;
@@ -214,13 +214,10 @@ function checkRestaurantExists(imageData){
     var existingRestaurantKey;
     if(imageData.location){
         for(var restaurant in localCopyRestaurants){
-            console.log(restaurant);
-            //console.log(restaurant.lat + "===?" + imageData.location.latitude);
-            //console.log(restaurant.lng + "===?" + imageData.location.longitude);
-            if(restaurant.lat === imageData.location.latitude 
-            && restaurant.lng === imageData.location.longitude){
+            if(localCopyRestaurants[restaurant].lat === imageData.location.latitude 
+            && localCopyRestaurants[restaurant].lng === imageData.location.longitude){
                 existingRestaurantKey = restaurant;
-                console.log("true! duplicate key: " + restaurant);
+                console.log("duplicate entry key: " + restaurant);
                 return restaurant;
             }
         }
