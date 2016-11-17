@@ -1,6 +1,7 @@
 $("document").ready(function(){
 
 //var database = firebase.database();
+//using firebase info from firebase.js
 var endpoint = "https://api.instagram.com/v1/";
 var token; //auth token required by instragram API
 var igQueryOwnPhotos = "users/self/media/recent?";
@@ -232,59 +233,59 @@ function doAddReview(imageData){
 
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
-        snapshot.forEach(function(childSnapshot) {
-            console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
-            console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
-            console.log(imageData.location.latitude + ", " + imageData.location.longitude);
-            if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
-                console.log("equal");
-                restaurantExists = true;
+        if(imageData.location){
+            snapshot.forEach(function(childSnapshot) {
+                console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
+                console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+                console.log(imageData.location.latitude + ", " + imageData.location.longitude);
+                if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
+                    console.log("equal");
+                    restaurantExists = true;
+                } else {
+                    console.log("not equal");
+                }
+                console.log("---------------------------");
+            });
+            // if review doesn't already exist, add it
+            if(restaurantExists){
+                console.log("restaurant already exists, don't add: " + imageData.location.name);
+                // restaurant already exists
+                // push this image to that restaurant_name's reviews array
             } else {
-                console.log("not equal");
+                // add new restaurant, and add this image
+                
+                console.log("add new restaurant: " + imageData.location.name);
+                var thisRestaurant = {};
+                    if(imageData.location.name){
+                        thisRestaurant.name = imageData.location.name;
+                    }
+                    if(imageData.location.latitude){
+                        thisRestaurant.lat = imageData.location.latitude;
+                    }
+                    if(imageData.location.longitude){
+                        thisRestaurant.lng = imageData.location.longitude;
+                    }
+                var allReviews = [];
+                allReviews.push(thisImage);
+                thisRestaurant.reviews = allReviews;
+                database.ref("restaurants").push(thisRestaurant);
             }
-            console.log("---------------------------");
         });
-        // if review doesn't already exist, add it
-        if(restaurantExists){
-            console.log("restaurant already exists, don't add: " + imageData.location.name);
-            // restaurant already exists
-            // push this image to that restaurant_name's reviews array
-        } else {
-            // add new restaurant, and add this image
-            
-            console.log("add new restaurant: " + imageData.location.name);
-            var thisRestaurant = {};
-            if(imageData.location){
-                if(imageData.location.name){
-                    thisRestaurant.name = imageData.location.name;
-                }
-                if(imageData.location.latitude){
-                    thisRestaurant.lat = imageData.location.latitude;
-                }
-                if(imageData.location.longitude){
-                    thisRestaurant.lng = imageData.location.longitude;
-                }
-            } else {
-                console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
-//          promptForLocation(imageData);
-            }
-            var allReviews = [];
-            allReviews.push(thisImage);
-            thisRestaurant.reviews = allReviews;
-            database.ref("restaurants").push(thisRestaurant);
-        }
-    });
+    } else { // if no location is set for this image
+        promptForLocation(imageData);
+    }
 }// function doAddReview
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
 // probably should pass in a way to ref. this review in the database
 // once that exists
+    console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
 }
 
 function promptForReviews(imageData){
 // cycle through a user's reviews
-// create a local array of images that have no thumbs up/down value
+// create a local array of images that have no thumbsup/down value
 // in a modal ask the user if they'd like to add them now, say how many
 // if yes, 
 //   - show images one at a time, 
