@@ -95,5 +95,6 @@ $(document).on("click",'#addfriend', function(){
 });
 
 
+@harold_the_square will my friend's list function be able to call upon specific user data with something for example like "users/"+dataFromIg.id+"/friends-users" when 
 
-
+//"users/"+dataFromIg.id
