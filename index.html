@@ -19,6 +19,12 @@
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">That's My Jam</span>
+                    <!-- change location form -->
+                    <div id="change-location-panel" class="">
+                        <p id="change-location-text">Change Location: </p>
+                        <input id="address" type="textbox" value="Los Angeles, California">
+                        <input id="submit" type="button" value="Go">
+                    </div>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
@@ -97,11 +103,6 @@
         
             <main class="mdl-layout__content">
                  <div class="page-content">
-                    <!-- city input for centering map -->
-                    <div id="floating-panel">
-                        <input id="address" type="textbox" value="Los Angeles, California">
-                        <input id="submit" type="button" value="Change Location">
-                    </div>
                     <!-- map -->
                     <div id="map"></div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
