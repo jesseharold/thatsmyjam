@@ -213,7 +213,9 @@ function checkReviewExists(imageData){
     for (var restaurant in localCopyRestaurants){
         if(localCopyRestaurants[restaurant].reviews){
             for(var i = 0; i < localCopyRestaurants[restaurant].reviews.length; i++){
+                console.log(localCopyRestaurants[restaurant].reviews[i].review_id + "===?" + imageData.id);
                 if(localCopyRestaurants[restaurant].reviews[i].review_id === imageData.id){
+                    console.log("true");
                     reviewsExists = true;
                     return reviewsExists;
                 }
