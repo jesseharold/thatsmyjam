@@ -213,8 +213,8 @@ function checkReviewExists(imageData){
 function checkRestaurantExists(imageData){
     var existingRestaurantKey;
     if(imageData.location){
-        console.log(localCopyRestaurants);
         for(var restaurant in localCopyRestaurants){
+            console.log(restaurant);
             //console.log(restaurant.lat + "===?" + imageData.location.latitude);
             //console.log(restaurant.lng + "===?" + imageData.location.longitude);
             if(restaurant.lat === imageData.location.latitude 
