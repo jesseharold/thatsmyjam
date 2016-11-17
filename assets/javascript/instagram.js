@@ -207,10 +207,8 @@ function checkRestaurantExists(imageData){
     var existingRestaurantKey;
     if(imageData.location){
         for(var restaurant in localCopyRestaurants){
-            if(sameLocation(localCopyRestaurants[restaurant].lat,
-            localCopyRestaurants[restaurant].lng,
-            imageData.location.latitude,
-            imageData.location.longitude)){
+            if(hasSameLocation(localCopyRestaurants[restaurant].lat, localCopyRestaurants[restaurant].lng,
+            imageData.location.latitude, imageData.location.longitude)){
                 // duplicate entry, return the key
                 existingRestaurantKey = restaurant;
                 return restaurant;
@@ -222,11 +220,11 @@ function checkRestaurantExists(imageData){
     return false;
 }// function checkRestaurantExists
 
-function sameLocation(lat1, lng1, lat2, lng2){
+function hasSameLocation(lat1, lng1, lat2, lng2){
     //icebox feature: have two thresholds, one that's a for sure match
     //and one that triggers a text compare between the names, looks for
     //a high percentage of string match
-    sameLocation = false;
+    var sameLocation = false;
     var threshold = 0;
     if (Math.abs(lat1 - lat2) <= threshold && Math.abs(lng1 - lng2) <= threshold){
         sameLocation = true;
