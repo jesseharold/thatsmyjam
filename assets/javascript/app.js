@@ -46,22 +46,11 @@ $('#notif').click(function(){
 
 
 
-//                     <li class="mdl-list__item">
-//                         <span class="mdl-list__item-primary-content">
-//                         <img class="mdl-list__item-avatar" src="assets/images/testprofpic.jpg"/>
-//                         Eric
-//                         </span>
-//                         <span class="mdl-list__item-secondary-action">
-//                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-3">
-//                             <input type="checkbox" id="list-checkbox-3" class="mdl-checkbox__input" />
-//                         </label>
-//                         </span>
-//                     </li>
 
-var testObject = {
+var friendsUsers = {
     friendNumber: 6,
     userName: "Dirk",
-    imageURL: "assets/images/testprofpic.jpg",
+    imageURL: "https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/14262873_1829037100651690_6065155530383425536_n.jpg?ig_cache_key=MTM4MjE3Njc2NDkxNDEwODY4NA%3D%3D.2",
 
 }
 
@@ -69,19 +58,42 @@ var testObject = {
 
 function populateFriendsList(testObject) {
 
+
+
+    var completedFriend
+
     var listTagFriend = $('<li>').addClass("mdl-list__item");
+
     var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
-    var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").append("src", testObject.imageURL).html(testObject.userName);
+    listTagFriend.append(spanTagFriend);
+
+    var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").attr("src", testObject.imageURL)
+    spanTagFriend.append(imageTagFriend).append(testObject.userName);
+
     var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
-    var inputCheckmark = $('<input>').append("type", "checkbox").append("id", "list-checkbox-" + testObject.friendNumber).addClass("mdl-checkbox__input");
-    var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").append("for", "list-checkbox-" + testObject.friendNumber).append(inputCheckmark)
+    spanTagFriend.after(spanCheckmark);
+
+    var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").attr("for", "list-checkbox-" + testObject.friendNumber);
+    var inputCheckmark = $('<input>').addClass("mdl-checkbox__input").attr("type", "checkbox").attr("id", "list-checkbox-" + testObject.friendNumber).attr("checked", "");
+   
+    spanCheckmark.append(labelCheckmark);
+
+    labelCheckmark.append(inputCheckmark);
     
     
+    completedFriend = listTagFriend;
     
-    var completedFriend = listTagFriend.append(spanTagFriend + imageTagFriend + spanCheckmark + labelCheckmark);
+    console.log(completedFriend);
     $(".friendlist").append(completedFriend);
+   
 }
 
 $(document).on("click",'#addfriend', function(){
-    populateFriendsList(JSON.stringify(testObject));
+    
+    populateFriendsList(friendsUsers);
+    componentHandler.upgradeDom();
 });
+
+
+
+
