@@ -270,9 +270,10 @@ function checkRestaurantExists(imageData){
             } else {
                 addReviewAndNewRestaurant(thisImage, imageData);
             }
-    } else { // if no location is set for this image
-        promptForLocation(imageData);
-    }
+        } else { // if no location is set for this image
+            promptForLocation(imageData);
+        }
+    });
 }// function checkRestaurantExists
 
 function addReviewToExistingRestaurant(thisImage, key){
