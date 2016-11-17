@@ -71,7 +71,6 @@ function getOwnUserInfo(){
 }//function getOwnUserInfo(){
 
 function updateUser(dataFromIg){
-    //console.log(dataFromIg);
     var user = {
         name: dataFromIg.full_name,
         id: dataFromIg.id,
@@ -80,10 +79,8 @@ function updateUser(dataFromIg){
     };
     // check to see if user already exists with this id
     if (localCopyUsers && localCopyUsers[dataFromIg.id]){
-        //console.log("updating existing user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).update(user);
     } else {
-        //console.log("creating new user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).set(user);
     }
     // for all: update friends list
@@ -121,7 +118,6 @@ function filterFriends(userID){
             myTMJFriends.push(allFriends[i]);
         }
     }
-    //console.log("myTMJFriends: " + myTMJFriends);
     database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
     getFriendsImages(myTMJFriends);
 }//function filterFriends
@@ -147,7 +143,6 @@ function getOwnImages(){
         dataType: "jsonp"
     })
     .done(function(response) {
-        //console.log(response.data);
         processImages(response);
         promptForReviews();
     }).fail(function(err){
@@ -216,7 +211,7 @@ function checkRestaurantExists(imageData){
             localCopyRestaurants[restaurant].lng,
             imageData.location.latitude,
             imageData.location.longitude)){
-                console.log("duplicate entry key: " + restaurant);
+                // duplicate entry, return the key
                 existingRestaurantKey = restaurant;
                 return restaurant;
             }
@@ -228,8 +223,10 @@ function checkRestaurantExists(imageData){
 }// function checkRestaurantExists
 
 function sameLocation(lat1, lng1, lat2, lng2){
+    //icebox feature: have two thresholds, one that's a for sure match
+    //and one that triggers a text compare between the names, looks for
+    //a high percentage of string match
     sameLocation = false;
-    console.log(lat1, lng1, lat2, lng2);
     var threshold = 0;
     if (Math.abs(lat1 - lat2) <= threshold && Math.abs(lng1 - lng2) <= threshold){
         sameLocation = true;
@@ -245,7 +242,6 @@ function addReviewToExistingRestaurant(imageData, key){
         text: imageData.caption.text,
         author: imageData.caption.from.id
     };
-    console.log("restaurant already exists, add review to: " + imageData.location.name);
     // restaurant already exists
     // push this image to that restaurant_name's reviews array
     database.ref("restaurants/"+key).push(imageData);
@@ -260,7 +256,6 @@ function addReviewAndNewRestaurant(imageData){
         author: imageData.caption.from.id
     };
     // add new restaurant, and add this image
-    console.log("add new restaurant: " + imageData.location.name);
     var thisRestaurant = {};
     if(imageData.location.name){
         thisRestaurant.name = imageData.location.name;
