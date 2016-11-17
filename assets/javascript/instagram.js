@@ -233,48 +233,58 @@ function doAddReview(imageData){
 
     database.ref("restaurants").once('value', function(snapshot) {
         var restaurantExists = false;
+        var existingRestaurantKey;
         if(imageData.location){
             snapshot.forEach(function(childSnapshot) {
-                console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
-                console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
-                console.log(imageData.location.latitude + ", " + imageData.location.longitude);
+                //console.log(imageData.location.name +"==?"+ childSnapshot.child("name").val());
+                //console.log(childSnapshot.child("lat").val() + ", " + childSnapshot.child("lng").val());
+                //console.log(imageData.location.latitude + ", " + imageData.location.longitude);
                 if(childSnapshot.child("lat").val() == imageData.location.latitude && childSnapshot.child("lng").val() == imageData.location.longitude){
-                    console.log("equal");
+                    //console.log("equal");
                     restaurantExists = true;
+                    existingRestaurantKey = childSnapshot.key;
                 } else {
-                    console.log("not equal");
+                    //console.log("not equal");
                 }
-                console.log("---------------------------");
+                //console.log("---------------------------");
             });
             // if review doesn't already exist, add it
             if(restaurantExists){
                 console.log("restaurant already exists, don't add: " + imageData.location.name);
                 // restaurant already exists
                 // push this image to that restaurant_name's reviews array
+                addReviewToExistingRestaurant(imageData, existingRestaurantKey);
             } else {
                 // add new restaurant, and add this image
-                
                 console.log("add new restaurant: " + imageData.location.name);
-                var thisRestaurant = {};
-                    if(imageData.location.name){
-                        thisRestaurant.name = imageData.location.name;
-                    }
-                    if(imageData.location.latitude){
-                        thisRestaurant.lat = imageData.location.latitude;
-                    }
-                    if(imageData.location.longitude){
-                        thisRestaurant.lng = imageData.location.longitude;
-                    }
-                var allReviews = [];
-                allReviews.push(thisImage);
-                thisRestaurant.reviews = allReviews;
-                database.ref("restaurants").push(thisRestaurant);
+                addReviewAndNewRestaurant(imageData);
             }
         });
     } else { // if no location is set for this image
         promptForLocation(imageData);
     }
 }// function doAddReview
+
+function addReviewToExistingRestaurant(imageData, key){
+    database.ref("restaurants/"+key).push(imageData);
+}//function addReviewToExistingRestaurant
+
+function addReviewAndNewRestaurant(imageData){
+    var thisRestaurant = {};
+    if(imageData.location.name){
+        thisRestaurant.name = imageData.location.name;
+    }
+    if(imageData.location.latitude){
+        thisRestaurant.lat = imageData.location.latitude;
+    }
+    if(imageData.location.longitude){
+        thisRestaurant.lng = imageData.location.longitude;
+    }
+    var allReviews = [];
+    allReviews.push(thisImage);
+    thisRestaurant.reviews = allReviews;
+    database.ref("restaurants").push(thisRestaurant);
+}//function addReviewAndNewRestaurant
 
 function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
