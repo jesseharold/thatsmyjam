@@ -24,7 +24,6 @@ if (location.href.indexOf("#") > 0){
 }
 
 function initializeApp(){
-
     //listen for changes to DB to keep localCopyRestaurants updated
     database.ref("restaurants").on("value", function(snapshot){
         localCopyRestaurants = snapshot.val();
@@ -36,7 +35,6 @@ function initializeApp(){
             getOwnImages();
         }
     });
-
     //listen for changes to DB to keep localCopyUsers updated
     database.ref("users").on("value", function(snapshot){
         localCopyUsers = snapshot.val();
@@ -80,7 +78,6 @@ function updateUser(dataFromIg){
         username: dataFromIg.username,
         profilePicture: dataFromIg.profile_picture
     };
-
     // check to see if user already exists with this id
     if (localCopyUsers && localCopyUsers[dataFromIg.id]){
         console.log("updating existing user "+dataFromIg.id);
@@ -89,7 +86,6 @@ function updateUser(dataFromIg){
         console.log("creating new user "+dataFromIg.id);
         database.ref("users/"+dataFromIg.id).set(user);
     }
-
     // for all: update friends list
     updateFriendList(dataFromIg.id);
 }//function updateUser
@@ -116,13 +112,12 @@ function updateFriendList(userID){
 }//function updateFriendList
 
 function filterFriends(userID){
-    // check user's friends list against user DB
+    // check user's friends list against existing users
     // create a second friends list of only other TMJ users
-    database.ref("users").once('value', function(snapshot) {
-        var allFriends = snapshot.child(userID).child("friends").val();
+        var allFriends = localCopyUsers[userID].friends;
         var myTMJFriends = [];
-        for (var i = 0; i < allFriends.length; i++ ){
-            if (snapshot.hasChild(allFriends[i])){
+        for (var i = 0; i < allFriends.length; i++){
+            if (localCopyUsers[allFriends[i]]){
                 myTMJFriends.push(allFriends[i]);
             }
         }
@@ -130,7 +125,7 @@ function filterFriends(userID){
         database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
         getFriendsImages(myTMJFriends);
     });
-}
+}//function filterFriends
 
 function getFriendsImages(myFriends){
      $.ajax({
