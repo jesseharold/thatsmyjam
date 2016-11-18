@@ -6,6 +6,8 @@ var currentLocation = SF;
 var currentUser = "bill@gmail.com";
 var friendsList = ["4147363198", "4147363198", "4149753642"];
 
+//test branch new-branch 
+
 //database references
 var restaurantData = database.ref("/restaurants");
 
