@@ -19,7 +19,7 @@
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
                     
-                    <span class="mdl-layout-title">That's My Jam</span>
+                    <span class="mdl-layout-title"><a id="titlelink" href="index.html">That's My Jam</a></span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                    
@@ -55,10 +55,12 @@
                                     </div>
                                 <div class="mdl-card__supporting-text">
                                         <form action="#">
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <div class="mdl-layout-spacer"></div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="restaurantlength">
                                                 <input class="mdl-textfield__input" type="text" id="restaurantname" />
                                                 <label class="mdl-textfield__label" for="restaurantname">Restaurant Name</label>
                                             </div>
+                                            <div class="mdl-layout-spacer"></div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 <input class="mdl-textfield__input" type="text" id="address" />
                                                 <label class="mdl-textfield__label" for="address">Address</label>
@@ -79,14 +81,23 @@
                                                 <input class="mdl-textfield__input" type="text" id="phone" />
                                                 <label class="mdl-textfield__label" for="phone">Phone</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <div class="">
+                                                Thumbs up or down?
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" id="thumbup">
+                                                <i class="material-icons">thumb_up</i>
+                                                </button>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" id="thumbdown">
+                                                <i class="material-icons">thumb_down</i>
+                                                </button>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="textboxlength">
                                                 <textarea class="mdl-textfield__input" type="text" id="review" rows="5"></textarea>
                                                 <label class="mdl-textfield__label" for="review">Review</label>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">That's My Jam!</button>
+                                        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="submit-restaurant">That's My Jam!</button>
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--3-col"> 
