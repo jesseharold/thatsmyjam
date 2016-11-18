@@ -275,7 +275,8 @@ function addReviewAndNewRestaurant(imageData){
         thumbnail: imageData.images.thumbnail.url,
         image: imageData.images.standard_resolution.url,
         text: imageData.caption.text,
-        author: imageData.caption.from.id
+        author: imageData.caption.from.id,
+        thumb: "up"
     };
     // add new restaurant, and add this image
     var thisRestaurant = {};
