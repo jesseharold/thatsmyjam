@@ -319,14 +319,16 @@ function promptForReviews(){
 function showReviewModal(arrayToReview){
     var reviewObject = arrayToReview[0].review;
     var restaurant_id = arrayToReview[0].restaurant;
+    var modalContainer = $("<div>").addClass("modalContainer");
     var modalBG = $("<div>").addClass("modalBackground");
-    var container = $("<div>").addClass("modalContainer");
+    var modalContent = $("<div>").addClass("modalContent");
     var image = $("<img>").attr("src", reviewObject.thumbnail);
     var textInput = $("<textarea>").text(reviewObject.text);
     var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
-    var modal = modalBG.append(container);
+    modalContainer.append(modalBG);
+    var modal = modalContainer.append(container);
     modal.append(image);
     modal.append(textInput);
     modal.append(thumbs);
