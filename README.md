@@ -13,7 +13,9 @@ and firebase
 ## program flow:
 
 ### to add an instagram photo
-* user takes a food photo and posts with the hashtag #thatsmyjam and the restaurant added as the location
+* user takes a food photo and posts in their instagram account 
+* user must use the hashtag #thatsmyjam 
+* and have a location set for the post
 
 ### user logs in w instagram:
 * look up their IG username in our DB of users, add if new user
