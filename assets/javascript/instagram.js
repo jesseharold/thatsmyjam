@@ -11,6 +11,7 @@ var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
 var currentUserId;
+var currentUserFriendsList;
 var dataready=0;
 
 //check for auth token and store
@@ -137,6 +138,7 @@ function filterFriends(userID){
         }
     }
     database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
+    currentUserFriendsList = myTMJFriends;
     getFriendsImages(myTMJFriends);
     // call function on the user interface to populate visible friends list
     //displayFriends();
@@ -259,7 +261,8 @@ function addReviewToExistingRestaurant(imageData, key){
         thumbnail: imageData.images.thumbnail.url,
         image: imageData.images.standard_resolution.url,
         text: imageData.caption.text,
-        author: imageData.caption.from.id
+        author: imageData.caption.from.id,
+        thumb: "up"
     };
     // push this image to that restaurant_name's reviews array
     database.ref("restaurants/" + key + "/reviews").push(thisImage);
