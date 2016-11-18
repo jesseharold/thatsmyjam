@@ -319,22 +319,20 @@ function promptForReviews(){
 function showReviewModal(arrayToReview){
     var reviewObject = arrayToReview[0].review;
     var restaurant_id = arrayToReview[0].restaurant;
-    var modalContainer = $("<div>").addClass("modalContainer");
-    var modalBG = $("<div>").addClass("modalBackground");
-    var modalContent = $("<div>").addClass("modalContent");
     var image = $("<img>").attr("src", reviewObject.thumbnail);
     var textInput = $("<textarea>").text(reviewObject.text);
     var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
-    modalContainer.append(modalBG);
-    var modal = modalContainer.append(container);
-    modal.append(image);
-    modal.append(textInput);
-    modal.append(thumbs);
-    modal.append(button);
-    modal.append(buttonCancel);
-    $("body").append(modalBG);
+    var currentReview = $("<div>").addClass("doing-review").attr("id", reviewObject.review_id);
+    currentReview.append(image);
+    currentReview.append(textInput);
+    currentReview.append(thumbs);
+    currentReview.append(button);
+    currentReview.append(buttonCancel);
+
+    openModal(currentReview);
+
     // in a modal show the user :
     //   - show images
     //   - show buttons of thumbs
@@ -346,5 +344,15 @@ function showReviewModal(arrayToReview){
     //  on cancel, remove modal, store local variable to not prompt
     //   - say thaks on done
 }//function showReviewModal
+
+function openModal(content){
+    var modalContainer = $("<div>").addClass("modalContainer");
+    var modalBG = $("<div>").addClass("modalBackground");
+    var modalContent = $("<div>").addClass("modalContent");
+    modalContainer.append(modalBG);
+    var modal = modalContainer.append(container);
+    modal.append(content);
+    $("body").append(modalContainer);
+}
 
 });//document ready
