@@ -326,7 +326,7 @@ function showReviewModal(arrayToReview){
     var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
-    modalBG.append(container).after(image).after(textInput).after(thumbs).after(button).after(buttonCancel);
+    modalBG.append(container).append(image).after(textInput).after(thumbs).after(button).after(buttonCancel);
     $("body").append(modalBG);
     // in a modal show the user :
     //   - show images
@@ -338,6 +338,6 @@ function showReviewModal(arrayToReview){
     //  on submit, update database and call promptForReviews again
     //  on cancel, remove modal, store local variable to not prompt
     //   - say thaks on done
-}
+}//function showReviewModal
 
 });//document ready
