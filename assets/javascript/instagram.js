@@ -1,40 +1,41 @@
-$("document").ready(function(){
 
 //var database = firebase.database();
 //using firebase info from firebase.js
-var endpoint = "https://api.instagram.com/v1/";
-var token; //auth token required by instragram API
-var igQueryOwnPhotos = "users/self/media/recent?";
-var igQueryTag = "tags/thatsmyjam/media/recent?";
-var igQuerySearch = "media/search?";
+var instagramEndpoint = "https://api.instagram.com/v1/";
+var instagramAuthToken; //auth token required by instragram API
+var instagramQueryOwnPhotos = "users/self/media/recent?";
+var instagramQueryTag = "tags/thatsmyjam/media/recent?";
+var instagramQuerySearch = "media/search?";
 var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
 var currentUserId;
 var currentUserFriendsList;
-var dataready=0;
+var instagramDataReady=0;
 
-//check for auth token and store
-if (location.href.indexOf("#") > 0){
-    var authTokenString = location.href.split("#").pop();
-    var authToken = authTokenString.split("=");
-    if (authToken[0] === "access_token"){
-        $("#login").hide();
-        token = authToken[1];
-        document.cookie = "authToken=" + token;
-        initializeApp();
-    }
-} else {
-    //look for token value in cookies
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++){
-        var cookie = cookies[i];
-        while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1);
-        }
-        if (cookie.indexOf("authToken=") === 0) {
-            token = cookie.substring(10, cookie.length);
+function checkForAuthToken(){
+    //check for auth token and store
+    if (location.href.indexOf("#") > 0){
+        var authTokenString = location.href.split("#").pop();
+        var authToken = authTokenString.split("=");
+        if (authToken[0] === "access_token"){
+            $("#login").hide();
+            instagramAuthToken = authToken[1];
+            document.cookie = "authToken=" + instagramAuthToken;
             initializeApp();
+        }
+    } else {
+        //look for token value in cookies
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++){
+            var cookie = cookies[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf("authToken=") === 0) {
+                instagramAuthToken = cookie.substring(10, cookie.length);
+                initializeApp();
+            }
         }
     }
 }
@@ -44,8 +45,8 @@ function initializeApp(){
     database.ref("restaurants").on("value", function(snapshot){
         localCopyRestaurants = snapshot.val();
         //console.log(localCopyRestaurants);
-        dataready++;
-        if(dataready === 2){
+        instagramDataReady++;
+        if(instagramDataReady === 2){
             //check to see if both sets of data are ready
             getOwnUserInfo();
             getOwnImages();
@@ -55,8 +56,8 @@ function initializeApp(){
     database.ref("users").on("value", function(snapshot){
         localCopyUsers = snapshot.val();
         //console.log(localCopyUsers);
-        dataready++;
-        if(dataready === 2){
+        instagramDataReady++;
+        if(instagramDataReady === 2){
             //check to see if both sets of data are ready
             getOwnUserInfo();
             getOwnImages();
@@ -74,7 +75,7 @@ function getLocation(){
 
 function getOwnUserInfo(){
     $.ajax({
-        url: endpoint + "users/self/?" + "access_token=" + token,
+        url: instagramEndpoint + "users/self/?" + "access_token=" + instagramAuthToken,
         method: 'GET',
         dataType: "jsonp"
     })
@@ -106,7 +107,7 @@ function updateUser(dataFromIg){
 
 function updateFriendList(userID){
     $.ajax({
-        url: endpoint + "users/self/follows?" + "scope=follower_list&" + "access_token=" + token,
+        url: instagramEndpoint + "users/self/follows?" + "scope=follower_list&" + "access_token=" + instagramAuthToken,
         method: 'GET',
         dataType: "jsonp"
     })
@@ -146,7 +147,7 @@ function filterFriends(userID){
 
 function getFriendsImages(myFriends){
      $.ajax({
-        url: endpoint + igQueryTag + "scope=public_content&" + "access_token=" + token,
+        url: instagramEndpoint + instagramQueryTag + "scope=public_content&" + "access_token=" + instagramAuthToken,
         method: 'GET',
         dataType: "jsonp"
     })
@@ -160,7 +161,7 @@ function getFriendsImages(myFriends){
 
 function getOwnImages(){
     $.ajax({
-        url: endpoint + igQueryOwnPhotos + "access_token=" + token,
+        url: instagramEndpoint + instagramQueryOwnPhotos + "access_token=" + instagramAuthToken,
         method: 'GET',
         dataType: "jsonp"
     })
@@ -189,7 +190,6 @@ function processImages(dataFromIg){
                 }
             }
         }
-        promptForReviews();
     } else {
         console.error("meta error: " + dataFromIg.meta.code);
     }
@@ -236,9 +236,10 @@ function checkRestaurantExists(imageData){
                 return restaurant;
             }
         }
-    } else { // if no location is set for this image
-        promptForLocation(imageData);
-    }
+    }// else { // if no location is set for this image
+        //promptForLocation(imageData);
+        //iceboxed
+    //}
     return false;
 }// function checkRestaurantExists
 
@@ -293,60 +294,12 @@ function addReviewAndNewRestaurant(imageData){
     database.ref("restaurants").push(thisRestaurant);
 }//function addReviewAndNewRestaurant
 
-function promptForLocation(imageData){
+//function promptForLocation(imageData){
 // this is in the icebox, but it would be nice to add down the road.
 // probably should pass in a way to ref. this review in the database
 // once that exists
-    console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
-}
-
-function promptForReviews(){
-    // find one review authored by current user that doesn't have 
-    // thumbsup/down 
-    var reviewMe = [];
-    for (var restaurant in localCopyRestaurants){
-        var reviews = localCopyRestaurants[restaurant].reviews;
-        if(reviews){
-            for(var review in reviews){
-                if(reviews[review].author === currentUserId && !reviews[review].thumb){
-                    reviewMe.push({review:reviews[review], restaurant:restaurant});
-                }
-            }
-        }
-    }
-    if(reviewMe.length > 0){
-        showReviewModal(reviewMe);
-    }
-}//function promptForReviews
-
-function showReviewModal(arrayToReview){
-    var reviewObject = arrayToReview[0].review;
-    var restaurant_id = arrayToReview[0].restaurant;
-    var image = $("<img>").attr("src", reviewObject.thumbnail);
-    var textInput = $("<textarea>").text(reviewObject.text);
-    var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
-    var button = $("<button>").addClass("reviewSubmit").text("Submit");
-    var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
-    var currentReview = $("<div>").addClass("doing-review").attr("id", reviewObject.review_id);
-    currentReview.append(image);
-    currentReview.append(textInput);
-    currentReview.append(thumbs);
-    currentReview.append(button);
-    currentReview.append(buttonCancel);
-
-    openModal(currentReview);
-
-    // in a modal show the user :
-    //   - show images
-    //   - show buttons of thumbs
-    //   - show existing text in an input with submit button
-    //   - show button to cancel adding reviews, store as global var
-    //  add styles and instructions
-    //  add button event listeners:
-    //  on submit, update database and call promptForReviews again
-    //  on cancel, remove modal, store local variable to not prompt
-    //   - say thaks on done
-}//function showReviewModal
+    //console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
+//}
 
 function openModal(content){
     var modalContainer = $("<div>").addClass("modalContainer");
@@ -358,4 +311,7 @@ function openModal(content){
     $("body").append(modalContainer);
 }
 
+$("document").ready(function(){
+checkForAuthToken();
 });//document ready
+
