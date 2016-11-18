@@ -327,7 +327,7 @@ function showReviewModal(arrayToReview){
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
     modalBG.append(container).after(image).after(textInput).after(thumbs).after(button).after(buttonCancel);
-    $("document").append(modalBG);
+    $("body").append(modalBG);
     // in a modal show the user :
     //   - show images
     //   - show buttons of thumbs
