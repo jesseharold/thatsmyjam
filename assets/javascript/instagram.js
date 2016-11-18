@@ -321,12 +321,17 @@ function showReviewModal(arrayToReview){
     var restaurant_id = arrayToReview[0].restaurant;
     var modalBG = $("<div>").addClass("modalBackground");
     var container = $("<div>").addClass("modalContainer");
-    var image = $("<img>").attr("src", reviewObject.image);
+    var image = $("<img>").attr("src", reviewObject.thumbnail);
     var textInput = $("<textarea>").text(reviewObject.text);
     var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
-    modalBG.append(container).append(image).after(textInput).after(thumbs).after(button).after(buttonCancel);
+    var modal = modalBG.append(container);
+    modal.append(image);
+    modal.append(textInput);
+    modal.append(thumbs);
+    modal.append(button);
+    modal.append(buttonCancel);
     $("body").append(modalBG);
     // in a modal show the user :
     //   - show images
