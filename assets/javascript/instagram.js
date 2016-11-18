@@ -300,26 +300,29 @@ function promptForLocation(imageData){
 function promptForReviews(){
     // find one review authored by current user that doesn't have 
     // thumbsup/down 
-    var reviewMe = false;
-    var reviewMeRestaurant = false;
+    var reviewMe = [];
     for (var restaurant in localCopyRestaurants){
         var reviews = localCopyRestaurants[restaurant].reviews;
         if(reviews){
-            for(var i = 0; i < reviews.length; i++){
-                if(reviews[i].author === currentUserId && !reviews.thumb){
-                    showReviewModal(reviews[i].image, reviews[i].text, reviews[i].review_id, restaurant);
-                    i = reviews.length;
+            for(var review in reviews){
+                if(reviews[review].author === currentUserId && !reviews[review].thumb){
+                    reviewMe.push({review:reviews[review], restaurant:restaurant});
                 }
             }
         }
     }
+    if(reviewMe.length > 0){
+        showReviewModal(reviewMe);
+    }
 }//function promptForReviews
 
-function showReviewModal(img, text, review_id, restaurant_id){
+function showReviewModal(arrayToReview){
+    var reviewObject = arrayToReview[0].review;
+    var restaurant_id = arrayToReview[0].restaurant;
     var modalBG = $("<div>").addClass("modalBackground");
     var container = $("<div>").addClass("modalContainer");
-    var image = $("<img>").attr("src", img);
-    var textInput = $("<textarea>").text(text);
+    var image = $("<img>").attr("src", reviewObject.image);
+    var textInput = $("<textarea>").text(reviewObject.text);
     var thumbs = $("<a>Thumbs Up</a><a>Thumbs Down</a>");
     var button = $("<button>").addClass("reviewSubmit").text("Submit");
     var buttonCancel = $("<button>").addClass("reviewCancel").text("Not Now");
