@@ -41,7 +41,9 @@ function addReviewModal(){
     });
     $("body").on("click", "#submitReview", function(){
         var reviewData = {
-            location: {}
+            location: {},
+            thumbnail: "",
+            image: ""
         };
         reviewData.text = $(".modalContainer #reviewText").val();
         reviewData.author = currentUserId;
