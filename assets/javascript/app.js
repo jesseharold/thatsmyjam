@@ -37,41 +37,45 @@ function addReviewModal(){
         $("#useLocation").data("location", currentLocation);
     });
     $("body").on("click", "#enterAddress", function(){
-        $("#enterAddress").after("<input type='text' id='newReviewAddress1'><br><input type='text' id='newReviewAddress2'>");
+        $("#enterAddress").after("Address: <input type='text' id='newReviewAddress1'><br>Address 2: <input type='text' id='newReviewAddress2'>");
     });
     $("body").on("click", "#submitReview", function(){
         if($(".modalContainer #newReviewAddress1").val()){
-            console.log($(".modalContainer #newReviewAddress1").val());
-            console.log($(".modalContainer #newReviewAddress2").val());
-        }
-        var reviewData = {
-            location: {},
-            images: {
-                thumbnail: {url: ""},
-                standard_resolution: {url: ""}
-            },
-            caption: {
-                from: {}
-            }
-        };
-        reviewData.caption.from.id = currentUserId;
-        reviewData.caption.text = $(".modalContainer #reviewText").val();
-        reviewData.location.name = $(".modalContainer #restaurantName").val();
-        reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
-        reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
-        reviewData.id = "review" + Math.random()*99999999999999999;
-        reviewData.thumb = $("input[name=thumb]:checked").val();
-        var restaurantKey = checkRestaurantExists(reviewData);
-        if (restaurantKey){
-            addReviewToExistingRestaurant(reviewData, restaurantKey)
+            addressToLatLng($(".modalContainer #newReviewAddress1").val()+$(".modalContainer #newReviewAddress2").val(), processReviewFromModal);
         } else {
-            addReviewAndNewRestaurant(reviewData);
+            processReviewFromModal($(".modalContainer #useLocation").data("location").lat + ", " + $(".modalContainer #useLocation").data("location").lng);
         }
-
     });
-
-
 }
+
+function processReviewFromModal(location){
+    console.log(location);
+    var reviewData = {
+        location: {},
+        images: {
+            thumbnail: {url: ""},
+            standard_resolution: {url: ""}
+        },
+        caption: {
+            from: {}
+        }
+    };
+    reviewData.caption.from.id = currentUserId;
+    reviewData.caption.text = $(".modalContainer #reviewText").val();
+    reviewData.location.name = $(".modalContainer #restaurantName").val();
+    reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
+    reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
+    reviewData.id = "review" + Math.random()*99999999999999999;
+    reviewData.thumb = $("input[name=thumb]:checked").val();
+    var restaurantKey = checkRestaurantExists(reviewData);
+    if (restaurantKey){
+        addReviewToExistingRestaurant(reviewData, restaurantKey)
+    } else {
+        addReviewAndNewRestaurant(reviewData);
+    }
+}//function processReviewFromModal
+
+
 function openModal(content){
     var modalContainer = $("<div>").addClass("modalContainer");
     var modalBG = $("<div>").addClass("modalBG");
