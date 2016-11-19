@@ -350,8 +350,8 @@ function openModal(content){
     var modalBG = $("<div>").addClass("modalBG");
     var modalContent = $("<div>").addClass("modalContent");
     modalContainer.append(modalBG);
-    var modal = modalContainer.append(modalContent);
-    modal.append(content);
+    modalContainer.append(modalContent);
+    modalContent.append(content);
     $("body").append(modalContainer);
 }
 
