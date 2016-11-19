@@ -26,12 +26,24 @@ function addReviewModal(){
     formContainer.append("Restaurant Name: <input type='text' id='restaurantName'>");
     formContainer.append("<br>Thumbs: Up <input type='radio' name='thumb' value='up' id='thumbsUp'>");
     formContainer.append("Down <input type='radio' name='thumb' value='down' id='thumbsDown'>");
-    formContainer.append("<br>Review: <input type='text' id='reviewText'>");
+    formContainer.append("<br><textarea id='reviewText' rows='5' cols='20'>Review</textarea>");
     formContainer.append("<br>Location: <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
+    formContainer.append("<br><button id='submitReview'>Add Review</button>");
     openModal(formContainer);
     $("body").on("click", ".modalBG", function(){
         $("div.modalContainer").remove();
     });
+    $("body").on("click", "#useLocation", function(){
+        console.log("useLocation");
+    });
+    $("body").on("click", "#enterAddress", function(){
+        console.log("enterAddress");
+    });
+    $("body").on("click", "#submitReview", function(){
+        console.log("submitReview");
+    });
+
+
 }
 function openModal(content){
     var modalContainer = $("<div>").addClass("modalContainer");

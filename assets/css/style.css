@@ -169,3 +169,8 @@ body, html{
     padding: 20px;
     line-height: 43px;
 }
+.modalContent button {
+    background-color: rgb(103,58,183);
+    color: white;
+    margin: 5px;
+}
