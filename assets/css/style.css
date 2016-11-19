@@ -110,3 +110,31 @@ color:white;
      border-color: white;
     
 }
+
+#footerid {
+    display: table;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:-10px;
+}
+
+#mainlength {
+    height: 100%;
+    width:100%;
+}
+
+.page-content {
+    height:100%;
+    width:100%;
+}
+
+.mdl-layout {
+    height:100%;
+    width:100%;
+}
+
+body, html{
+    height:100%;
+    width:100%;
+}
