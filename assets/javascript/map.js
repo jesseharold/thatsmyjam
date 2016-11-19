@@ -31,23 +31,17 @@ function createMarkers(friendsListFromIG){
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
         // loop throgh the object
-        console.log("friends list", friendsList);
-        console.log("reviews", reviews);
         for (var key in reviews) {
             if (reviews.hasOwnProperty(key)){
-                console.log("inside if in loop");
                 //do stuff for each item in the object
-                console.log("author", reviews[key].author);
                 if (friendsList && friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
                     display = true;  //then display is true.
-                    console.log(display);
                 };
             };
         };
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
             //create the marker
-            console.log("creating marker");
             var marker = new google.maps.Marker({
                 position: {lat: childSnap.val().lat, lng: childSnap.val().lng},
                 map: map,  //set which map to place the marker on
@@ -87,7 +81,6 @@ function createMarkerContent(restaurant, callback){
         var reviews = restaurant.reviews;
         for (var key in reviews) {
             if (reviews.hasOwnProperty(key)){
-                console.log("inside if in loop");
                 //do stuff for each item in the object
                 if (friendsList && friendsList.indexOf(reviews[key].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
                     //start each individual review with a new div
@@ -104,7 +97,6 @@ function createMarkerContent(restaurant, callback){
                 };
             };
         };
-        // for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
             
         // };
         markerHTML = markerHTML + "</div>"; //add the closing div tag;
