@@ -34,7 +34,7 @@ function addReviewModal(){
         $("div.modalContainer").remove();
     });
     $("body").on("click", "#useLocation", function(){
-        console.log("useLocation");
+        console.log(currentLocation);
     });
     $("body").on("click", "#enterAddress", function(){
         console.log("enterAddress");
