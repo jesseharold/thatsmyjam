@@ -48,8 +48,8 @@ function addReviewModal(){
             }
         };
         reviewData.text = $(".modalContainer #reviewText").val();
-        reviewData.author = currentUserId;
-        reviewData.text = $(".modalContainer #reviewText").val();
+        reviewData.caption.from.id = currentUserId;
+        reviewData.caption.text = $(".modalContainer #reviewText").val();
         reviewData.location.name = $(".modalContainer #restaurantName").val();
         reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
         reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
