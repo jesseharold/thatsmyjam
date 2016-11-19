@@ -141,8 +141,49 @@ function filterFriends(userID){
     currentUserFriendsList = myTMJFriends;
     getFriendsImages(myTMJFriends);
     // call function on the user interface to populate visible friends list
-    //displayFriends();
+    populateFriendsList(myTMJFriends);
 }//function filterFriends
+
+function populateFriendsList(arrayOfIDs) {
+    var completedFriends = $("<ul>")
+        .addClass("demo-list-control")
+        .addClass("mdl-list")
+        .addClass("friendlist");
+    //loop through array of friends' user IDs, build html
+    for(var i = 0; i < arrayOfIDs.length; i++){
+        var friendID = arrayOfIDs[i];
+        var listTagFriend = $('<li>').addClass("mdl-list__item");
+        var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
+        listTagFriend.append(spanTagFriend);
+
+        var imageTagFriend = $('<img>')
+            .addClass("mdl-list__item-avatar")
+            .attr("src", localCopyUsers[friendID].profilePicture);
+        spanTagFriend
+            .append(imageTagFriend)
+            .append(localCopyUsers[friendID].name);
+
+        var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
+        spanTagFriend.after(spanCheckmark);
+
+        var labelCheckmark = $('<label>')
+            .addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect")
+            .attr("for", "list-checkbox-" + i);
+        var inputCheckmark = $('<input>')
+            .addClass("mdl-checkbox__input")
+            .attr("type", "checkbox")
+            .attr("id", "list-checkbox-" + i)
+            .attr("checked", "");
+    
+        spanCheckmark.append(labelCheckmark);
+        labelCheckmark.append(inputCheckmark);
+
+        completedFriends.append(listTagFriend);    
+        //console.log(completedFriend);
+    }
+    $(".mdl-layout__drawer-right").append(completedFriends);
+}
+
 
 function getFriendsImages(myFriends){
      $.ajax({
