@@ -18,11 +18,9 @@
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
-                    
                     <span class="mdl-layout-title"><a id="titlelink" href="index.html">That's My Jam</a></span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
-                   
                 </div>
             </header>
             
@@ -41,9 +39,6 @@
         
             <main class="mdl-layout__content">
                  <div class="page-content">
-
-                    
-                        
                         <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
                             <main class="mdl-layout__content">
                                 <div class="mdl-grid">
@@ -51,10 +46,9 @@
                                 </div>
                                 <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--6-col">
                                     <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-                                        <h2 class="mdl-card__title-text">Add a Restaurant (I know a place...)</h2>
+                                        <h2 class="mdl-card__title-text">Add a Restaurant Review</h2>
                                     </div>
                                 <div class="mdl-card__supporting-text">
-                                        <form action="#">
                                             <div class="mdl-layout-spacer"></div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="restaurantlength">
                                                 <input class="mdl-textfield__input" type="text" id="restaurantname" />
@@ -77,10 +71,6 @@
                                                 <input class="mdl-textfield__input" type="text" id="zipcode" />
                                                 <label class="mdl-textfield__label" for="zipcode">Zipcode</label>
                                             </div>
-                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="phone" />
-                                                <label class="mdl-textfield__label" for="phone">Phone</label>
-                                            </div>
                                             <div class="">
                                                 Thumbs up or down?
                                                 <button class="mdl-button mdl-js-button mdl-button--icon" id="thumbup">
@@ -94,7 +84,6 @@
                                                 <textarea class="mdl-textfield__input" type="text" id="review" rows="5"></textarea>
                                                 <label class="mdl-textfield__label" for="review">Review</label>
                                             </div>
-                                        </form>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
                                         <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="submit-restaurant">That's My Jam!</button>
@@ -103,17 +92,10 @@
                                 <div class="mdl-cell mdl-cell--3-col"> 
                                 </div>
                             </div>
-		    
-	    </main>
-    </div>
+        	    </main>
+            </div>
+        </div>                
 
-                </div>
-                
-            </main>
-
-            
-
-        </div>
 
         
 
@@ -121,6 +103,20 @@
         <script  src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
         <script src="assets/javascript/app.js"></script>
+        <script lang="javascript">
+            $("#submit-restaurant").click(function(){
+                var newReview = {
+                    restaurantName: $("#restaurantname").val(),
+                    text: $("review").val()
+                }
+                if ($("#thumbup").hasclass("mdl-button--colored")){
+                    newReview.thumb = "up";
+                } else if ($("#thumbdown").hasclass("mdl-button--colored")){
+                    newReview.thumb = "down";
+                }
+                return false;
+            })
+        </script>
        
     </body>
 </html>
