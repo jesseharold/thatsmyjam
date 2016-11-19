@@ -39,14 +39,21 @@ function createMarkers(friendsListFromIG){
         console.log("friendslist", friendsList)
         console.log("reviews", reviews);
         console.log("reviews length", reviews.length)
-        debugger;
-        for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
-            console.log("each review author", reviews[i].author);
-            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
-                console.log("matching author", reviews[i].author);
-                display = true;  //then display is true.
-            };
+        // debugger;
+        // for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
+        //     console.log("each review author", reviews[i].author);
+        //     if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+        //         console.log("matching author", reviews[i].author);
+        //         display = true;  //then display is true.
+        //     };
+        // };
+
+        console.log("each review author", reviews[0].author);
+        if (friendsList.indexOf(reviews[0].author) >= 0){ //for each reivew, if the author is in your friends list... 
+            console.log("matching author", reviews[0].author);
+            display = true;  //then display is true.
         };
+
         console.log(display);
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
@@ -97,7 +104,7 @@ function createMarkerContent(restaurant, callback){
                 //start each individual review with a new div
                 markerHTML = markerHTML + "<div class='review-wrapper'>";
                 //add the reviewer name
-                markerHTML = markerHTML + "<p class='review-author'>" + allReviews[j].author + " says: </p>";
+                markerHTML = markerHTML + "<p class='review-author'>" + localCopyUsers[allReviews[j].author].name + " says: </p>";
                 //add the reviewer's text review
                 markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
                 //add all images saved along with the review
