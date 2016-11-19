@@ -39,20 +39,29 @@ function createMarkers(friendsListFromIG){
         console.log("friendslist", friendsList)
         console.log("reviews", reviews);
         console.log("reviews length", reviews.length)
-        // debugger;
-        // for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
-        //     console.log("each review author", reviews[i].author);
-        //     if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
-        //         console.log("matching author", reviews[i].author);
-        //         display = true;  //then display is true.
-        //     };
-        // };
-
-        console.log("each review author", reviews[0].author);
-        if (friendsList.indexOf(reviews[0].author) >= 0){ //for each reivew, if the author is in your friends list... 
-            console.log("matching author", reviews[0].author);
-            display = true;  //then display is true.
+        // Get the size of the reviews object
+        Object.size = function(obj) {  // function to find size of an object
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            };
+            return size;
         };
+        var reviewsSize = Object.size(reviews);  //run the function on the reviews object
+        //look through the object
+        for (var i = 0; i < reviewsSize; i++){  //loop over the array looking at each review..
+            console.log("each review author", reviews[i].author);
+            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+                console.log("matching author", reviews[i].author);
+                display = true;  //then display is true.
+            };
+        };
+
+        // console.log("each review author", reviews[0].author);
+        // if (friendsList.indexOf(reviews[0].author) >= 0){ //for each reivew, if the author is in your friends list... 
+        //     console.log("matching author", reviews[0].author);
+        //     display = true;  //then display is true.
+        // };
 
         console.log(display);
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
