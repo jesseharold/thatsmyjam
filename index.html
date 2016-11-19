@@ -25,7 +25,9 @@
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link"  href="restaurant.html">Add a Review</a>
                         <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
-                        <a class="mdl-navigation__link"  href="">Sign up</a>
+                        <!-- not needed at the moment
+                            <a class="mdl-navigation__link"  href="">Sign up</a>
+                        -->
                     </nav>
                     
                     <!--<div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>-->
@@ -40,28 +42,14 @@
                 <span class="mdl-layout-title">That's My Jam</span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
-                    <a class="mdl-navigation__link" href="">Sign up</a>
                     <a class="mdl-navigation__link" href="restaurant.html">Add a Restaurant</a>
+                    <a class="mdl-navigation__link" href="">Contact</a>
                     <a class="mdl-navigation__link" href="">About Us</a>
                 </nav>
             </div>
             
             <div class="mdl-layout__drawer-right">
-                <span class="mdl-layout-title" id="addfriend">Friend's List</span>
-                <ul class="demo-list-control mdl-list friendlist">
-                    <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                        <i class="material-icons  mdl-list__item-avatar">person</i>
-                        Bill
-                        </span>
-                        <span class="mdl-list__item-secondary-action">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-1">
-                            <input type="checkbox" id="list-checkbox-1" class="mdl-checkbox__input" checked />
-                        </label>
-                        </span>
-                    </li>
-                   
-                </ul>
+                <span class="mdl-layout-title" id="addfriend">Friends List</span>
             </div>
         
             <main class="mdl-layout__content">
@@ -91,14 +79,16 @@
         
         <!-- jquery link -->
         <script  src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-        <!-- main front-end script -->
-        <script src="assets/javascript/app.js"></script>
         <!-- firebase scripts -->
         <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
         <script src="assets/javascript/firebase.js"></script>
         <!-- google maps scripts-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtu_MMhMD6Ss_EH4Ol-gidM9fRcePTO0M" async defer></script>
         <script src="assets/javascript/map.js"></script>
+        <!-- instagram integration script -->
+        <script src="assets/javascript/instagram.js"></script>
+        <!--  front-end script -->
+        <script src="assets/javascript/app.js"></script>
         
     </body>
 </html>
