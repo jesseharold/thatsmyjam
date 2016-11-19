@@ -50,12 +50,14 @@ function addReviewModal(){
         reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
         reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
         reviewData.review_id = "review" + Math.random()*9999999999999999999999;
-        reviewData.thumb = "up";
-        console.log(reviewData);
-/*
-        thumb: "up"
-*/
-
+        reviewData.thumb = $("input[name=thumb]:checked").val();
+        var restaurantKey = checkRestaurantExists(reviewData);
+        console.log(restaurantKey);
+        if (restaurantKey){
+            addReviewToExistingRestaurant(reviewData, restaurantKey)
+        } else {
+            addReviewAndNewRestaurant(reviewData);
+        }
 
     });
 

@@ -70,9 +70,8 @@ function getOwnUserInfo(){
         dataType: "jsonp"
     })
     .done(function(response) {
-        updateUser(response.data);
         currentUserId = response.data.id;
-        console.log(currentUserId);
+        updateUser(response.data);
     })
     .fail(function(error){
         console.error(error);
