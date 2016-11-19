@@ -9,51 +9,6 @@ var friendsList;
 //database references
 var restaurantData = database.ref("/restaurants");
 
-//this function creates the HTML that will be put in the marker's infowindow
-function createMarkerContent(restaurant, callback){
-    //start the marker content with an open div tag
-    
-    //add restaurants address
-    latLngToAddress(restaurant.lat, restaurant.lng, function(result){
-        var markerHTML = "<div>";  
-        var address;
-        //add restaurants name
-        markerHTML = markerHTML + "<h3>" + restaurant.name + "</h3>";
-        address = result;
-        console.log("callback executed");
-        markerHTML = markerHTML + "<p>" + address + "</p>"; 
-        //add restaurants reviews
-        var allReviews = restaurant.reviews;
-        console.log(allReviews);
-        for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
-            if (friendsList.indexOf(allReviews[j].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
-                //start each individual review with a new div
-                markerHTML = markerHTML + "<div class='review-wrapper'>";
-                //add the reviewer name
-                markerHTML = markerHTML + "<p class='review-author'>" + allReviews[j].author + " says: </p>";
-                //add the reviewer's text review
-                markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
-                //add all images saved along with the review
-                markerHTML = markerHTML + "<img src='" + allReviews[j].image +"' class='review-image'>"; //add it to the marker content html
-
-                // the below block can be used to add multiple images if they are in an array
-                // var reviewImages = allReviews[j].image;
-                // if (reviewImages != undefined){  //only do the following if the review includes an "images" array 
-                //     for (var k = 0; k < reviewImages.length; k++) {  //for each image in the "images" array...
-                //     markerHTML = markerHTML + "<img src='" + reviewImages[k] +"' class='review-image'>"; //add it to the marker content html 
-                //     };
-                // };
-
-                //close the review wrapper for this tag 
-                markerHTML = markerHTML + "</div>";
-            };
-        };
-        markerHTML = markerHTML + "</div>"; //add the closing div tag;
-        callback(markerHTML);
-    });
-    
-}
-
 //create a map
 var map;
 function initMap() {
@@ -73,7 +28,9 @@ function initMap() {
         geocodeCenterMap(geocoder, map);
         $("#address").val("");
     });
-
+}
+function createMarkers(friendsListFromIG){
+    friendsList = friendsListFromIG;
     //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
     database.ref("/restaurants").on("child_added", function(childSnap){
         //check to see if the restaurant was reviewed by a friend
@@ -110,6 +67,51 @@ function initMap() {
             
     });
 };
+
+
+//this function creates the HTML that will be put in the marker's infowindow
+function createMarkerContent(restaurant, callback){
+    //start the marker content with an open div tag
+    
+    //add restaurants address
+    latLngToAddress(restaurant.lat, restaurant.lng, function(result){
+        var markerHTML = "<div>";  
+        var address;
+        //add restaurants name
+        markerHTML = markerHTML + "<h3>" + restaurant.name + "</h3>";
+        address = result;
+        console.log("callback executed");
+        markerHTML = markerHTML + "<p>" + address + "</p>"; 
+        //add restaurants reviews
+        var allReviews = restaurant.reviews;
+        console.log(allReviews);
+        for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
+            if (friendsList && friendsList.indexOf(allReviews[j].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
+                //start each individual review with a new div
+                markerHTML = markerHTML + "<div class='review-wrapper'>";
+                //add the reviewer name
+                markerHTML = markerHTML + "<p class='review-author'>" + allReviews[j].author + " says: </p>";
+                //add the reviewer's text review
+                markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
+                //add all images saved along with the review
+                markerHTML = markerHTML + "<img src='" + allReviews[j].image +"' class='review-image'>"; //add it to the marker content html
+
+                // the below block can be used to add multiple images if they are in an array
+                // var reviewImages = allReviews[j].image;
+                // if (reviewImages != undefined){  //only do the following if the review includes an "images" array 
+                //     for (var k = 0; k < reviewImages.length; k++) {  //for each image in the "images" array...
+                //     markerHTML = markerHTML + "<img src='" + reviewImages[k] +"' class='review-image'>"; //add it to the marker content html 
+                //     };
+                // };
+
+                //close the review wrapper for this tag 
+                markerHTML = markerHTML + "</div>";
+            };
+        };
+        markerHTML = markerHTML + "</div>"; //add the closing div tag;
+        callback(markerHTML);
+    });
+}
 
 //geocorder for changing the map's center
 function geocodeCenterMap(geocoder, resultsMap) {
