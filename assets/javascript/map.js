@@ -38,7 +38,6 @@ function createMarkers(friendsListFromIG){
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
         console.log("friendslist", friendsList)
         console.log("reviews", reviews);
-        console.log("reviews length", reviews.length)
         // Get the size of the reviews object
         Object.size = function(obj) {  // function to find size of an object
             var size = 0, key;
@@ -48,6 +47,7 @@ function createMarkers(friendsListFromIG){
             return size;
         };
         var reviewsSize = Object.size(reviews);  //run the function on the reviews object
+        console.log("reviews size", reviewsSize)
         //look through the object
         for (var i = 0; i < reviewsSize; i++){  //loop over the array looking at each review..
             console.log("each review author", reviews[i].author);
