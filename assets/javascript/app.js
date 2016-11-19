@@ -37,7 +37,7 @@ function addReviewModal(){
         $("#useLocation").data("location", currentLocation);
     });
     $("body").on("click", "#enterAddress", function(){
-        $("#enterAddress").after("Address: <input type='text' id='newReviewAddress1'><br>Address 2: <input type='text' id='newReviewAddress2'>");
+        $("#enterAddress").after("<br>Address: <input type='text' id='newReviewAddress1'><br>Address 2: <input type='text' id='newReviewAddress2'>");
     });
     $("body").on("click", "#submitReview", function(){
         if($(".modalContainer #newReviewAddress1").val()){
