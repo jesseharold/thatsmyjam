@@ -44,6 +44,7 @@ function createMarkers(friendsListFromIG){
                 display = true;  //then display is true.
             };
         };
+        console.log(display);
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
             //create the marker
@@ -142,7 +143,6 @@ function setAddressSuggest(addressObject){
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': addressObject}, function(results, status) {
         if (status === "OK") {
-            console.log(results[0].address_components)
             $("#address").attr("placeholder", results[0].address_components[3].long_name)
         } else {
             alert("Geocode was not successful for the following reason: " + status);
