@@ -4,7 +4,7 @@ var friendsList;
 //database references
 var restaurantData = database.ref("/restaurants");
 
-console.log("bill test: map.js called");
+console.log("bill test: map.js called 926");
 
 //create a map
 var map;
