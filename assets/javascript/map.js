@@ -4,8 +4,6 @@ var friendsList;
 //database references
 var restaurantData = database.ref("/restaurants");
 
-console.log("bill test: map.js called 926");
-
 //create a map
 var map;
 function initMap() {
@@ -17,7 +15,6 @@ function initMap() {
         zoom: 12,
         center: mapCenter
     });
-    console.log("bill test: map created")
 
     //code for geocoder
     var geocoder = new google.maps.Geocoder();
@@ -28,43 +25,20 @@ function initMap() {
 }
 function createMarkers(friendsListFromIG){
     friendsList = friendsListFromIG;
-    console.log("createMarkers fired");
     //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
     restaurantData.on("child_added", function(childSnap){
-        console.log("child added fired")
-        console.log("child", childSnap.val());
         //check to see if the restaurant was reviewed by a friend
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
-        console.log("friendslist", friendsList)
-        console.log("reviews", reviews);
-        // Get the size of the reviews object
-        Object.size = function(obj) {  // function to find size of an object
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) size++;
-            };
-            return size;
-        };
-        var reviewsSize = Object.size(reviews);  //run the function on the reviews object
-        console.log("reviews size", reviewsSize)
-        //look through the object
-        for (var i = 0; i < reviewsSize; i++){  //loop over the array looking at each review..
-            console.log("each review author", reviews[i].author);
-            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
-                console.log("matching author", reviews[i].author);
-                display = true;  //then display is true.
-                break;
+        // loop throgh the object
+        for (var key in reviews) {
+            if (reviews.hasOwnProperty(key)){
+                //do stuff for each item in the object
+                if (friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
+                    display = true;  //then display is true.
+                };
             };
         };
-
-        // console.log("each review author", reviews[0].author);
-        // if (friendsList.indexOf(reviews[0].author) >= 0){ //for each reivew, if the author is in your friends list... 
-        //     console.log("matching author", reviews[0].author);
-        //     display = true;  //then display is true.
-        // };
-
-        console.log(display);
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
             //create the marker
@@ -85,8 +59,6 @@ function createMarkers(friendsListFromIG){
                     });  //create the conent for the info marker
                 }
             })(marker));
-            //testing console log
-            console.log("marker created 2");
         };
             
     });
@@ -104,11 +76,9 @@ function createMarkerContent(restaurant, callback){
         //add restaurants name
         markerHTML = markerHTML + "<h3>" + restaurant.name + "</h3>";
         address = result;
-        console.log("callback executed");
         markerHTML = markerHTML + "<p>" + address + "</p>"; 
         //add restaurants reviews
         var allReviews = restaurant.reviews;
-        console.log(allReviews);
         for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
             if (friendsList && friendsList.indexOf(allReviews[j].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
                 //start each individual review with a new div
@@ -150,7 +120,6 @@ function latLngToAddress(latitude, longitude, callback){
     var address = "error finding address";
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === "OK") {
-            console.log(results[0].formatted_address)
             address = results[0].formatted_address;
             callback(address);
         } else {
