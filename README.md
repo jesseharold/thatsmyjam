@@ -12,26 +12,31 @@ and firebase
 
 ## program flow:
 
+### to add an instagram photo
+* user takes a food photo and posts in their instagram account 
+* user must use the hashtag #thatsmyjam 
+* and have a location set for the post
+
 ### user logs in w instagram:
-* look up their IG username in our DB of users, add if new
-* retrieve their friends list from IG
-* add / update in our DB on their user object
-* get their friends' reviews and photos from the DB
-* populate the map w friends reviews
-* check IG to see if there are new photos from their friends
-* update the DB with new reviews
-* update the map
-* check to see if they have new instagram photos with the hashtag
-* add new photos to our DB as reviews
-* prompt them to add text reviews to the photos
-* if any tagged photos are missing location information, prompt them to add it, possibly from google places data
+* look up their IG username in our DB of users, add if new user
+* retrieve their user info and friends list from IG
+* add / update their user info and friends list in our DB
+* retrieve their tagged photos from IG, add to the DB if new
+* get their friends' tagged photos from IG, add to the DB if new
+* populate the current location map w their own and friends reviews
 
-### all users:
-* have map ready to filter displayed reviews by author
-* have map ready to add a new review from the map button
-* when adding a new review, is it possible to use the instagram api to add a new photo???
-* have app ready to change the location of the map
+### logged in users can:
+* filter displayed reviews by author
+* add a new (no photo) review from the map + button or link
+* change the location of the map
 
+### Features for future development:
+* have celebrities as optional "friends" to add curated content to your maps as well
+* if a user puts the hastag but doesn't add a location, the app prompts them to add location info
+* integrate google places to make adding a new location easier/more accurate
+* ability to save your friends filter state for next login
+* ability to invite friends
+* update DB of photos from instagram in real time, not just on log in
 
 ## our sandbox instagram users:
 * ontopofspaghetti - added, content added

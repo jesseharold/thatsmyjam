@@ -1,4 +1,3 @@
-
 //var database = firebase.database();
 //using firebase info from firebase.js
 var instagramEndpoint = "https://api.instagram.com/v1/";
@@ -355,4 +354,3 @@ function openModal(content){
 $("document").ready(function(){
 checkForAuthToken();
 });//document ready
-

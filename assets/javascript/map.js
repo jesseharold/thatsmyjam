@@ -1,13 +1,10 @@
-//TEST DATA - locations
-var LA = {lat: 34.0554665, lng: -118.30951240000002};
-var SF = {lat: 37.7749, lng: -122.4194}; 
-//TEST DATA - current user info
-var currentLocation = SF;
-var currentUser = "bill@gmail.com";
+//define variables
+var currentLocation = {lat: 37.7749, lng: -122.4194};  //test
 var friendsList;
-
 //database references
 var restaurantData = database.ref("/restaurants");
+
+console.log("bill test: map.js called 926");
 
 //create a map
 var map;
@@ -20,7 +17,7 @@ function initMap() {
         zoom: 12,
         center: mapCenter
     });
-    console.log("map created")
+    console.log("bill test: map created")
 
     //code for geocoder
     var geocoder = new google.maps.Geocoder();
@@ -31,16 +28,43 @@ function initMap() {
 }
 function createMarkers(friendsListFromIG){
     friendsList = friendsListFromIG;
+    console.log("createMarkers fired");
     //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
-    database.ref("/restaurants").on("child_added", function(childSnap){
+    restaurantData.on("child_added", function(childSnap){
+        console.log("child added fired")
+        console.log("child", childSnap.val());
         //check to see if the restaurant was reviewed by a friend
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
-        for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
-            if (friendsList && friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+        console.log("friendslist", friendsList)
+        console.log("reviews", reviews);
+        // Get the size of the reviews object
+        Object.size = function(obj) {  // function to find size of an object
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            };
+            return size;
+        };
+        var reviewsSize = Object.size(reviews);  //run the function on the reviews object
+        console.log("reviews size", reviewsSize)
+        //look through the object
+        for (var i = 0; i < reviewsSize; i++){  //loop over the array looking at each review..
+            console.log("each review author", reviews[i].author);
+            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+                console.log("matching author", reviews[i].author);
                 display = true;  //then display is true.
+                break;
             };
         };
+
+        // console.log("each review author", reviews[0].author);
+        // if (friendsList.indexOf(reviews[0].author) >= 0){ //for each reivew, if the author is in your friends list... 
+        //     console.log("matching author", reviews[0].author);
+        //     display = true;  //then display is true.
+        // };
+
+        console.log(display);
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
             //create the marker
@@ -62,7 +86,7 @@ function createMarkers(friendsListFromIG){
                 }
             })(marker));
             //testing console log
-            console.log("marker created");
+            console.log("marker created 2");
         };
             
     });
@@ -90,19 +114,11 @@ function createMarkerContent(restaurant, callback){
                 //start each individual review with a new div
                 markerHTML = markerHTML + "<div class='review-wrapper'>";
                 //add the reviewer name
-                markerHTML = markerHTML + "<p class='review-author'>" + allReviews[j].author + " says: </p>";
+                markerHTML = markerHTML + "<p class='review-author'>" + localCopyUsers[allReviews[j].author].name + " says: </p>";
                 //add the reviewer's text review
                 markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
                 //add all images saved along with the review
                 markerHTML = markerHTML + "<img src='" + allReviews[j].image +"' class='review-image'>"; //add it to the marker content html
-
-                // the below block can be used to add multiple images if they are in an array
-                // var reviewImages = allReviews[j].image;
-                // if (reviewImages != undefined){  //only do the following if the review includes an "images" array 
-                //     for (var k = 0; k < reviewImages.length; k++) {  //for each image in the "images" array...
-                //     markerHTML = markerHTML + "<img src='" + reviewImages[k] +"' class='review-image'>"; //add it to the marker content html 
-                //     };
-                // };
 
                 //close the review wrapper for this tag 
                 markerHTML = markerHTML + "</div>";
@@ -147,11 +163,9 @@ function setAddressSuggest(addressObject){
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': addressObject}, function(results, status) {
         if (status === "OK") {
-            console.log(results[0].address_components)
             $("#address").attr("placeholder", results[0].address_components[3].long_name)
         } else {
             alert("Geocode was not successful for the following reason: " + status);
         };
     });
 }
-

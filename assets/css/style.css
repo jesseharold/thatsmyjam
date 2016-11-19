@@ -91,3 +91,22 @@
     bottom:35%;
 }     
 
+#titlelink{
+    text-decoration: none;
+    color:inherit;
+}
+
+/* geocoder styling */
+#floating-panel {
+
+color:white;
+}
+
+ #address-label, #address-div, #submit {
+    color: white;
+   
+}
+#address {
+     border-color: white;
+    
+}
