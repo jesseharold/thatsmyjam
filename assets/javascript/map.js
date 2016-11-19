@@ -33,7 +33,7 @@ function createMarkers(friendsListFromIG){
         // loop throgh the object
         console.log(reviews);
         for (var key in reviews) {
-            if (reviews[key].hasOwnProperty(key)){
+            if (reviews.hasOwnProperty(key)){
                 console.log("inside if in loop");
                 //do stuff for each item in the object
                 if (friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
