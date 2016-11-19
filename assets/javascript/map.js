@@ -80,7 +80,7 @@ function initMap() {
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
         for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
-            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+            if (friendsList && friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
                 display = true;  //then display is true.
             };
         };
