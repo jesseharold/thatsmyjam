@@ -334,17 +334,38 @@ function addReviewAndNewRestaurant(imageData){
     database.ref("restaurants").push(thisRestaurant);
 }//function addReviewAndNewRestaurant
 
-//function promptForLocation(imageData){
-// this is in the icebox, but it would be nice to add down the road.
-// probably should pass in a way to ref. this review in the database
-// once that exists
-    //console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
-//}
+
+function addReviewModal(){
+    var formContainer = $("<div>");
+    formContainer.append("Restaurant Name: <input type='text' id='restaurantName'>");
+    formContainer.append("<br>Thumbs: <input type='radio' name='thumb' value='up' id='thumbsUp'>");
+    formContainer.append("<input type='radio' name='thumb' value='down' id='thumbsDown'>");
+    formContainer.append("<br>Review: <input type='text' id='reviewText'>");
+    formContainer.append("<br>Location: <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
+    openModal(formContainer);
+}
 
 function openModal(content){
-    var modalContainer = $("<div>").addClass("modalContainer");
-    var modalBG = $("<div>").addClass("modalBackground");
-    var modalContent = $("<div>").addClass("modalContent");
+    var modalContainer = $("<div>").css({
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%"
+    });
+    var modalBG = $("<div>").css({
+        position: "absolute",
+        top: 0,
+        left: 0,
+        backgroundColor: "black",
+        opacity: ".8",
+        width: "100%",
+        height: "100%"
+    });
+    var modalContent = $("<div>").css({
+        margin: "auto",
+        width: "45%"
+    });
     modalContainer.append(modalBG);
     var modal = modalContainer.append(container);
     modal.append(content);
