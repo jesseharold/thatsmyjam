@@ -45,6 +45,9 @@ function addReviewModal(){
             images: {
                 thumbnail: {},
                 standard_resolution: {}
+            },
+            caption: {
+                from: {}
             }
         };
         reviewData.text = $(".modalContainer #reviewText").val();
