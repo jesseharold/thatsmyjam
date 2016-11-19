@@ -75,6 +75,7 @@ function processReviewFromModal(location){
     } else {
         addReviewAndNewRestaurant(reviewData);
     }
+    $("div.modalContainer").remove();
 }//function processReviewFromModal
 
 
