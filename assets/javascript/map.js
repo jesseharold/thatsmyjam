@@ -1,12 +1,8 @@
-//TEST DATA - locations
-var LA = {lat: 34.0554665, lng: -118.30951240000002};
-var SF = {lat: 37.7749, lng: -122.4194}; 
 //TEST DATA - current user info
-var currentLocation = SF;
-var currentUser = "bill@gmail.com";
+// var currentLocation = {lat: 34.0554665, lng: -118.30951240000002};
 var friendsList = ["4147363198", "4147363198", "4149753642"];
 
-//test branch new-branch 
+var currentLocation = {lat: geoLocation[0], lng: geoLocation[1]};
 
 //database references
 var restaurantData = database.ref("/restaurants");
