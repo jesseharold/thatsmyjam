@@ -36,8 +36,8 @@ function createMarkers(friendsListFromIG){
         //check to see if the restaurant was reviewed by a friend
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
-        console.log("reviews", reviews);
         console.log("friendslist", friendsList)
+        console.log("reviews", reviews);
         console.log("reviews length", reviews.length)
         debugger;
         for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
