@@ -1,5 +1,5 @@
 //define variables
-var currentLocation = {lat: 37.7749, lng: -122.4194};  //test
+var currentLocation = {lat: 34.059389, lng: -118.445712};  // UCLA
 var friendsList;
 //database references
 var restaurantData = database.ref("/restaurants");
@@ -8,6 +8,9 @@ var restaurantData = database.ref("/restaurants");
 var map;
 function initMap() {
     //declare variables
+    if (geoLocation){
+        currentLocation = geoLocation;
+    }
     var mapCenter = currentLocation;
     setAddressSuggest(currentLocation);
     // Create a map object and specify the DOM element for display.
