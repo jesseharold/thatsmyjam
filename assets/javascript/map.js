@@ -31,8 +31,10 @@ function createMarkers(friendsListFromIG){
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
         // loop throgh the object
+        console.log(reviews);
         for (var key in reviews) {
-            if (reviews.hasOwnProperty(key)){
+            if (reviews[key].hasOwnProperty(key)){
+                console.log("inside if in loop");
                 //do stuff for each item in the object
                 if (friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
                     display = true;  //then display is true.
