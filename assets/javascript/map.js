@@ -38,6 +38,8 @@ function createMarkers(friendsListFromIG){
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
         console.log("reviews", reviews);
         console.log("friendslist", friendsList)
+        console.log("reviews length", reviews.length)
+        debugger;
         for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
             console.log("each review author", reviews[i].author);
             if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
