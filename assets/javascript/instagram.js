@@ -297,7 +297,6 @@ function addReviewToExistingRestaurant(imageData, key){
         thumb: "up"
     };
     // push this image to that restaurant_name's reviews array
-    console.log(thisRestaurant);
     database.ref("restaurants/" + key + "/reviews").push(thisImage);
 }//function addReviewToExistingRestaurant
 
@@ -324,7 +323,6 @@ function addReviewAndNewRestaurant(imageData){
     var allReviews = [];
     allReviews.push(thisImage);
     thisRestaurant.reviews = allReviews;
-    console.log(thisRestaurant);
     database.ref("restaurants").push(thisRestaurant);
 }//function addReviewAndNewRestaurant
 

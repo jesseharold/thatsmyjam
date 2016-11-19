@@ -140,6 +140,20 @@ function latLngToAddress(latitude, longitude, callback){
     });
 }
 
+//function to find lat and lng from an address 
+function addressToLatLng(address, callback){
+    var geocoder = new google.maps.Geocoder();
+    var latLng = "error finding location";
+    geocoder.geocode({'location': address}, function(results, status) {
+        if (status === "OK") {
+            address = results[0];
+            callback(address);
+        } else {
+            alert("Geocode was not successful for the following reason: " + status);
+        };
+    });
+}
+
 function setAddressSuggest(addressObject){
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': addressObject}, function(results, status) {
