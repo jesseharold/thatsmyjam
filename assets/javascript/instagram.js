@@ -367,7 +367,7 @@ function openModal(content){
         width: "45%"
     });
     modalContainer.append(modalBG);
-    var modal = modalContainer.append(container);
+    var modal = modalContainer.append(modalContent);
     modal.append(content);
     $("body").append(modalContainer);
 }
