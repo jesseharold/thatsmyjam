@@ -8,6 +8,10 @@ var restaurantData = database.ref("/restaurants");
 var map;
 function initMap() {
     //declare variables
+    $.get("https://ipinfo.io", function(response) {
+        var location = response.loc;
+        geoLocation = location.split(",");
+    }, "jsonp");
     if (geoLocation){
         currentLocation = geoLocation;
     }

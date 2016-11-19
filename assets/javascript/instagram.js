@@ -61,15 +61,7 @@ function initializeApp(){
             getOwnImages();
         }
     });
-    //getLocation();
 }//function initializeApp
-
-function getLocation(){
-    $.get("https://ipinfo.io", function(response) {
-        var location = response.loc;
-        geoLocation = location.split(",");
-    }, "jsonp");
-}//function getLocation
 
 function getOwnUserInfo(){
     $.ajax({
