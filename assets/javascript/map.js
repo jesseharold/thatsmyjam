@@ -142,12 +142,11 @@ function latLngToAddress(latitude, longitude, callback){
 
 //function to find lat and lng from an address 
 function addressToLatLng(address, callback){
+    var newLocation;
     var geocoder = new google.maps.Geocoder();
-    var latLng = "error finding location";
-    geocoder.geocode({'location': address}, function(results, status) {
+    geocoder.geocode({'address': address}, function(results, status) {
         if (status === "OK") {
-            address = results[0];
-            callback(address);
+            newLocation = results[0].geometry.location; //returns an object like {lat: xx, lng: yy}
         } else {
             alert("Geocode was not successful for the following reason: " + status);
         };

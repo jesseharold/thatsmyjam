@@ -37,19 +37,21 @@ function addReviewModal(){
         $("#useLocation").data("location", currentLocation);
     });
     $("body").on("click", "#enterAddress", function(){
-        $("#enterAddress").after("<br>Address: <input type='text' id='newReviewAddress1'><br>Address 2: <input type='text' id='newReviewAddress2'>");
+        $("#enterAddress").off().after("<br>Address: <input type='text' id='newReviewAddress1'><br>Address 2: <input type='text' id='newReviewAddress2'>");
     });
     $("body").on("click", "#submitReview", function(){
         if($(".modalContainer #newReviewAddress1").val()){
             addressToLatLng($(".modalContainer #newReviewAddress1").val()+$(".modalContainer #newReviewAddress2").val(), processReviewFromModal);
         } else {
-            processReviewFromModal($(".modalContainer #useLocation").data("location").lat + ", " + $(".modalContainer #useLocation").data("location").lng);
+            processReviewFromModal({
+                lat: $(".modalContainer #useLocation").data("location").lat,
+                lng: $(".modalContainer #useLocation").data("location").lng
+            });
         }
     });
 }
 
 function processReviewFromModal(location){
-    console.log(location);
     var reviewData = {
         location: {},
         images: {
@@ -63,8 +65,8 @@ function processReviewFromModal(location){
     reviewData.caption.from.id = currentUserId;
     reviewData.caption.text = $(".modalContainer #reviewText").val();
     reviewData.location.name = $(".modalContainer #restaurantName").val();
-    reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
-    reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
+    reviewData.location.latitude = location.lat;
+    reviewData.location.longitude = location.lng;
     reviewData.id = "review" + Math.random()*99999999999999999;
     reviewData.thumb = $("input[name=thumb]:checked").val();
     var restaurantKey = checkRestaurantExists(reviewData);
