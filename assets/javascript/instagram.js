@@ -71,6 +71,8 @@ function getOwnUserInfo(){
     })
     .done(function(response) {
         updateUser(response.data);
+        currentUserId = response.data.id;
+        console.log(currentUserId);
     })
     .fail(function(error){
         console.error(error);
@@ -91,7 +93,6 @@ function updateUser(dataFromIg){
         database.ref("users/"+dataFromIg.id).set(user);
     }
     // for all: store ID locally and update friends list
-    currentUserId = dataFromIg.id;
     updateFriendList(dataFromIg.id);
 }//function updateUser
 
