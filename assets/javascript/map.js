@@ -54,6 +54,7 @@ function createMarkers(friendsListFromIG){
             if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
                 console.log("matching author", reviews[i].author);
                 display = true;  //then display is true.
+                break;
             };
         };
 
