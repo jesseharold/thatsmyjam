@@ -40,7 +40,9 @@ function addReviewModal(){
         console.log("enterAddress");
     });
     $("body").on("click", "#submitReview", function(){
-        var reviewData = {};
+        var reviewData = {
+            location: {}
+        };
         reviewData.text = $(".modalContainer #reviewText").val();
         reviewData.author = currentUserId;
         reviewData.text = $(".modalContainer #reviewText").val();
