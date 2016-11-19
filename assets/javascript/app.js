@@ -43,23 +43,22 @@ function addReviewModal(){
         var reviewData = {
             location: {},
             images: {
-                thumbnail: {},
-                standard_resolution: {}
+                thumbnail: {url: ""},
+                standard_resolution: {url: ""}
             },
             caption: {
                 from: {}
             }
         };
-        reviewData.text = $(".modalContainer #reviewText").val();
+        console.log(currentUserId);
         reviewData.caption.from.id = currentUserId;
         reviewData.caption.text = $(".modalContainer #reviewText").val();
         reviewData.location.name = $(".modalContainer #restaurantName").val();
         reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
         reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
-        reviewData.review_id = "review" + Math.random()*9999999999999999999999;
+        reviewData.id = "review" + Math.random()*9999999999999999999999;
         reviewData.thumb = $("input[name=thumb]:checked").val();
         var restaurantKey = checkRestaurantExists(reviewData);
-        console.log(restaurantKey);
         if (restaurantKey){
             addReviewToExistingRestaurant(reviewData, restaurantKey)
         } else {
