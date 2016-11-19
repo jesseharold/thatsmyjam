@@ -47,6 +47,7 @@ function createMarkers(friendsListFromIG){
         //if it was reviewed by a friend, display the restaurant and include all of the friend reviews
         if (display === true){  
             //create the marker
+            console.log("creating marker");
             var marker = new google.maps.Marker({
                 position: {lat: childSnap.val().lat, lng: childSnap.val().lng},
                 map: map,  //set which map to place the marker on
