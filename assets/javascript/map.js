@@ -1,13 +1,10 @@
-//TEST DATA - locations
-var LA = {lat: 34.0554665, lng: -118.30951240000002};
-var SF = {lat: 37.7749, lng: -122.4194}; 
-//TEST DATA - current user info
-var currentLocation = SF;
-var currentUser = "bill@gmail.com";
+//define variables
+var currentLocation = {lat: 37.7749, lng: -122.4194};  //test
 var friendsList;
-
 //database references
 var restaurantData = database.ref("/restaurants");
+
+console.log("bill test: map.js called");
 
 //create a map
 var map;
@@ -20,7 +17,7 @@ function initMap() {
         zoom: 12,
         center: mapCenter
     });
-    console.log("map created")
+    console.log("bill test: map created")
 
     //code for geocoder
     var geocoder = new google.maps.Geocoder();
@@ -31,8 +28,10 @@ function initMap() {
 }
 function createMarkers(friendsListFromIG){
     friendsList = friendsListFromIG;
+    console.log("createMarkers fired");
     //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
-    database.ref("/restaurants").on("child_added", function(childSnap){
+    restaurantData.on("child_added", function(childSnap){
+        console.log("child added fired")
         //check to see if the restaurant was reviewed by a friend
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
@@ -62,7 +61,7 @@ function createMarkers(friendsListFromIG){
                 }
             })(marker));
             //testing console log
-            console.log("marker created");
+            console.log("marker created 2");
         };
             
     });
@@ -95,14 +94,6 @@ function createMarkerContent(restaurant, callback){
                 markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
                 //add all images saved along with the review
                 markerHTML = markerHTML + "<img src='" + allReviews[j].image +"' class='review-image'>"; //add it to the marker content html
-
-                // the below block can be used to add multiple images if they are in an array
-                // var reviewImages = allReviews[j].image;
-                // if (reviewImages != undefined){  //only do the following if the review includes an "images" array 
-                //     for (var k = 0; k < reviewImages.length; k++) {  //for each image in the "images" array...
-                //     markerHTML = markerHTML + "<img src='" + reviewImages[k] +"' class='review-image'>"; //add it to the marker content html 
-                //     };
-                // };
 
                 //close the review wrapper for this tag 
                 markerHTML = markerHTML + "</div>";
