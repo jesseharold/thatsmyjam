@@ -142,7 +142,7 @@ function filterFriends(userID){
     currentUserFriendsList = myTMJFriends;
     getFriendsImages(myTMJFriends);
     // call function on the user interface to populate visible friends list
-    //displayFriends();
+    populateFriendsList(myTMJFriends);
 }//function filterFriends
 
 function getFriendsImages(myFriends){

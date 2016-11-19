@@ -56,35 +56,41 @@ var friendsUsers = {
 
 
 
-function populateFriendsList(testObject) {
+function populateFriendsList(arrayOfIDs) {
+    var completedFriends
+    //loop through array of friends' user IDs, build html
+    for(var i = 0; i < arrayOfIDs.length; i++)
+        var friendID = arrayOfIDs[i];
+        var listTagFriend = $('<li>').addClass("mdl-list__item");
+        var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
+        listTagFriend.append(spanTagFriend);
 
+        var imageTagFriend = $('<img>')
+            .addClass("mdl-list__item-avatar")
+            .attr("src", localCopyUsers[friendID].profilePicture);
+        spanTagFriend
+            .append(imageTagFriend)
+            .append(localCopyUsers[friendID].name);
 
+        var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
+        spanTagFriend.after(spanCheckmark);
 
-    var completedFriend
-
-    var listTagFriend = $('<li>').addClass("mdl-list__item");
-
-    var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
-    listTagFriend.append(spanTagFriend);
-
-    var imageTagFriend = $('<img>').addClass("mdl-list__item-avatar").attr("src", testObject.imageURL)
-    spanTagFriend.append(imageTagFriend).append(testObject.userName);
-
-    var spanCheckmark = $('<span>').addClass("mdl-list__item-secondary-action");
-    spanTagFriend.after(spanCheckmark);
-
-    var labelCheckmark = $('<label>').addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").attr("for", "list-checkbox-" + testObject.friendNumber);
-    var inputCheckmark = $('<input>').addClass("mdl-checkbox__input").attr("type", "checkbox").attr("id", "list-checkbox-" + testObject.friendNumber).attr("checked", "");
-   
-    spanCheckmark.append(labelCheckmark);
-
-    labelCheckmark.append(inputCheckmark);
+        var labelCheckmark = $('<label>')
+            .addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect")
+            .attr("for", "list-checkbox-" + i);
+        var inputCheckmark = $('<input>')
+            .addClass("mdl-checkbox__input")
+            .attr("type", "checkbox")
+            .attr("id", "list-checkbox-" + i)
+            .attr("checked", "");
     
-    
-    completedFriend = listTagFriend;
-    
-    console.log(completedFriend);
-    $(".friendlist").append(completedFriend);
+        spanCheckmark.append(labelCheckmark);
+        labelCheckmark.append(inputCheckmark);
+
+        completedFriend.append(listTagFriend);    
+        //console.log(completedFriend);
+    }
+    $(".friendlist").append(completedFriends);
    
 }
 
