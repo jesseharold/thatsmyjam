@@ -146,7 +146,10 @@ function filterFriends(userID){
 }//function filterFriends
 
 function populateFriendsList(arrayOfIDs) {
-    var completedFriends;
+    var completedFriends = $("<ul>")
+        .addClass("demo-list-control")
+        .addClass("mdl-list")
+        .addClass("friendlist");
     //loop through array of friends' user IDs, build html
     for(var i = 0; i < arrayOfIDs.length; i++){
         var friendID = arrayOfIDs[i];
@@ -179,7 +182,7 @@ function populateFriendsList(arrayOfIDs) {
         completedFriends.append(listTagFriend);    
         //console.log(completedFriend);
     }
-    $(".friendlist").append(completedFriends);
+    $(".mdl-layout__drawer-right").append(completedFriends);
 }
 
 
