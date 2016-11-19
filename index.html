@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_purple-blue.min.css" />
         <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
         <link rel="stylesheet" href="assets/css/style.css">
-        <!-- map stylsheet -->
+        <!-- map stylesheet -->
         <link rel="stylesheet" href="assets/css/map.css"> 
         
     </head>
@@ -39,10 +39,7 @@
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link"  href="restaurant.html">Add a Review</a>
-                        <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://billbitt.github.io/project-1-friends-restaurant-review/&response_type=token&scope=follower_list+public_content">Login</a>
-                        <!-- not needed at the moment
-                            <a class="mdl-navigation__link"  href="">Sign up</a>
-                        -->
+                        <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/project-1-friends-restaurant-review&response_type=token&scope=follower_list+public_content">Login</a>
                     </nav>
                     
                     <!--<div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>-->
@@ -52,34 +49,42 @@
                 </div>
             </header>
             
-            <!--HAmburger Menu -->
+            <!--Hamburger Menu -->
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">That's My Jam</span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://billbitt.github.io/project-1-friends-restaurant-review/&response_type=token&scope=follower_list+public_content">Login</a>
                     <a class="mdl-navigation__link" href="restaurant.html">Add a Restaurant</a>
-                    <a class="mdl-navigation__link" href="">Contact</a>
-                    <a class="mdl-navigation__link" href="">About Us</a>
+                    <a class="mdl-navigation__link" href="http://www.imdb.com/title/tt0118884/">Contact</a>
+                    <a class="mdl-navigation__link" href="http://blog.hubspot.com/marketing/remarkable-about-us-page-examples">About Us</a>
                 </nav>
             </div>
-            
+            <!--Friend's List Drawer-->
             <div class="mdl-layout__drawer-right">
                 <span class="mdl-layout-title" id="addfriend">Friends List</span>
             </div>
         
-            <main class="mdl-layout__content">
+            <main class="mdl-layout__content" id="mainlength">
                  <div class="page-content">
                     <!-- map -->
                     <div id="map"></div>
                     
-    
                 </div>
                 
             </main>
-
-             <div class="mdl-layout__obfuscator-right">
+            <!--Footer-->
+                    <footer class="mdl-mini-footer">
+                        <div class="mdl-mini-footer__left-section" id="footerid">
+                            <div class="mdl-logo">TMJ All Rights Reserved</div>
+                            <ul class="mdl-mini-footer__link-list">
+                                <li><a href="https://www.youtube.com/watch?v=yWP6Qki8mWc">Help</a></li>
+                                <li><a href="https://en.wikipedia.org/wiki/Privacy">Privacy & Terms</a></li>
+                            </ul>
+                        </div>
+                    </footer>
+            <!--Offclick area-->
+            <div class="mdl-layout__obfuscator-right">
             </div>
-
         </div>
         
         <!-- jquery link -->
