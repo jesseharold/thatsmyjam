@@ -38,7 +38,7 @@ function createMarkers(friendsListFromIG){
                 console.log("inside if in loop");
                 //do stuff for each item in the object
                 console.log("author", reviews[key].author);
-                if (friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
+                if (friendsList && friendsList.indexOf(reviews[key].author) >= 0){ //for each reivew, if the author is in your friends list... 
                     display = true;  //then display is true.
                     console.log(display);
                 };
@@ -84,22 +84,29 @@ function createMarkerContent(restaurant, callback){
         address = result;
         markerHTML = markerHTML + "<p>" + address + "</p>"; 
         //add restaurants reviews
-        var allReviews = restaurant.reviews;
-        for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
-            if (friendsList && friendsList.indexOf(allReviews[j].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
-                //start each individual review with a new div
-                markerHTML = markerHTML + "<div class='review-wrapper'>";
-                //add the reviewer name
-                markerHTML = markerHTML + "<p class='review-author'>" + localCopyUsers[allReviews[j].author].name + " says: </p>";
-                //add the reviewer's text review
-                markerHTML = markerHTML + "<p>" + allReviews[j].text + "</p>";
-                //add all images saved along with the review
-                markerHTML = markerHTML + "<img src='" + allReviews[j].image +"' class='review-image'>"; //add it to the marker content html
+        var reviews = restaurant.reviews;
+        for (var key in reviews) {
+            if (reviews.hasOwnProperty(key)){
+                console.log("inside if in loop");
+                //do stuff for each item in the object
+                if (friendsList && friendsList.indexOf(reviews[key].author) >= 0){  //if the reviewer is on the friendsList then proceed...  
+                    //start each individual review with a new div
+                    markerHTML = markerHTML + "<div class='review-wrapper'>";
+                    //add the reviewer name
+                    markerHTML = markerHTML + "<p class='review-author'>" + localCopyUsers[reviews[key].author].name + " says: </p>";
+                    //add the reviewer's text review
+                    markerHTML = markerHTML + "<p>" + reviews[key].text + "</p>";
+                    //add all images saved along with the review
+                    markerHTML = markerHTML + "<img src='" + reviews[key].image +"' class='review-image'>"; //add it to the marker content html
 
-                //close the review wrapper for this tag 
-                markerHTML = markerHTML + "</div>";
+                    //close the review wrapper for this tag 
+                    markerHTML = markerHTML + "</div>";
+                };
             };
         };
+        // for (var j = 0; j < allReviews.length; j++){  //loop through all the reviews for the restaurant
+            
+        // };
         markerHTML = markerHTML + "</div>"; //add the closing div tag;
         callback(markerHTML);
     });
