@@ -176,8 +176,15 @@ body, html{
     border: 0;
     padding: 8px;
 }
-.modalContent .thumbs-icons{
+.modalContent .thumbs-icons {
     width: 20px;
     margin: 0 1px 0 25px;
     color: rgb(103,58,183);
+}
+.modalContent #submitReview {
+    margin: 0 34%;
+    padding: 12px;
+    font-weight: bolder;
+    font-size: large;
+    margin-top: 10px;
 }

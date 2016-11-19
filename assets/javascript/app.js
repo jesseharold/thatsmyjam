@@ -23,24 +23,38 @@ $(document).on("click",".add-review-link", function(){
 function addReviewModal(){
     var formContainer = $("<div>");
     formContainer.append("<h3>Add a Review</h3>");
-    formContainer.append("Restaurant Name: <input type='text' id='restaurantName'>");
-    formContainer.append("<br>Thumbs: <i class='material-icons thumbs-icons'>thumb_up_outline</i> <input type='radio' name='thumb' value='up' id='thumbsUp'>");
+    formContainer.append("Restaurant Name* <input type='text' id='restaurantName'>");
+    formContainer.append("<br>Thumbs* <i class='material-icons thumbs-icons'>thumb_up_outline</i> <input type='radio' name='thumb' value='up' id='thumbsUp'>");
     formContainer.append("<i class='material-icons thumbs-icons'>thumb_down_outline</i> <input type='radio' name='thumb' value='down' id='thumbsDown'>");
     formContainer.append("<br><textarea id='reviewText' rows='5' cols='20'>Review</textarea>");
-    formContainer.append("<br>Location: <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
+    formContainer.append("<br>Location* <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
     formContainer.append("<br><button id='submitReview'>Add Review</button>");
     openModal(formContainer);
     $("body").on("click", ".modalBG", function(){
         $("div.modalContainer").remove();
     });
     $("body").on("click", "#useLocation", function(){
-        console.log(currentLocation);
+        $("#useLocation").data("location", currentLocation);
     });
     $("body").on("click", "#enterAddress", function(){
         console.log("enterAddress");
     });
     $("body").on("click", "#submitReview", function(){
-        console.log("submitReview");
+        var reviewData = {};
+        reviewData.text = $(".modalContainer #reviewText").val();
+        reviewData.author = currentUserId;
+        reviewData.text = $(".modalContainer #reviewText").val();
+        reviewData.location.name = $(".modalContainer #restaurantName").val();
+        reviewData.location.latitude = $(".modalContainer #useLocation").data("location").lat;
+        reviewData.location.longitude = $(".modalContainer #useLocation").data("location").lng;
+        reviewData.review_id = "review" + Math.random()*9999999999999999999999;
+        reviewData.thumb = "up";
+        console.log(reviewData);
+/*
+        thumb: "up"
+*/
+
+
     });
 
 
