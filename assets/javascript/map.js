@@ -1,5 +1,5 @@
 //define variables
-var currentLocation = {lat: 37.7749, lng: -122.4194};  //test
+var currentLocation = {lat: 34.059389, lng: -118.445712};  // UCLA
 var friendsList;
 //database references
 var restaurantData = database.ref("/restaurants");
@@ -8,6 +8,13 @@ var restaurantData = database.ref("/restaurants");
 var map;
 function initMap() {
     //declare variables
+    $.get("https://ipinfo.io", function(response) {
+        var location = response.loc;
+        geoLocation = location.split(",");
+    }, "jsonp");
+    if (geoLocation){
+        currentLocation = geoLocation;
+    }
     var mapCenter = currentLocation;
     setAddressSuggest(currentLocation);
     // Create a map object and specify the DOM element for display.
@@ -127,6 +134,19 @@ function latLngToAddress(latitude, longitude, callback){
         if (status === "OK") {
             address = results[0].formatted_address;
             callback(address);
+        } else {
+            alert("Geocode was not successful for the following reason: " + status);
+        };
+    });
+}
+
+//function to find lat and lng from an address 
+function addressToLatLng(address, callback){
+    var newLocation;
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status === "OK") {
+            newLocation = results[0].geometry.location; //returns an object like {lat: xx, lng: yy}
         } else {
             alert("Geocode was not successful for the following reason: " + status);
         };

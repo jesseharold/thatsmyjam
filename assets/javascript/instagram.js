@@ -61,15 +61,7 @@ function initializeApp(){
             getOwnImages();
         }
     });
-    //getLocation();
 }//function initializeApp
-
-function getLocation(){
-    $.get("https://ipinfo.io", function(response) {
-        var location = response.loc;
-        geoLocation = location.split(",");
-    }, "jsonp");
-}//function getLocation
 
 function getOwnUserInfo(){
     $.ajax({
@@ -78,6 +70,7 @@ function getOwnUserInfo(){
         dataType: "jsonp"
     })
     .done(function(response) {
+        currentUserId = response.data.id;
         updateUser(response.data);
     })
     .fail(function(error){
@@ -99,7 +92,6 @@ function updateUser(dataFromIg){
         database.ref("users/"+dataFromIg.id).set(user);
     }
     // for all: store ID locally and update friends list
-    currentUserId = dataFromIg.id;
     updateFriendList(dataFromIg.id);
 }//function updateUser
 
@@ -333,23 +325,6 @@ function addReviewAndNewRestaurant(imageData){
     thisRestaurant.reviews = allReviews;
     database.ref("restaurants").push(thisRestaurant);
 }//function addReviewAndNewRestaurant
-
-//function promptForLocation(imageData){
-// this is in the icebox, but it would be nice to add down the road.
-// probably should pass in a way to ref. this review in the database
-// once that exists
-    //console.log("An image was imported with no location information, it will not be displayed on any maps. Please make sure to tag all Instagram photos with a location.");
-//}
-
-function openModal(content){
-    var modalContainer = $("<div>").addClass("modalContainer");
-    var modalBG = $("<div>").addClass("modalBackground");
-    var modalContent = $("<div>").addClass("modalContent");
-    modalContainer.append(modalBG);
-    var modal = modalContainer.append(container);
-    modal.append(content);
-    $("body").append(modalContainer);
-}
 
 $("document").ready(function(){
 checkForAuthToken();

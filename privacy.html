@@ -1,40 +1,88 @@
-<html>
-<head>
-    <title>#seefood Privacy Policy</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <meta charset="utf-8">
-    <style>
-        #title, #main{      
-                margin: auto;
-                margin-bottom: 10px;
-            }
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>That's My Jam</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_purple-blue.min.css" />
+        <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+        <link rel="stylesheet" href="assets/css/restaurant.css">
+        <style>
+            
+        </style>
+    </head>
+    <body>
 
-        .container .panel-heading, .jumbotron, .btn-primary{
-            background-color: navy;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="jumbotron" id="title">
-            <h1>see-food-friends</h1>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Privacy Policy</h3>
+        <!--Fixed header-->
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title"><a id="titlelink" href="index.html">That's My Jam</a></span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+            </header>
+            
+            <!--HAmburger Menu -->
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">That's My Jam</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="">Friend</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Contact</a>
+                    <a class="mdl-navigation__link" href="">About Us</a>
+                </nav>
             </div>
             
-            <div class="panel-body">
-                see-food-friends uses instagram users' photos only with their permission, as indicated by either logging in and authorizing or by using the #seefoodfriends hashtag. Instagram users photos will never be sold, monetized, or shared in any way other than the stated usage of the app - displaying the images on a map visible to the users' friends.
+            
+        
+            <main class="mdl-layout__content">
+                 <div class="page-content">
+                        <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+                            <main class="mdl-layout__content">
+                                <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--3-col"> 
+                                </div>
+                                <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--6-col">
+                                    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                                        <h2 class="mdl-card__title-text">Privacy Policy</h2>
+                                    </div>
+                                <div class="mdl-card__supporting-text">
+                                            thatsmyjam uses instagram users' photos only with their permission, as indicated by either logging in and authorizing or by using the #seefoodfriends hashtag. Instagram users photos will never be sold, monetized, or shared in any way other than the stated usage of the app - displaying the images on a map visible to the users' friends.
                 <br><br>
                 For any questions, contact jesseharold@gmail.com.
+                                    </div>
+                                    
+                                </div>
+                                <div class="mdl-cell mdl-cell--3-col"> 
+                                </div>
+                            </div>
+        	    </main>
             </div>
-        </div>
-        
-</body>
+        </div>                
 
+
+        
+
+
+        <script  src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+        <script src="assets/javascript/app.js"></script>
+        <script lang="javascript">
+            $("#submit-restaurant").click(function(){
+                var newReview = {
+                    restaurantName: $("#restaurantname").val(),
+                    text: $("review").val()
+                }
+                if ($("#thumbup").hasclass("mdl-button--colored")){
+                    newReview.thumb = "up";
+                } else if ($("#thumbdown").hasclass("mdl-button--colored")){
+                    newReview.thumb = "down";
+                }
+                return false;
+            })
+        </script>
+       
+    </body>
 </html>
