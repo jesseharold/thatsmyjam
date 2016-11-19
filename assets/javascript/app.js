@@ -91,7 +91,6 @@ function populateFriendsList(arrayOfIDs) {
         //console.log(completedFriend);
     }
     $(".friendlist").append(completedFriends);
-   
 }
 
 $(document).on("click",'#addfriend', function(){
