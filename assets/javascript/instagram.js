@@ -148,7 +148,7 @@ function filterFriends(userID){
 function populateFriendsList(arrayOfIDs) {
     var completedFriends
     //loop through array of friends' user IDs, build html
-    for(var i = 0; i < arrayOfIDs.length; i++)
+    for(var i = 0; i < arrayOfIDs.length; i++){
         var friendID = arrayOfIDs[i];
         var listTagFriend = $('<li>').addClass("mdl-list__item");
         var spanTagFriend = $('<span>').addClass("mdl-list__item-primary-content");
