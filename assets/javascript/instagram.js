@@ -346,26 +346,9 @@ function addReviewModal(){
 }
 
 function openModal(content){
-    var modalContainer = $("<div>").css({
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%"
-    });
-    var modalBG = $("<div>").css({
-        position: "absolute",
-        top: 0,
-        left: 0,
-        backgroundColor: "black",
-        opacity: ".8",
-        width: "100%",
-        height: "100%"
-    });
-    var modalContent = $("<div>").css({
-        margin: "auto",
-        width: "45%"
-    });
+    var modalContainer = $("<div>").addClass("modalContainer");
+    var modalBG = $("<div>").addClass("modalBG");
+    var modalContent = $("<div>").addClass("modalContent");
     modalContainer.append(modalBG);
     var modal = modalContainer.append(modalContent);
     modal.append(content);
