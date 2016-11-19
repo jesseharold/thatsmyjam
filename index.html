@@ -21,6 +21,21 @@
                     <span class="mdl-layout-title"><a href="index.html" id="titlelink">That's My Jam</a></span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
+                     <!-- city input for centering map -->
+                    <div class="mdl-navigation" id="floating-panel">
+                        <form action="#">
+                            <div class="mdl-textfield mdl-js-textfield" id="address-div">
+                                <input class="mdl-textfield__input" type="text" id="address">
+                                <label class="mdl-textfield__label" for="address" id="address-label">Los Angeles, CA</label>
+                            </div> 
+                            <button class="mdl-button mdl-js-button" id="submit" type="button">
+                                Change Location
+                            </button>  
+                        </form>
+                        
+                    </div>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link"  href="restaurant.html">Add a Review</a>
@@ -54,19 +69,9 @@
         
             <main class="mdl-layout__content">
                  <div class="page-content">
-                    <!-- city input for centering map -->
-                    <div id="floating-panel">
-                        <input id="address" type="textbox" value="Los Angeles, California">
-                        <input id="submit" type="button" value="Change Location">
-                    </div>
                     <!-- map -->
                     <div id="map"></div>
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addrestaurant">
-                        <i class="material-icons">add</i> 
-                    </button>
-                    <span class="mdl-tooltip mdl-tooltip--left" data-mdl-for="addrestaurant">
-                        Add Restaurant
-                    </span>
+                    
     
                 </div>
                 
@@ -83,7 +88,7 @@
         <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
         <script src="assets/javascript/firebase.js"></script>
         <!-- google maps scripts-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtu_MMhMD6Ss_EH4Ol-gidM9fRcePTO0M&callback=initMap" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtu_MMhMD6Ss_EH4Ol-gidM9fRcePTO0M" async defer></script>
         <script src="assets/javascript/map.js"></script>
         <!-- instagram integration script -->
         <script src="assets/javascript/instagram.js"></script>
