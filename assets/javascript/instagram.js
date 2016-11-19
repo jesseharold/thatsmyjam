@@ -10,7 +10,6 @@ var geoLocation;
 var localCopyRestaurants;
 var localCopyUsers;
 var currentUserId;
-var currentUserFriendsList;
 var instagramDataReady=0;
 
 function checkForAuthToken(){
@@ -139,7 +138,8 @@ function filterFriends(userID){
         }
     }
     database.ref("users").child(userID).child("friends-users").set(myTMJFriends);
-    currentUserFriendsList = myTMJFriends;
+    //friendsList is an array defined in map.js, used to add markers to the map
+    friendsList = myTMJFriends;
     getFriendsImages(myTMJFriends);
     // call function on the user interface to populate visible friends list
     populateFriendsList(myTMJFriends);

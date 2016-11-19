@@ -4,7 +4,7 @@ var SF = {lat: 37.7749, lng: -122.4194};
 //TEST DATA - current user info
 var currentLocation = SF;
 var currentUser = "bill@gmail.com";
-var friendsList = ["4147363198", "4147363198", "4149753642"];
+var friendsList;
 
 //database references
 var restaurantData = database.ref("/restaurants");
