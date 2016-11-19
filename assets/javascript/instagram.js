@@ -146,7 +146,7 @@ function filterFriends(userID){
 }//function filterFriends
 
 function populateFriendsList(arrayOfIDs) {
-    var completedFriends
+    var completedFriends;
     //loop through array of friends' user IDs, build html
     for(var i = 0; i < arrayOfIDs.length; i++){
         var friendID = arrayOfIDs[i];
@@ -176,7 +176,7 @@ function populateFriendsList(arrayOfIDs) {
         spanCheckmark.append(labelCheckmark);
         labelCheckmark.append(inputCheckmark);
 
-        completedFriend.append(listTagFriend);    
+        completedFriends.append(listTagFriend);    
         //console.log(completedFriend);
     }
     $(".friendlist").append(completedFriends);
