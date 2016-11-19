@@ -32,11 +32,15 @@ function createMarkers(friendsListFromIG){
     //look at all the children (restaurants) in the restaurant database & place a marker if reviewed by one of your friends
     restaurantData.on("child_added", function(childSnap){
         console.log("child added fired")
+        console.log("child", childSnap.val());
         //check to see if the restaurant was reviewed by a friend
         var display = false;  //we will assume we do not have a review from a friend
         var reviews = childSnap.val().reviews; //store the array that has all the reviews
+        console.log("reviews", reviews);
+        console.log("friendslist", friendsList)
         for (var i = 0; i < reviews.length; i++){  //loop over the array looking at each review..
-            if (friendsList && friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+            if (friendsList.indexOf(reviews[i].author) >= 0){ //for each reivew, if the author is in your friends list... 
+                console.log("matching author", reviews[i].author);
                 display = true;  //then display is true.
             };
         };
