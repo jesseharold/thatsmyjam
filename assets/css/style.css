@@ -174,3 +174,7 @@ body, html{
     color: white;
     margin: 5px;
 }
+.modalContent .thumbs-icons{
+    width: 20px;
+    margin: 0 1px 0 25px;
+}

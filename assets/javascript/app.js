@@ -24,8 +24,8 @@ function addReviewModal(){
     var formContainer = $("<div>");
     formContainer.append("<h3>Add a Review</h3>");
     formContainer.append("Restaurant Name: <input type='text' id='restaurantName'>");
-    formContainer.append("<br>Thumbs: <i class='material-icons'>thumb_up_outline</i> <input type='radio' name='thumb' value='up' id='thumbsUp'>");
-    formContainer.append("<i class='material-icons'>thumb_down_outline</i> <input type='radio' name='thumb' value='down' id='thumbsDown'>");
+    formContainer.append("<br>Thumbs: <i class='material-icons thumbs-icons'>thumb_up_outline</i> <input type='radio' name='thumb' value='up' id='thumbsUp'>");
+    formContainer.append("<i class='material-icons thumbs-icons'>thumb_down_outline</i> <input type='radio' name='thumb' value='down' id='thumbsDown'>");
     formContainer.append("<br><textarea id='reviewText' rows='5' cols='20'>Review</textarea>");
     formContainer.append("<br>Location: <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
     formContainer.append("<br><button id='submitReview'>Add Review</button>");
