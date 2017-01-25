@@ -15,9 +15,10 @@ and firebase
 ### to add an instagram photo
 * user takes a food photo and posts in their instagram account 
 * user must use the hashtag #thatsmyjam 
-* and have a location set for the post
+* user must have a location set for the post
 
-### user logs in w instagram:
+### to use the app
+* user logs in to the app w their instagram credentials
 * look up their IG username in our DB of users, add if new user
 * retrieve their user info and friends list from IG
 * add / update their user info and friends list in our DB
