@@ -30,9 +30,6 @@ function addReviewModal(){
     formContainer.append("<br>Location* <button id='useLocation'>Use Current Location</button><button id='enterAddress'>Enter Address</button>");
     formContainer.append("<br><button id='submitReview'>Add Review</button>");
     openModal(formContainer);
-    $("body").on("click", ".modalBG", function(){
-        $("div.modalContainer").remove();
-    });
     $("body").on("click", "#useLocation", function(){
         $("#useLocation").data("location", currentLocation);
     });
@@ -87,6 +84,9 @@ function openModal(content){
     modalContainer.append(modalContent);
     modalContent.append(content);
     $("body").append(modalContainer);
+    $("body").on("click", ".modalBG", function(){
+        $("div.modalContainer").remove();
+    });
 }
 
 //Color the thumbs up or down
@@ -104,5 +104,17 @@ $(document).on("click","#thumbdown", function(){
     }
 });
 
+$(document).ready(promptForLogin);
 
-
+function promptForLogin(){
+    if(!instagramAuthToken){
+        var formContainer = $("<div>");
+        formContainer.append("<h3>Welcome to That's My Jam</h3>");
+        formContainer.append("<p>Log in with your Instagram account to see your friends' and your own delicious meals nearby.</p>");
+        formContainer.append("<button id='loginFromModal'>Begin</button>");
+        $(document).on("click","#loginFromModal", function(){
+            window.location = "https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/thatsmyjam/&response_type=token&scope=follower_list+public_content";
+        });
+        openModal(formContainer);
+    }
+}
