@@ -17,6 +17,7 @@ function checkForAuthToken(){
         var authTokenString = location.href.split("#").pop();
         var authToken = authTokenString.split("=");
         if (authToken[0] === "access_token"){
+            console.log("found in url");
             loggedIn(authToken[1]);
         }
     } else {
@@ -28,6 +29,7 @@ function checkForAuthToken(){
                 cookie = cookie.substring(1);
             }
             if (cookie.indexOf("tmjAuthToken=") === 0) {
+                console.log("found in cookie");
                 loggedIn(cookie.substring(13, cookie.length));
             } else {
                 console.log("did not find AuthToken");
@@ -78,7 +80,7 @@ function getOwnUserInfo(){
     })
     .done(function(response) {
         currentUserId = response.data.id;
-        $("#userID").text(currentUserId);
+        $("#userID").text(response.data.username);
         updateUser(response.data);
     })
     .fail(function(error){
