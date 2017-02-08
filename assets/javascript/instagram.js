@@ -20,6 +20,7 @@ function checkForAuthToken(){
             $("#login").hide();
             instagramAuthToken = authToken[1];
             document.cookie = "authToken=" + instagramAuthToken;
+            console.log("found AuthToken in url");
             initializeApp();
         }
     } else {
@@ -32,7 +33,10 @@ function checkForAuthToken(){
             }
             if (cookie.indexOf("authToken=") === 0) {
                 instagramAuthToken = cookie.substring(10, cookie.length);
+                console.log("found AuthToken in cookie");
                 initializeApp();
+            } else {
+                console.log("did not find AuthToken");
             }
         }
     }
@@ -42,7 +46,7 @@ function initializeApp(){
     //listen for changes to DB to keep localCopyRestaurants updated
     database.ref("restaurants").on("value", function(snapshot){
         localCopyRestaurants = snapshot.val();
-        //console.log(localCopyRestaurants);
+        console.log("localCopyRestaurants: ", localCopyRestaurants);
         instagramDataReady++;
         if(instagramDataReady === 2){
             //check to see if both sets of data are ready

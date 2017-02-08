@@ -111,7 +111,7 @@ function promptForLogin(){
         var formContainer = $("<div>");
         formContainer.append("<h3>Welcome to That's My Jam</h3>");
         formContainer.append("<p>Log in with your Instagram account to see your friends' and your own delicious meals nearby.</p>");
-        formContainer.append("<button id='loginFromModal'>Begin</button>");
+        formContainer.append("<button id='loginFromModal'>Login with Instagram to Begin</button>");
         $(document).on("click","#loginFromModal", function(){
             window.location = "https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/thatsmyjam/&response_type=token&scope=follower_list+public_content";
         });

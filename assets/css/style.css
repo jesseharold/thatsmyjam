@@ -162,6 +162,7 @@ body, html{
 }
 .modalContent {
     width: 45%;
+    max-width: 450px;
     position: relative;
     display: block;
     background-color: white;
@@ -175,6 +176,7 @@ body, html{
     margin: 5px;
     border: 0;
     padding: 8px;
+    cursor: pointer;
 }
 .modalContent .thumbs-icons {
     width: 20px;
