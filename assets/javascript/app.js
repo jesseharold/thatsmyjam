@@ -1,25 +1,3 @@
-$('#notif').click(function(){
-    if($('.mdl-layout__drawer-right').hasClass('active')){       
-        $('.mdl-layout__drawer-right').removeClass('active'); 
-    }
-    else{
-        $('.mdl-layout__drawer-right').addClass('active'); 
-    }
-});
-
-$('.mdl-layout__obfuscator-right').click(function(){
-    if($('.mdl-layout__drawer-right').hasClass('active')){       
-        $('.mdl-layout__drawer-right').removeClass('active'); 
-    }
-    else{
-        $('.mdl-layout__drawer-right').addClass('active'); 
-    }
-});
-
-
-$(document).on("click",".add-review-link", function(){
-    addReviewModal();
-});
 function addReviewModal(){
     var formContainer = $("<div>");
     formContainer.append("<h3>Add a Review</h3>");
@@ -75,7 +53,6 @@ function processReviewFromModal(location){
     $("div.modalContainer").remove();
 }//function processReviewFromModal
 
-
 function openModal(content){
     var modalContainer = $("<div>").addClass("modalContainer");
     var modalBG = $("<div>").addClass("modalBG");
@@ -89,23 +66,6 @@ function openModal(content){
     });
 }
 
-//Color the thumbs up or down
-$(document).on("click","#thumbup", function(){
-    if ($(this).hasClass('mdl-button mdl-js-button mdl-button--icon')){
-    $(this).toggleClass('mdl-button--colored');
-    componentHandler.upgradeDom();
-    }
-});
-
-$(document).on("click","#thumbdown", function(){
-    if ($(this).hasClass('mdl-button mdl-js-button mdl-button--icon')){
-    $(this).toggleClass('mdl-button--colored');
-    componentHandler.upgradeDom();
-    }
-});
-
-$(document).ready(promptForLogin);
-
 function promptForLogin(){
     if(!instagramAuthToken){
         var formContainer = $("<div>");
@@ -118,3 +78,48 @@ function promptForLogin(){
         openModal(formContainer);
     }
 }
+
+$(document).ready(function(){
+    //Color the thumbs up or down
+    $(document).on("click","#thumbup", function(){
+        if ($(this).hasClass("mdl-button mdl-js-button mdl-button--icon")){
+        $(this).toggleClass("mdl-button--colored");
+        componentHandler.upgradeDom();
+        }
+    });
+    $(document).on("click","#thumbdown", function(){
+        if ($(this).hasClass("mdl-button mdl-js-button mdl-button--icon")){
+        $(this).toggleClass("mdl-button--colored");
+        componentHandler.upgradeDom();
+        }
+    });
+
+    $("#notif").click(function(){
+        if($(".mdl-layout__drawer-right").hasClass("active")){       
+            $(".mdl-layout__drawer-right").removeClass("active"); 
+        }
+        else{
+            $(".mdl-layout__drawer-right").addClass("active"); 
+        }
+    });
+
+    $(".mdl-layout__obfuscator-right").click(function(){
+        if($(".mdl-layout__drawer-right").hasClass("active")){       
+            $(".mdl-layout__drawer-right").removeClass("active"); 
+        }
+        else{
+            $(".mdl-layout__drawer-right").addClass("active"); 
+        }
+    });
+    $("#logout").click(function(){
+        $.removeCookie('tmjAuthToken', { path: '/' });
+        $("#login").show();
+        $("#logout").hide();
+        instagramAuthToken = "";
+    });
+    $(document).on("click",".add-review-link", function(){
+        addReviewModal();
+    });
+
+    promptForLogin();
+});
