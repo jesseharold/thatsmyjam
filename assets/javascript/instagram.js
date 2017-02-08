@@ -17,11 +17,7 @@ function checkForAuthToken(){
         var authTokenString = location.href.split("#").pop();
         var authToken = authTokenString.split("=");
         if (authToken[0] === "access_token"){
-            $("#login").hide();
-            instagramAuthToken = authToken[1];
-            document.cookie = "authToken=" + instagramAuthToken;
-            console.log("found AuthToken in url");
-            initializeApp();
+            loggedIn(authToken[1]);
         }
     } else {
         //look for token value in cookies
@@ -31,15 +27,22 @@ function checkForAuthToken(){
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1);
             }
-            if (cookie.indexOf("authToken=") === 0) {
-                instagramAuthToken = cookie.substring(10, cookie.length);
-                console.log("found AuthToken in cookie");
-                initializeApp();
+            if (cookie.indexOf("tmjAuthToken=") === 0) {
+                loggedIn(cookie.substring(13, cookie.length));
             } else {
                 console.log("did not find AuthToken");
             }
         }
     }
+}
+
+function loggedIn(tokenValue){
+    instagramAuthToken = tokenValue;
+    $("#login").hide();
+    $("#logout").show();
+    document.cookie = "tmjAuthToken=" + tokenValue;
+    console.log("found AuthToken", tokenValue);
+    initializeApp();
 }
 
 function initializeApp(){
@@ -75,6 +78,7 @@ function getOwnUserInfo(){
     })
     .done(function(response) {
         currentUserId = response.data.id;
+        $("#userID").text(currentUserId);
         updateUser(response.data);
     })
     .fail(function(error){

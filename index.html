@@ -39,10 +39,14 @@
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         <a class="mdl-navigation__link add-review-link" href="#">Add a Review</a>
-                        <a class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/thatsmyjam/&response_type=token&scope=follower_list+public_content">Login</a>
+                        <a id="login" class="mdl-navigation__link" href="https://api.instagram.com/oauth/authorize/?client_id=7c89da9d27cd49f9a18e2d6155032011&redirect_uri=https://jesseharold.github.io/thatsmyjam/&response_type=token&scope=follower_list+public_content">Login</a>
+                        <a id="logout" class="mdl-navigation__link" href="https://instagram.com/accounts/logout/">Logout</a>
                     </nav>
                     
                     <!--<div class="material-icons mdl-badge" id="notif" data-badge="10">people_outline</div>-->
+                    <div id="userID">
+                        
+                    </div>
                     <button class="mdl-button mdl-button--icon" id="notif">
                         <i class="material-icons">people_outline</i>
                     </button>

@@ -115,7 +115,9 @@ color:white;
      border-color: white;
     
 }
-
+#logout {
+    display:none;
+}
 #footerid {
     display: table;
     text-align: center;
